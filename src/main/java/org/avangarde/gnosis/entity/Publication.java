@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Publication.findByUrl", query = "SELECT p FROM Publication p WHERE p.url = :url"),
     @NamedQuery(name = "Publication.findByDate", query = "SELECT p FROM Publication p WHERE p.date = :date")})
 
-public class Publication implements Serializable {
+public class Publication implements Serializable, IEntity<PublicationVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -149,4 +151,23 @@ public class Publication implements Serializable {
         this.subject = subject;
     }
     
+    @Override
+    public PublicationVo toVo() {
+        PublicationVo vo = new PublicationVo();
+        List<CommentVo> listVo = new ArrayList<CommentVo>();
+        for(Comment entity : getCommentList()){
+            listVo.add(entity.toVo());
+        }
+        vo.setCommentList(listVo);
+        vo.setDate(getDate());
+        vo.setId(getId());
+        vo.setRating(getRating());
+        vo.setStudentId(getStudent().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        vo.setTitle(getTitle());
+        vo.setTopic(getTopic());
+        vo.setType(getType());
+        vo.setUrl(getUrl());
+        return vo;
+    }
 }
