@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -32,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Topic.findByDateStarted", query = "SELECT t FROM Topic t WHERE t.dateStarted = :dateStarted"),
     @NamedQuery(name = "Topic.findByTitle", query = "SELECT t FROM Topic t WHERE t.title = :title"),})
 
-public class Topic implements Serializable {
+public class Topic implements Serializable, IEntity<TopicVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -114,6 +116,27 @@ public class Topic implements Serializable {
 
     public void setActivityList(List<Activity> activityList) {
         this.activityList = activityList;
+    }
+    
+    @Override
+    public TopicVo toVo() {
+        TopicVo vo = new TopicVo();
+        vo.setDateStarted(getDateStarted());
+        vo.setId(getId());
+        vo.setStudentId(getStudent().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        vo.setTitle(getTitle());
+        List<CommentVo> listCommentVo = new ArrayList<CommentVo>();
+        List<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for(Comment entity : getCommentList()){
+            listCommentVo.add(entity.toVo());
+        }
+        for(Activity entity : getActivityList()){
+            listActivityVo.add(entity.toVo());
+        }
+        vo.setCommentList(listCommentVo);
+        vo.setActivityList(listActivityVo);
+        return vo;
     }
    
 }
