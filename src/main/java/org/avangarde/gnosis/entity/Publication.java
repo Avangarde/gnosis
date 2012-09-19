@@ -169,5 +169,6 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setType(getType());
         vo.setUrl(getUrl());
         return vo;
+        
     }
 }
