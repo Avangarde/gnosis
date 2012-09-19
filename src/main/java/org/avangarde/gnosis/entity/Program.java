@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.ProgramVo;
 
 /**
  *
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Program.findByCode", query = "SELECT p FROM Program p WHERE p.code = :code"),
     @NamedQuery(name = "Program.findByName", query = "SELECT p FROM Program p WHERE p.name = :name")})
 
-public class Program implements Serializable {
+public class Program implements Serializable, IEntity<ProgramVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -113,6 +114,11 @@ public class Program implements Serializable {
     @Override
     public String toString() {
         return "co.com.sextus.gnosis.Program[ code=" + code + " ]";
+    }
+
+    @Override
+    public ProgramVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

@@ -151,11 +151,7 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         this.subject = subject;
     }
 
-    @Override
-    public PublicationVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+        
     @Override
     public PublicationVo toVo() {
         PublicationVo vo = new PublicationVo();
