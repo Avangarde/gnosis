@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.StudygroupVo;
 
 /**
@@ -80,7 +82,20 @@ public class Studygroup implements Serializable, IEntity<StudygroupVo> {
 
     @Override
     public StudygroupVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StudygroupVo vo = new StudygroupVo();
+        
+        vo.setId(getId());
+        vo.setName(getName());
+        vo.setSubjectCode(getSubject().getCode());
+        
+        ArrayList<StudentVo> listStudentVo = new ArrayList<StudentVo>();
+        for (Student entity : getStudentList()) {
+             listStudentVo.add(entity.toVo());
+        }
+        
+        vo.setStudentList(listStudentVo);
+        
+        return vo;
     }
    
 }

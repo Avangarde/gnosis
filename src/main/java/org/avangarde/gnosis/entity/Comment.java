@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.avangarde.gnosis.vo.CommentVo;
+import org.avangarde.gnosis.vo.LikeDislikeVo;
 
 /**
  *
@@ -162,7 +164,23 @@ public class Comment implements Serializable, IEntity<CommentVo> {
 
     @Override
     public CommentVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CommentVo vo =new CommentVo();
+        vo.setActivityId(getActivity().getId());
+        vo.setContent(getContent());
+        vo.setDate(getDate());
+        vo.setDisliked(getDislike());
+        vo.setId(getId());
+        List<LikeDislikeVo> listVo =new ArrayList<LikeDislikeVo>();
+        for(LikeDislike entity:getLikeDislikeList()){
+            listVo.add(entity.toVo());
+        }
+        vo.setLikeDislikeList(listVo);
+        vo.setLiked(getLike());
+        vo.setPublicationId(getPublication().getId());
+        vo.setStudentId(getStudent().getId());
+        vo.setTopicId(getTopic().getId());
+        vo.setTutorSubjectId(getTutorSubject().getId());
+        return vo;
     }
    
 }
