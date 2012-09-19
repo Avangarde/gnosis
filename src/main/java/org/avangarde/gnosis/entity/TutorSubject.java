@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.TutorSubjectVo;
 
 /**
  *
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TutorSubject.findAll", query = "SELECT t FROM TutorSubject t"),
     @NamedQuery(name = "TutorSubject.findByReputation", query = "SELECT t FROM TutorSubject t WHERE t.reputation = :reputation")})
 
-public class TutorSubject implements Serializable {
+public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -105,5 +106,12 @@ public class TutorSubject implements Serializable {
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
+
+    @Override
+    public TutorSubjectVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+   
 
 }

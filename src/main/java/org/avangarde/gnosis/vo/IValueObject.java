@@ -8,6 +8,6 @@ package org.avangarde.gnosis.vo;
  *
  * @author Zergio
  */
-public class TutorVo implements IValueObject {
+public interface IValueObject {
     
 }

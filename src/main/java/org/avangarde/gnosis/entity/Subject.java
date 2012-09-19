@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
  *
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Subject.findByName", query = "SELECT s FROM Subject s WHERE s.name = :name"),
     @NamedQuery(name = "Subject.findByNumGroups", query = "SELECT s FROM Subject s WHERE s.numGroups = :numGroups")})
 
-public class Subject implements Serializable {
+public class Subject implements Serializable, IEntity<SubjectVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -196,6 +197,11 @@ public class Subject implements Serializable {
     @Override
     public String toString() {
         return "co.com.sextus.gnosis.Subject[ code=" + code + " ]";
+    }
+
+    @Override
+    public SubjectVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

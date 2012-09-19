@@ -8,6 +8,6 @@ package org.avangarde.gnosis.vo;
  *
  * @author Zergio
  */
-class TopicVo {
+public class TopicVo implements IValueObject {
     
 }

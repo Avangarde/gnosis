@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -33,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tutor.findByQuestionReceived", query = "SELECT t FROM Tutor t WHERE t.questionReceived = :questionReceived"),
     @NamedQuery(name = "Tutor.findByNumberStudents", query = "SELECT t FROM Tutor t WHERE t.numberStudents = :numberStudents")})
 
-public class Tutor implements Serializable {
+public class Tutor implements Serializable, IEntity<TutorVo> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -143,6 +144,11 @@ public class Tutor implements Serializable {
 
     public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
         this.tutorSubjectList = tutorSubjectList;
+    }
+
+    @Override
+    public TutorVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
