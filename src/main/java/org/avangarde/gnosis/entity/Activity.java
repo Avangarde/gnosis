@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Activity.findAll", query = "SELECT a FROM Activity a"),})
 
-public class Activity implements Serializable {
+public class Activity implements Serializable, IEntity<ActivityVo> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,7 +60,7 @@ public class Activity implements Serializable {
     private Subject subject;
     @JoinColumn(name = "Tutor_tutorId", referencedColumnName = "tutorId")
     @ManyToOne
-    private Tutor tutortutorId;
+    private Tutor tutor;
     @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
@@ -90,11 +92,11 @@ public class Activity implements Serializable {
         this.details = details;
     }
 
-    public Date getDate() {
+    public Date getDateActivity() {
         return dateActivity;
     }
 
-    public void setDate(Date date) {
+    public void setDateActivity(Date date) {
         this.dateActivity = date;
     }
 
@@ -131,12 +133,12 @@ public class Activity implements Serializable {
         this.subject = subject;
     }
 
-    public Tutor getTutortutorId() {
-        return tutortutorId;
+    public Tutor getTutor() {
+        return tutor;
     }
 
-    public void setTutortutorId(Tutor tutortutorId) {
-        this.tutortutorId = tutortutorId;
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
 
     public Student getStudent() {
@@ -145,5 +147,25 @@ public class Activity implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public ActivityVo toVo() {
+        ActivityVo vo = new ActivityVo();
+        vo.setDateActivity(getDateActivity());
+        vo.setDetails(getDetails());
+        vo.setId(getId());
+        vo.setStudentId(getStudent().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        vo.setTopicId(getTopic().getId());
+        vo.setTutorId(getTutor().getId());
+        vo.setType(getType());
+        vo.setUrl(getUrl());
+        List<CommentVo> listVo = new ArrayList<CommentVo>();
+        for (Comment entity : getCommentList()){
+            listVo.add(entity.toVo());
+        }
+        vo.setCommentList(listVo);
+        return vo;
     }
 }

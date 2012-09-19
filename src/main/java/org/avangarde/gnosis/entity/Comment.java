@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.CommentVo;
 
 /**
  *
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),})
 
-public class Comment implements Serializable {
+public class Comment implements Serializable, IEntity<CommentVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -157,6 +158,11 @@ public class Comment implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public CommentVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
    
 }

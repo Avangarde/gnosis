@@ -55,7 +55,7 @@ public class Tutor implements Serializable {
     @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
-    @OneToMany(mappedBy = "tutortutorId")
+    @OneToMany(mappedBy = "tutor")
     private List<Activity> activityList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutor")
     private List<TutorSubject> tutorSubjectList;
