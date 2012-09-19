@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.avangarde.gnosis.vo.LikeDislikeVo;
 
 /**
  *
@@ -24,18 +25,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LikeDislike.findAll", query = "SELECT l FROM LikeDislike l"),
     @NamedQuery(name = "LikeDislike.findByLike", query = "SELECT l FROM LikeDislike l WHERE l.liked = :like"),
     @NamedQuery(name = "LikeDislike.findByDislike", query = "SELECT l FROM LikeDislike l WHERE l.disliked = :dislike")})
+public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
 
-public class LikeDislike implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "liked")
-    private Boolean liked;
+    private boolean liked;
     @Column(name = "disliked")
-    private Boolean disliked;
+    private boolean disliked;
     @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
@@ -85,5 +85,17 @@ public class LikeDislike implements Serializable {
     public void setComment(Comment comment) {
         this.comment = comment;
     }
- 
+
+    @Override
+    public LikeDislikeVo toVo() {
+
+        LikeDislikeVo vo = new LikeDislikeVo();
+        vo.setCommentId(getComment().getId());
+        vo.setDisliked(getDislike());
+        vo.setId(getId());
+        vo.setLiked(getLike());
+        vo.setStudentId(getStudent().getId());
+        
+        return vo;
+    }
 }
