@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Alexander
  */
-public class CommentVo {
+public class CommentVo implements IValueObject{
 
     private int id;
     private String content;

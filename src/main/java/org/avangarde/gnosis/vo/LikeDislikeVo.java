@@ -8,7 +8,7 @@ package org.avangarde.gnosis.vo;
  *
  * @author Zergio
  */
-public class LikeDislikeVo {
+public class LikeDislikeVo implements IValueObject{
 
     private int id;
     private boolean liked;
