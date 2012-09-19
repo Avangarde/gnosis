@@ -71,7 +71,6 @@ public class TopicVo {
 
     public void setActivityList(List<ActivityVo> activityList) {
         this.activityList = activityList;
-    }
-    
+    }   
     
 }
