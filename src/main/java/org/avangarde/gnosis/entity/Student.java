@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -31,9 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findByUserName", query = "SELECT s FROM Student s WHERE s.userName = :userName"),
     @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
     @NamedQuery(name = "Student.findByCareer", query = "SELECT s FROM Student s WHERE s.career = :career"),})
+public class Student implements Serializable, IEntity<StudentVo> {
 
-public class Student implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -251,5 +252,88 @@ public class Student implements Serializable {
     public void setPublicationList(List<Publication> publicationList) {
         this.publicationList = publicationList;
     }
-   
+
+    @Override
+    public StudentVo toVo() {
+        StudentVo vo = new StudentVo();
+
+        //atributos
+        vo.setCareer(getCareer());
+        vo.setEmail(getEmail());
+        vo.setFirstName(getFirstName());
+        vo.setLastName(getLastName());
+        vo.setId(getId());
+        vo.setPassword(getPassword());
+        vo.setProgramCode(getProgram().getCode());
+        vo.setUrlPhoto(getUrlPhoto());
+        vo.setUserName(getUserName());
+
+        //Listas
+
+        ArrayList<StudygroupVo> listStudygroupVo = new ArrayList<StudygroupVo>();
+        for (Studygroup entity : getStudygroupList()) {
+             listStudygroupVo.add(entity.toVo());
+        }
+        
+        
+        
+        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+        for (TutorSubject entity : getTutorSubjectList()) {
+            listTutorSubjectVo.add(entity.toVo());
+        }
+        
+        ArrayList<SubjectVo> listSubjectVo = new ArrayList<SubjectVo>();
+        for (Subject entity : getSubjectList()) {
+            listSubjectVo.add(entity.toVo());
+        }
+        
+        ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
+        for (Topic entity : getTopicList()) {
+            listTopicVo.add(entity.toVo());
+        }
+        
+        ArrayList<EventVo> listEventVo = new ArrayList<EventVo>();
+        for (Event entity : getEventList()) {
+            listEventVo.add(entity.toVo());
+        }
+        
+        ArrayList<TutorVo> listTutorVo = new ArrayList<TutorVo>();
+        for (Tutor entity : getTutorList()) {
+            listTutorVo.add(entity.toVo());
+        }
+        
+        ArrayList<LikeDislikeVo> listLikeDislikeVo = new ArrayList<LikeDislikeVo>();
+        for (LikeDislike entity : getLikeDislikeList()) {
+            listLikeDislikeVo.add(entity.toVo());
+        }
+        
+        ArrayList<CommentVo> listCommentVo = new ArrayList<CommentVo>();
+        for (Comment entity : getCommentList()) {
+            listCommentVo.add(entity.toVo());
+        }
+        
+        ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for (Activity entity : getActivityList()) {
+            listActivityVo.add(entity.toVo());
+        }
+        
+        ArrayList<PublicationVo> listPublicationVo = new ArrayList<PublicationVo>();
+        for (Publication entity : getPublicationList()) {
+            listPublicationVo.add(entity.toVo());
+        }
+             
+        vo.setStudygroupList(listStudygroupVo);
+        vo.setTutorSubjectList(listTutorSubjectVo);
+        vo.setSubjectList(listSubjectVo);
+        vo.setTopicList(listTopicVo);
+        vo.setEventList(listEventVo);
+        vo.setTutorList(listTutorVo);
+        vo.setLikeDislikeList(listLikeDislikeVo);
+        vo.setCommentList(listCommentVo);
+        vo.setActivityList(listActivityVo);
+        vo.setPublicationList(listPublicationVo);
+        
+        return vo;
+
+    }
 }

@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.PublicationVo;
 
 /**
  *
@@ -36,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Publication.findByUrl", query = "SELECT p FROM Publication p WHERE p.url = :url"),
     @NamedQuery(name = "Publication.findByDate", query = "SELECT p FROM Publication p WHERE p.date = :date")})
 
-public class Publication implements Serializable {
+public class Publication implements Serializable, IEntity<PublicationVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -147,6 +148,11 @@ public class Publication implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    @Override
+    public PublicationVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

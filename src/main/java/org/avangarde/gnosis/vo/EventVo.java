@@ -8,6 +8,6 @@ package org.avangarde.gnosis.vo;
  *
  * @author Zergio
  */
-class EventVo {
+public class EventVo implements IValueObject {
     
 }
