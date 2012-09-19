@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Zergio
  */
-public class PublicationVo {
+public class PublicationVo implements IValueObject{
    
     private int id;
     private String title;

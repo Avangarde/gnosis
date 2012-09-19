@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.TutorSubjectVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -109,9 +110,21 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
 
     @Override
     public TutorSubjectVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TutorSubjectVo vo = new TutorSubjectVo();
+        List<CommentVo> listVo = new ArrayList<CommentVo>();
+        for(Comment entity : getCommentList()){
+            listVo.add(entity.toVo());
+        }
+        vo.setCommentList(listVo);
+        vo.setId(getId());
+        vo.setReputation(getReputation());
+        List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
+        for(Student entity : getStudentList()){
+            listStudentVo.add(entity.toVo());
+        }
+        vo.setStudentList(listStudentVo);
+        vo.setTutorId(getTutor().getId());
+        return vo;
     }
-
-   
-
+  
 }

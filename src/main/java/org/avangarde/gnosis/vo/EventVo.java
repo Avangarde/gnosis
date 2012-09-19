@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author Zergio
  */
-public class EventVo {
+public class EventVo implements IValueObject{
     
     private int id;
     private String name;
