@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.avangarde.gnosis.vo.EventVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -119,10 +119,19 @@ public class Event implements Serializable, IEntity<EventVo> {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
-
+    
     @Override
     public EventVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        EventVo vo = new EventVo();
+        vo.setDate(getDate());
+        vo.setDescription(getDescription());
+        vo.setHour(getHour());
+        vo.setId(getId());
+        vo.setName(getName());
+        vo.setStudentId(getStudent().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        vo.setType(getType());      
+        return vo;     
     }
    
 }

@@ -25,18 +25,17 @@ import org.avangarde.gnosis.vo.LikeDislikeVo;
     @NamedQuery(name = "LikeDislike.findAll", query = "SELECT l FROM LikeDislike l"),
     @NamedQuery(name = "LikeDislike.findByLike", query = "SELECT l FROM LikeDislike l WHERE l.liked = :like"),
     @NamedQuery(name = "LikeDislike.findByDislike", query = "SELECT l FROM LikeDislike l WHERE l.disliked = :dislike")})
-
 public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "liked")
-    private Boolean liked;
+    private boolean liked;
     @Column(name = "disliked")
-    private Boolean disliked;
+    private boolean disliked;
     @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
@@ -89,7 +88,14 @@ public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
 
     @Override
     public LikeDislikeVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        LikeDislikeVo vo = new LikeDislikeVo();
+        vo.setCommentId(getComment().getId());
+        vo.setDisliked(getDislike());
+        vo.setId(getId());
+        vo.setLiked(getLike());
+        vo.setStudentId(getStudent().getId());
+        
+        return vo;
     }
- 
 }

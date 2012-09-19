@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.SubjectVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -201,7 +202,67 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
 
     @Override
     public SubjectVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        SubjectVo vo = new SubjectVo();
+        //Atributos
+        vo.setCode(getCode());
+        vo.setName(getName());
+        vo.setDescription(getDescription());
+        vo.setNumGroups(getNumGroups());
+        //Listas
+        ArrayList<StudentVo> listStudentVo = new ArrayList<StudentVo>();
+        for (Student entity : getStudentList()) {
+             listStudentVo.add(entity.toVo());
+        }
+        
+        ArrayList<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
+        for (Program entity : getProgramList()) {
+             listProgramVo.add(entity.toVo());
+        }
+        
+        ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
+        for (Topic entity : getTopicList()) {
+            listTopicVo.add(entity.toVo());
+        }
+        
+        ArrayList<EventVo> listEventVo = new ArrayList<EventVo>();
+        for (Event entity : getEventList()) {
+            listEventVo.add(entity.toVo());
+        }
+        
+        ArrayList<StudygroupVo> listStudygroupVo = new ArrayList<StudygroupVo>();
+        for (Studygroup entity : getStudygroupList()) {
+             listStudygroupVo.add(entity.toVo());
+        }
+        
+        ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for (Activity entity : getActivityList()) {
+            listActivityVo.add(entity.toVo());
+        }
+        
+        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+        for (TutorSubject entity : getTutorSubjectList()) {
+            listTutorSubjectVo.add(entity.toVo());
+        }
+        
+        ArrayList<PublicationVo> listPublicationVo = new ArrayList<PublicationVo>();
+        for (Publication entity : getPublicationList()) {
+            listPublicationVo.add(entity.toVo());
+        }
+        
+        vo.setStudentList(listStudentVo);
+        vo.setProgramList(listProgramVo);
+        vo.setTopicList(listTopicVo);
+        vo.setEventList(listEventVo);
+        vo.setStudygroupList(listStudygroupVo);
+        vo.setActivityList(listActivityVo);
+        vo.setTutorSubjectList(listTutorSubjectVo);
+        vo.setPublicationList(listPublicationVo);
+        
+        
+        
+        
+        
+        return vo;
     }
     
 }
