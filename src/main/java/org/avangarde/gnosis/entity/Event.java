@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),})
 
-public class Event implements Serializable {
+public class Event implements Serializable, IEntity<EventVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,6 +118,20 @@ public class Event implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+    
+    @Override
+    public EventVo toVo() {
+        EventVo vo = new EventVo();
+        vo.setDate(getDate());
+        vo.setDescription(getDescription());
+        vo.setHour(getHour());
+        vo.setId(getId());
+        vo.setName(getName());
+        vo.setStudentId(getStudent().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        vo.setType(getType());      
+        return vo;     
     }
    
 }
