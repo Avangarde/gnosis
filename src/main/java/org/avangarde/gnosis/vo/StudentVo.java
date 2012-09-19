@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Zergio
  */
-public class StudentVo {
+public class StudentVo implements IValueObject {
     //Atributos nativos
     private int id;
     private String userName;
@@ -21,13 +21,12 @@ public class StudentVo {
     private String career;
     private String urlPhoto;
     //Atributo externo
-    private Integer programId;
+    private Integer programCode;
     //Vos Adicionales
     private List<StudygroupVo> studygroupList;
     private List<TutorSubjectVo> tutorSubjectList;
     private List<SubjectVo> subjectList;
     private List<TopicVo> topicList;
-    
     private List<EventVo> eventList;
     private List<TutorVo> tutorList;
     private List<LikeDislikeVo> likeDislikeList;
@@ -115,12 +114,12 @@ public class StudentVo {
         this.password = password;
     }
 
-    public Integer getProgramId() {
-        return programId;
+    public Integer getProgramCode() {
+        return programCode;
     }
 
-    public void setProgramId(Integer programId) {
-        this.programId = programId;
+    public void setProgramCode(Integer programId) {
+        this.programCode = programCode;
     }
 
     public List<PublicationVo> getPublicationList() {

@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Alexander
  */
-public class ActivityVo {
+public class ActivityVo implements IValueObject {
     
     private int id;
     private String type;

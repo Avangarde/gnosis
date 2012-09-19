@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.avangarde.gnosis.vo.StudygroupVo;
 
 /**
  *
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Studygroup.findAll", query = "SELECT s FROM Studygroup s"),})
 
-public class Studygroup implements Serializable {
+public class Studygroup implements Serializable, IEntity<StudygroupVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +76,11 @@ public class Studygroup implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    @Override
+    public StudygroupVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
    
 }

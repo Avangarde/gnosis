@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.avangarde.gnosis.vo.LikeDislikeVo;
 
 /**
  *
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LikeDislike.findByLike", query = "SELECT l FROM LikeDislike l WHERE l.liked = :like"),
     @NamedQuery(name = "LikeDislike.findByDislike", query = "SELECT l FROM LikeDislike l WHERE l.disliked = :dislike")})
 
-public class LikeDislike implements Serializable {
+public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -84,6 +85,11 @@ public class LikeDislike implements Serializable {
 
     public void setComment(Comment comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public LikeDislikeVo toVo() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
  
 }
