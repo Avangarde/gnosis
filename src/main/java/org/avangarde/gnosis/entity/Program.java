@@ -1,7 +1,6 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.ProgramVo;
-import org.avangarde.gnosis.vo.StudentVo;
-import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
  *
@@ -32,12 +28,12 @@ import org.avangarde.gnosis.vo.SubjectVo;
     @NamedQuery(name = "Program.findByCode", query = "SELECT p FROM Program p WHERE p.code = :code"),
     @NamedQuery(name = "Program.findByName", query = "SELECT p FROM Program p WHERE p.name = :name")})
 
-public class Program implements Serializable, IEntity<ProgramVo> {
+public class Program implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "code")
-    private int code;
+    private Integer code;
     @Column(name = "name")
     private String name;
     @JoinTable(name = "program_subject", joinColumns = {
@@ -95,25 +91,28 @@ public class Program implements Serializable, IEntity<ProgramVo> {
     }
 
     @Override
-    public ProgramVo toVo() {
-        ProgramVo vo =new ProgramVo();
-        vo.setCode(getCode());
-        vo.setName(getName());
-        //<editor-fold defaultstate="collapsed" desc="vo.setStudentList">
-        List<StudentVo> studentListVo = new ArrayList<StudentVo>();
-        for (Student entity : getStudentList()){
-            studentListVo.add(entity.toVo());
+    public int hashCode() {
+        int hash = 0;
+        hash += (code != null ? code.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Program)) {
+            return false;
         }
-        vo.setStudentList(studentListVo);
-        //</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="vo.setSubjectList">
-        List<SubjectVo> subjectListVo = new ArrayList<SubjectVo>();
-        for (Subject entity : getSubjectList()){
-            subjectListVo.add(entity.toVo());
+        Program other = (Program) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+            return false;
         }
-        vo.setSubjectList(subjectListVo);
-        //</editor-fold>
-        return vo;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "co.com.sextus.gnosis.Program[ code=" + code + " ]";
     }
     
 }
