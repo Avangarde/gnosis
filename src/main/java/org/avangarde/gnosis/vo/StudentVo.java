@@ -118,7 +118,7 @@ public class StudentVo implements IValueObject {
         return programCode;
     }
 
-    public void setProgramCode(Integer programId) {
+    public void setProgramId(Integer programId) {
         this.programCode = programCode;
     }
 
