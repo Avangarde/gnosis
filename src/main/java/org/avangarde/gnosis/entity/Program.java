@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.ProgramVo;
+import org.avangarde.gnosis.vo.*;
+
 
 /**
  *
@@ -98,27 +100,27 @@ public class Program implements Serializable, IEntity<ProgramVo> {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Program)) {
-            return false;
-        }
-        Program other = (Program) object;
-        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "co.com.sextus.gnosis.Program[ code=" + code + " ]";
-    }
 
     @Override
     public ProgramVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ProgramVo vo =new ProgramVo();
+        vo.setCode(getCode());
+        vo.setName(getName());
+        //<editor-fold defaultstate="collapsed" desc="vo.setStudentList">
+        List<StudentVo> studentListVo = new ArrayList<StudentVo>();
+        for (Student entity : getStudentList()){
+            studentListVo.add(entity.toVo());
+        }
+        vo.setStudentList(studentListVo);
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="vo.setSubjectList">
+        List<SubjectVo> subjectListVo = new ArrayList<SubjectVo>();
+        for (Subject entity : getSubjectList()){
+            subjectListVo.add(entity.toVo());
+        }
+        vo.setSubjectList(subjectListVo);
+        //</editor-fold>
+        return vo;
     }
     
 }
