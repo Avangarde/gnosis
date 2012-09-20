@@ -22,7 +22,7 @@ public class ActivityDAO implements IDAO<Activity> {
         }
         return instance;
     }
-    
+
     @Override
     public void persist(Activity entity, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");

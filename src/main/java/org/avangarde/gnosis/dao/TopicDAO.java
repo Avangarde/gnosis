@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Topic;
  * @author Familia Martinez
  */
 public class TopicDAO implements IDAO<Topic> {
+
     private static TopicDAO instance;
 
     public static synchronized TopicDAO getInstance() {
@@ -46,5 +47,4 @@ public class TopicDAO implements IDAO<Topic> {
     public List<Topic> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

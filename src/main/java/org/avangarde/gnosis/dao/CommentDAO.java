@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Comment;
  * @author Familia Martinez
  */
 public class CommentDAO implements IDAO<Comment> {
+
     private static CommentDAO instance;
 
     public static synchronized CommentDAO getInstance() {

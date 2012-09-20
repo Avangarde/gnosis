@@ -9,7 +9,7 @@ import org.avangarde.gnosis.entity.Student;
  * @author Alexander
  */
 public class StudentDAO implements IDAO<Student> {
-    
+
     private static StudentDAO instance;
 
     public static synchronized StudentDAO getInstance() {
@@ -43,9 +43,8 @@ public class StudentDAO implements IDAO<Student> {
     public List<Student> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public Student login(Student entity, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

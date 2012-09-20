@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Publication;
  * @author Familia Martinez
  */
 public class PublicationDAO implements IDAO<Publication> {
+
     private static PublicationDAO instance;
 
     public static synchronized PublicationDAO getInstance() {

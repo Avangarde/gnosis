@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.LikeDislike;
  * @author Familia Martinez
  */
 public class LikeDislikeDAO implements IDAO<LikeDislike> {
+
     private static LikeDislikeDAO instance;
 
     public static synchronized LikeDislikeDAO getInstance() {

@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Program;
  * @author Familia Martinez
  */
 public class ProgramDAO implements IDAO<Program> {
+
     private static ProgramDAO instance;
 
     public static synchronized ProgramDAO getInstance() {

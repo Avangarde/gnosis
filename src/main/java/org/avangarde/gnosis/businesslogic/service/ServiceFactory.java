@@ -8,11 +8,10 @@ public class ServiceFactory {
 
     private ServiceFactory() {
     }
-    
+
     public StudentService getStudentService() {
         return StudentService.getInstance();
     }
-    
     private static ServiceFactory instance;
 
     public static synchronized ServiceFactory getInstance() {

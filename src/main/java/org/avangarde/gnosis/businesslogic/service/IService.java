@@ -7,8 +7,8 @@ import javax.persistence.EntityManager;
  *
  * @author Alexander
  */
-public interface IService <VO> {
-    
+public interface IService<VO> {
+
     void persist(VO vo, EntityManager em);
 
     VO find(Object id, EntityManager em);
@@ -18,5 +18,4 @@ public interface IService <VO> {
     void delete(Object id, EntityManager em);
 
     List<VO> getList(EntityManager em);
-    
 }

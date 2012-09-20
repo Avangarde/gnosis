@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Subject;
  * @author Familia Martinez
  */
 public class SubjectDAO implements IDAO<Subject> {
+
     private static SubjectDAO instance;
 
     public static synchronized SubjectDAO getInstance() {

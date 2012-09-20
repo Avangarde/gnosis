@@ -2,39 +2,39 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.avangarde.gnosis.dao;
+package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.avangarde.gnosis.entity.TutorSubject;
+import org.avangarde.gnosis.vo.EventVo;
 
 /**
  *
  * @author Familia Martinez
  */
-public class TutorSubjectDAO implements IDAO<TutorSubject> {
+public class EventService implements IService<EventVo> {
 
-    private static TutorSubjectDAO instance;
+    private static EventService instance;
 
-    public static synchronized TutorSubjectDAO getInstance() {
+    public static synchronized EventService getInstance() {
         if (instance == null) {
-            instance = new TutorSubjectDAO();
+            instance = new EventService();
         }
         return instance;
     }
 
     @Override
-    public void persist(TutorSubject entity, EntityManager em) {
+    public void persist(EventVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public TutorSubject find(Object id, EntityManager em) {
+    public EventVo find(Object id, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(TutorSubject entity, EntityManager em) {
+    public void update(EventVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -44,7 +44,7 @@ public class TutorSubjectDAO implements IDAO<TutorSubject> {
     }
 
     @Override
-    public List<TutorSubject> getList(EntityManager em) {
+    public List<EventVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

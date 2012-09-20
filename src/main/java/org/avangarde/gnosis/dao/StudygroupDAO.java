@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Studygroup;
  * @author Familia Martinez
  */
 public class StudygroupDAO implements IDAO<Studygroup> {
+
     private static StudygroupDAO instance;
 
     public static synchronized StudygroupDAO getInstance() {

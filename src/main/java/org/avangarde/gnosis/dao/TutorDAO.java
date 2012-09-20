@@ -13,6 +13,7 @@ import org.avangarde.gnosis.entity.Tutor;
  * @author Familia Martinez
  */
 public class TutorDAO implements IDAO<Tutor> {
+
     private static TutorDAO instance;
 
     public static synchronized TutorDAO getInstance() {

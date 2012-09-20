@@ -12,7 +12,7 @@ public class DAOFactory {
     public ActivityDAO getActivityDAO() {
         return ActivityDAO.getInstance();
     }
-    
+
     public CommentDAO getCommentDAO() {
         return CommentDAO.getInstance();
     }
@@ -24,7 +24,7 @@ public class DAOFactory {
     public LikeDislikeDAO getLikeDislikeDAO() {
         return LikeDislikeDAO.getInstance();
     }
-    
+
     public ProgramDAO getProgramDAO() {
         return ProgramDAO.getInstance();
     }
@@ -32,11 +32,11 @@ public class DAOFactory {
     public PublicationDAO getPublicationDAO() {
         return PublicationDAO.getInstance();
     }
-    
+
     public StudentDAO getStudentDAO() {
         return StudentDAO.getInstance();
     }
-    
+
     public StudygroupDAO getStudygroupDAO() {
         return StudygroupDAO.getInstance();
     }
@@ -44,7 +44,7 @@ public class DAOFactory {
     public SubjectDAO getSubjectDAO() {
         return SubjectDAO.getInstance();
     }
-    
+
     public TopicDAO getTopicDAO() {
         return TopicDAO.getInstance();
     }
@@ -52,11 +52,10 @@ public class DAOFactory {
     public TutorDAO getTutorDAO() {
         return TutorDAO.getInstance();
     }
-    
+
     public TutorSubjectDAO getTutorSubjectDAO() {
         return TutorSubjectDAO.getInstance();
     }
-    
     private static DAOFactory instance;
 
     public static synchronized DAOFactory getInstance() {
