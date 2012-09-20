@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Zergio
  */
-public class TopicVo {
+public class TopicVo implements IValueObject{
     
     private int id;
     private Date dateStarted;

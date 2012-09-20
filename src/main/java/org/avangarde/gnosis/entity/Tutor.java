@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.TutorVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -148,7 +149,25 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
 
     @Override
     public TutorVo toVo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TutorVo vo = new TutorVo();
+        List<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for(Activity entity : getActivityList()){
+            listActivityVo.add(entity.toVo());
+        }
+        vo.setActivityList(listActivityVo);
+        vo.setId(getId());
+        vo.setNumberStudents(getNumberStudents());
+        vo.setNumberVotes(getNumberVotes());
+        vo.setPublishedResources(getPublishedResources());
+        vo.setQuestionReceived(getQuestionReceived());
+        vo.setReputation(getReputation());
+        vo.setStudentId(getStudent().getId());
+        List<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+        for(TutorSubject entity : getTutorSubjectList()){
+            listTutorSubjectVo.add(entity.toVo());
+        }
+        vo.setTutorSubjectList(listTutorSubjectVo);
+        vo.setUserName(getUserName());
+        return vo;
     }
-
 }
