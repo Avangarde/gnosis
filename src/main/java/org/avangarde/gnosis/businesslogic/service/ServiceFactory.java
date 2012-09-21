@@ -21,6 +21,10 @@ public class ServiceFactory {
         return EventService.getInstance();
     }
     
+    public LikeDislikeService getLikeDislikeService() {
+        return LikeDislikeService.getInstance();
+    }
+    
     public ProgramService getProgramService() {
         return ProgramService.getInstance();
     }

@@ -11,8 +11,8 @@ import org.avangarde.gnosis.businesslogic.service.IService;
  *
  * @author Alexander
  */
-public class Facade <VO> {
-    
+public class Facade<VO> {
+
     protected EntityManagerFactory emf;
     protected EntityManager em;
     protected IService service;
@@ -22,9 +22,7 @@ public class Facade <VO> {
         em = emf.createEntityManager();
         this.service = service;
     }
-    
-    
-    
+
     public void persist(VO vo) {
         EntityTransaction tx = null;
         try {
@@ -81,7 +79,7 @@ public class Facade <VO> {
         }
     }
 
-    public boolean delete (Object id){
+    public boolean delete(Object id) {
         EntityManager em = null;
         EntityTransaction tx = null;
         boolean ret = false;
@@ -91,7 +89,7 @@ public class Facade <VO> {
             service.delete(id, em);
             tx.commit();
             ret = true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             if (em != null && tx != null) {
                 tx.rollback();
@@ -105,7 +103,7 @@ public class Facade <VO> {
         }
     }
 
-    public List<VO> getList (){
+    public List<VO> getList() {
         try {
             return service.getList(em);
         } finally {
@@ -115,5 +113,4 @@ public class Facade <VO> {
             }
         }
     }
-    
 }
