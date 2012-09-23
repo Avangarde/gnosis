@@ -1,14 +1,63 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+
+    </body>
     <h:head>
-        <title>Facelet Title</title>
+        <title>Gnosis</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="100">
+                <h:outputText value="Gnosis" />
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="30">
+                <h:outputText value="Gnosis®. All Rights Reserved" />
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+
+                <p:layout>
+                    <p:layoutUnit position="west" size="50%">
+                        <p:panel header="Entra">
+                            <h:panelGrid columns="3">  
+                                <h:outputText value="Nombre de usuario: " />  
+                                <p:inputText id="userName"></p:inputText>
+                                <h:outputText value="@unal.edu.co " />
+                                
+                                <h:outputText value="Contraseña: " />  
+                                <p:password id="password" />
+                                
+                            </h:panelGrid>  
+                        </p:panel>
+                        <br><iframe width="500" 
+                                    height="255" 
+                                    src="http://www.youtube.com/embed/rfoatg2_5LY" 
+                                    frameborder="0" 
+                                    allowfullscreen="true">
+                            </iframe></br>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center">
+                        <p:panel header="Registrate!">
+                            <h:panelGrid columns="3">  
+                                <h:outputText value="Nombre de usuario: " />  
+                                <p:inputText id="userName"></p:inputText>
+                                <h:outputText value="@unal.edu.co " />
+                                
+                                <h:outputText value="Contraseña: " />  
+                                <p:password id="password" />
+                                
+                            </h:panelGrid>  
+                        </p:panel>
+                    </p:layoutUnit>
+                </p:layout>
+
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
-
