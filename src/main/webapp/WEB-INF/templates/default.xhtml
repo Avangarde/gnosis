@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Gnosis <ui:insert name="title"></ui:insert></title>
+        
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="#{request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="#{request.contextPath}/resources/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$('.collapse').collapse();
+	</script>
+
+    </h:head>
+
+    <h:body>
+
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+
+                    <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Be sure to leave the brand out there if you want it shown -->
+                    <a class="brand" href="#">Gnosis</a>
+
+                    <!-- Everything you want hidden at 940px or less, place within here -->
+                    <div class="nav-collapse">
+                        <!-- .nav, .navbar-search, .navbar-form, etc -->
+                        <ul class="nav pull-left">
+                            <li><a href="#">Mi Escritorio</a></li>
+                            <li><a href="#">Mis Materias</a></li>
+                            <li><a href="#">Mis Tutores</a></li>
+                            <li><a href="#">Mi Calendario</a></li>
+                        </ul>                  
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <ui:insert name="content">
+        </ui:insert>
+
+    </h:body>
+
+</html>
