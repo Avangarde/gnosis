@@ -1,14 +1,71 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./WEB-INF/templates/default.xhtml">
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="title">
         - Index
     </ui:define>
-    
+
     <ui:define name="content">
-        Otra Cosa
+        <div class="container">
+            <div class="row">
+                <div class="span6">
+                    <div class="hero-unit">
+                        <h1>Entra</h1>
+                        <f:view>
+                            <h:form>
+                                <h:outputLabel value="Correo o Usuario: " for="userName"/>
+                                <h:inputText id="userName" label="userName" required="true" 
+                                             value="#{login.userName}"/>
+                                <h:outputLabel value="Contraseña: " for="password"/>
+                                <h:inputSecret id="password" label="password" required="true" 
+                                               value="#{login.password}"/>
+                                <div class="form-actions">
+                                    <h:commandButton action="#{login.logIn()}" value="Entrar" class="btn btn-primary" />
+                                </div>
+                            </h:form>
+                        </f:view>
+                    </div>
+                    <iframe src="http://www.youtube.com/embed/jHnvK0SYYWk?list=SP5F907F818938859E&amp;hl=es_ES" frameborder="0"></iframe>
+                </div>
+                <div class="span6">
+                    <div class="hero-unit">
+                        <h1>Registrate</h1>
+                        <f:view>
+                            <h:form>
+                                <h:outputLabel value="¿Cómo te llamas?: " for="firstName"/>
+                                <h:inputText id="firstName" label="firstName" required="true" 
+                                             value="#{signUp.firstName}"/>
+                                <h:outputLabel value="Y ahora tu apellido: " for="lastName"/>
+                                <h:inputText id="lastName" label="lastName" required="true" 
+                                             value="#{signUp.lastName}"/>
+                                <h:outputLabel value="¿Cuál es tu correo?: " for="email"/>
+                                <h:inputText id="email" label="email" required="true" 
+                                             value="#{signUp.email}"/>@unal.edu.co
+                                <h:outputLabel value="Escribe tu contraseña: " for="passwordSignUp"/>
+                                <h:inputSecret id="passwordSignUp" label="passwordSignUp" required="true" 
+                                               value="#{signUp.password}"/>
+                                <h:outputLabel value="Escribela de nuevo: " for="passwordSignUpR"/>
+                                <h:inputSecret id="passwordSignUpR" label="passwordSignUpR" required="true" 
+                                               value=""/>
+                                <h:outputLabel value="¿Qué estudias?: " for="program"/>
+                                <h:selectOneMenu id="program" value="#{signUp.programId}" required="true">
+                                                <f:selectItem itemLabel="" />
+                                                <f:selectItems value="#{lists.programs}" />
+                                                <f:validateLongRange minimum="1" />
+                                            </h:selectOneMenu>
+                                <div class="form-actions">
+                                    <h:commandButton action="#{signUp.signUp()}" value="Registrarse" class="btn btn-primary" />
+                                </div>
+                            </h:form>
+                        </f:view>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

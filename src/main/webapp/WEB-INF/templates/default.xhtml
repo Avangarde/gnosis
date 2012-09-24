@@ -7,14 +7,14 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Gnosis <ui:insert name="title"></ui:insert></title>
-        
+
         <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	<link href="#{request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="#{request.contextPath}/resources/jquery/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		$('.collapse').collapse();
-	</script>
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="#{request.contextPath}/resources/jquery/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $('.collapse').collapse();
+        </script>
 
     </h:head>
 
@@ -42,13 +42,30 @@
                             <li><a href="#">Mis Materias</a></li>
                             <li><a href="#">Mis Tutores</a></li>
                             <li><a href="#">Mi Calendario</a></li>
-                        </ul>                  
-                    </div>
+                        </ul> 
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Nombre de Usuario
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Editar Cuenta</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Cerrar Sesion</a></li>
+                                </ul>
+                            </li>
+                        </ul>
 
+                        <form class="navbar-search pull-right">
+                            <input type="text" class="search-query" placeholder="Busca una materia"/>
+                            <button type="submit" class="btn"><i class="icon-search icon-white" /></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         <ui:insert name="content">
         </ui:insert>
 
