@@ -13,12 +13,12 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class Login {
+public class LoginBean {
 
     private String userName;
     private String password;
     
-    public Login() {
+    public LoginBean() {
     }
 
     public String getUserName() {

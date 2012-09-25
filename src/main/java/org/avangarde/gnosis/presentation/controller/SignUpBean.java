@@ -13,7 +13,7 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class SignUp {
+public class SignUpBean {
 
     private String userName;
     private String password;
@@ -22,7 +22,7 @@ public class SignUp {
     private String email;
     private Long programId;
     
-    public SignUp() {
+    public SignUpBean() {
     }
 
     public String getUserName() {

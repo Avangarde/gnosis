@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./WEB-INF/templates/default.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="title">
         - Index
@@ -12,53 +13,86 @@
     <ui:define name="content">
         <div class="container">
             <div class="row">
-                <div class="span6">
+                <div class="span4 offset1">
                     <div class="hero-unit">
-                        <h1>Entra</h1>
                         <f:view>
-                            <h:form>
-                                <h:outputLabel value="Correo o Usuario: " for="userName"/>
-                                <h:inputText id="userName" label="userName" required="true" 
-                                             value="#{login.userName}"/>
-                                <h:outputLabel value="Contraseña: " for="password"/>
-                                <h:inputSecret id="password" label="password" required="true" 
-                                               value="#{login.password}"/>
+                            <h:form id="loginForm">
+                                <legend><h1>Entra</h1></legend>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="text" id="userName" required="true" placeholder="Correo o Usuario"
+                                               value="#{loginBean.userName}"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="password" id="password" placeholder="Contraseña" required="true" 
+                                               value="#{loginBean.password}"/>
+                                    </div>
+                                </div>
                                 <div class="form-actions">
-                                    <h:commandButton action="#{login.logIn()}" value="Entrar" class="btn btn-primary" />
+                                    <h:commandButton action="#{loginBean.logIn()}" value="Entrar" class="btn btn-large btn-primary" />
                                 </div>
                             </h:form>
                         </f:view>
                     </div>
                     <iframe src="http://www.youtube.com/embed/jHnvK0SYYWk?list=SP5F907F818938859E&amp;hl=es_ES" frameborder="0"></iframe>
                 </div>
-                <div class="span6">
+                <div class="span5 offset1">
                     <div class="hero-unit">
-                        <h1>Registrate</h1>
                         <f:view>
-                            <h:form>
-                                <h:outputLabel value="¿Cómo te llamas?: " for="firstName"/>
-                                <h:inputText id="firstName" label="firstName" required="true" 
-                                             value="#{signUp.firstName}"/>
-                                <h:outputLabel value="Y ahora tu apellido: " for="lastName"/>
-                                <h:inputText id="lastName" label="lastName" required="true" 
-                                             value="#{signUp.lastName}"/>
-                                <h:outputLabel value="¿Cuál es tu correo?: " for="email"/>
-                                <h:inputText id="email" label="email" required="true" 
-                                             value="#{signUp.email}"/>@unal.edu.co
-                                <h:outputLabel value="Escribe tu contraseña: " for="passwordSignUp"/>
-                                <h:inputSecret id="passwordSignUp" label="passwordSignUp" required="true" 
-                                               value="#{signUp.password}"/>
-                                <h:outputLabel value="Escribela de nuevo: " for="passwordSignUpR"/>
-                                <h:inputSecret id="passwordSignUpR" label="passwordSignUpR" required="true" 
-                                               value=""/>
-                                <h:outputLabel value="¿Qué estudias?: " for="program"/>
-                                <h:selectOneMenu id="program" value="#{signUp.programId}" required="true">
-                                                <f:selectItem itemLabel="" />
-                                                <f:selectItems value="#{lists.programs}" />
-                                                <f:validateLongRange minimum="1" />
-                                            </h:selectOneMenu>
+                            <h:form id="signUpForm">
+                                <legend><h1>Registrate</h1></legend>
+                                <h:messages for="signUpForm" class="alert alert-error"/>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="text" id="firstName" placeholder="Como te llamas?" required="true" 
+                                               value="#{signUpBean.firstName}"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input type="text" id="lastName" placeholder="Y tu Apellido?" required="true" 
+                                               value="#{signUpBean.lastName}"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="input-append">
+                                            <input class="span2" type="text" id="email" placeholder="¿Cuál es tu correo?" required="true" 
+                                                   value="#{signUpBean.email}"/><span class="add-on">@unal.edu.co</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <h:outputLabel value="Escribe una Contraseña "/>  
+                                        <p:password id="passwordSignUp" required="true" value="#{signUpBean.password}"
+                                                    feedback="true" promptLabel="Usa una contraseña segura" inline="true" 
+                                                    weakLabel="Debil" goodLabel="Buena" strongLabel="Segura" 
+                                                    match="passwordSignUpR"/>
+                                        <p:watermark for="passwordSignUp" value="Escribe una Contraseña" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <h:outputLabel value="Escribela de nuevo "/>
+                                        <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
+                                        <p:password id="passwordSignUpR" required="true" value=""/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label " for="program">Qué Estudias?</label>
+                                    <div class="controls">
+                                        <h:selectOneMenu id="program" value="#{signUpBean.programId}" required="true">
+                                            <f:selectItem itemLabel="" />
+                                            <f:selectItems value="#{lists.programs}" />
+                                            <f:validateLongRange minimum="1" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
                                 <div class="form-actions">
-                                    <h:commandButton action="#{signUp.signUp()}" value="Registrarse" class="btn btn-primary" />
+                                    <h:commandButton action="#{signUpBean.signUp()}" value="Registrarse" class="btn btn-large btn-primary" />
                                 </div>
                             </h:form>
                         </f:view>
