@@ -74,7 +74,7 @@ public class SignUpBean {
     }
     
     public String signUp() {
-        return "succes";
+        return "success";
     }
     
 }

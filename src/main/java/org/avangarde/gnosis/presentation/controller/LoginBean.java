@@ -38,7 +38,7 @@ public class LoginBean {
     }
     
     public String logIn() {
-        return "succes";
+        return "failure";
     }
     
 }
