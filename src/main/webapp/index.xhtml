@@ -60,7 +60,7 @@
                                     <div class="controls">
                                         <div class="input-append">
                                             <input class="span2" type="text" id="email" placeholder="¿Cuál es tu correo?" required="true" 
-                                                   value="#{signUpBean.email}"/><span class="add-on">@unal.edu.co</span>
+                                                   value="#{signUpBean.userName}"/><span class="add-on">@unal.edu.co</span>
                                         </div>
                                     </div>
                                 </div>
@@ -78,14 +78,14 @@
                                     <div class="controls">
                                         <h:outputLabel value="Escribela de nuevo "/>
                                         <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
-                                        <p:password id="passwordSignUpR" required="true" value=""/>
+                                        <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"/>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label " for="program">Qué Estudias?</label>
                                     <div class="controls">
-                                        <h:selectOneMenu id="program" value="#{signUpBean.programId}" required="true">
-                                            <f:selectItem itemLabel="" />
+                                        <h:selectOneMenu id="program" value="#{signUpBean.programId}" required="false">
+                                            <f:selectItem itemLabel=""/>
                                             <f:selectItems value="#{lists.programs}" />
                                             <f:validateLongRange minimum="1" />
                                         </h:selectOneMenu>

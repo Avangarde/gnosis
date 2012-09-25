@@ -24,7 +24,7 @@ public class CommentService implements IService<CommentVo> {
     }
 
     @Override
-    public void persist(CommentVo vo, EntityManager em) {
+    public void create(CommentVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

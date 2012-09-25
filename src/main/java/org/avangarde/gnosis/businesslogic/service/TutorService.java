@@ -24,7 +24,7 @@ public class TutorService implements IService<TutorVo> {
     }
 
     @Override
-    public void persist(TutorVo vo, EntityManager em) {
+    public void create(TutorVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

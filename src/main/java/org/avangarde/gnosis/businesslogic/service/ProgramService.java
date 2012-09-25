@@ -24,7 +24,7 @@ public class ProgramService implements IService<ProgramVo> {
     }
 
     @Override
-    public void persist(ProgramVo vo, EntityManager em) {
+    public void create(ProgramVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

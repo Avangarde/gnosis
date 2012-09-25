@@ -24,7 +24,7 @@ public class EventService implements IService<EventVo> {
     }
 
     @Override
-    public void persist(EventVo vo, EntityManager em) {
+    public void create(EventVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

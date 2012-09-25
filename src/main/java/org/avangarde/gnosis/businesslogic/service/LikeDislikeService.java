@@ -24,7 +24,7 @@ public class LikeDislikeService implements IService<LikeDislikeVo> {
     }
 
     @Override
-    public void persist(LikeDislikeVo vo, EntityManager em) {
+    public void create(LikeDislikeVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

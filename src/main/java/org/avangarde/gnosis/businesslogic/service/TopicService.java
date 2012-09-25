@@ -24,7 +24,7 @@ public class TopicService implements IService<TopicVo> {
     }
 
     @Override
-    public void persist(TopicVo vo, EntityManager em) {
+    public void create(TopicVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

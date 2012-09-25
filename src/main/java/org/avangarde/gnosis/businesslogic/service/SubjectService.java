@@ -24,7 +24,7 @@ public class SubjectService implements IService<SubjectVo> {
     }
 
     @Override
-    public void persist(SubjectVo vo, EntityManager em) {
+    public void create(SubjectVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

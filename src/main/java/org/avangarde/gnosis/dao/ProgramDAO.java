@@ -30,7 +30,7 @@ public class ProgramDAO implements IDAO<Program> {
 
     @Override
     public Program find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Program) em.find(Program.class, id);
     }
 
     @Override

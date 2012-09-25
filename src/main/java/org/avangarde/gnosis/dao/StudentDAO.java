@@ -21,7 +21,7 @@ public class StudentDAO implements IDAO<Student> {
 
     @Override
     public void persist(Student entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override

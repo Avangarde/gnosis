@@ -24,7 +24,7 @@ public class PublicationService implements IService<PublicationVo> {
     }
 
     @Override
-    public void persist(PublicationVo vo, EntityManager em) {
+    public void create(PublicationVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

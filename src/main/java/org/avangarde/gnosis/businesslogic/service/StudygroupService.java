@@ -24,7 +24,7 @@ public class StudygroupService implements IService<StudygroupVo> {
     }
 
     @Override
-    public void persist(StudygroupVo vo, EntityManager em) {
+    public void create(StudygroupVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

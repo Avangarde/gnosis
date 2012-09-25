@@ -23,12 +23,12 @@ public class Facade<VO> {
         this.service = service;
     }
 
-    public void persist(VO vo) {
+    public void create(VO vo) {
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
             tx.begin();
-            service.persist(vo, em);
+            service.create(vo, em);
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,11 @@ package org.avangarde.gnosis.businesslogic.service;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.vo.StudentVo;
+import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.dao.ProgramDAO;
+import org.avangarde.gnosis.dao.StudentDAO;
+import org.avangarde.gnosis.entity.Program;
 
 /**
  *
@@ -20,8 +25,18 @@ public class StudentService implements IService<StudentVo> {
     }
 
     @Override
-    public void persist(StudentVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void create(StudentVo vo, EntityManager em) {
+        Student entity = new Student();
+        entity.setFirstName(vo.getFirstName());
+        entity.setLastName(vo.getLastName());
+        entity.setUserName(vo.getUserName());
+        entity.setEmail(vo.getEmail());
+        entity.setPassword(vo.getPassword());
+        
+        //Program program = DAOFactory.getInstance().getProgramDAO().find(vo.getProgramId(), em);
+        //entity.setProgram(program);
+        
+        DAOFactory.getInstance().getStudentDAO().persist(entity, em);
     }
 
     @Override

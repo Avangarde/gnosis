@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
  */
 public interface IService<VO> {
 
-    void persist(VO vo, EntityManager em);
+    void create(VO vo, EntityManager em);
 
     VO find(Object id, EntityManager em);
 

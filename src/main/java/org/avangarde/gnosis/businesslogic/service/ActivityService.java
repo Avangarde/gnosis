@@ -24,7 +24,7 @@ public class ActivityService implements IService<ActivityVo> {
     }
 
     @Override
-    public void persist(ActivityVo vo, EntityManager em) {
+    public void create(ActivityVo vo, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
