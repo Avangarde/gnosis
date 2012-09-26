@@ -14,7 +14,6 @@ import java.util.List;
 public class StudentVo {
     //Atributos nativos
     private int id;
-    private int trash;//Eliminate
     private String userName;
     private String firstName;
     private String lastName;
