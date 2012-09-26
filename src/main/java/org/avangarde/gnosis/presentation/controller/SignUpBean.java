@@ -29,7 +29,7 @@ public class SignUpBean {
     private Integer programId;
     @ManagedProperty(value = "#{user}")
     private UserBean user;
-    
+
     public SignUpBean() {
     }
 
@@ -88,7 +88,7 @@ public class SignUpBean {
     public void setProgramId(Integer programId) {
         this.programId = programId;
     }
-    
+
     public UserBean getUser() {
         return user;
     }
@@ -96,22 +96,21 @@ public class SignUpBean {
     public void setUser(UserBean user) {
         this.user = user;
     }
-    
+
     public String signUp() {
-        FacesContext fc = FacesContext.getCurrentInstance();
+
         StudentFacade facade = FacadeFactory.getInstance().getStudentFacade();
-        
+
         StudentVo vo = new StudentVo();
         vo.setFirstName(getFirstName());
         vo.setLastName(getLastName());
         vo.setUserName(getUserName());
-        vo.setEmail(getUserName()+"@unal.edu.co");
+        vo.setEmail(getUserName() + "@unal.edu.co");
         vo.setPassword(getPassword());
         vo.setProgramId(getProgramId());
-        
+
         facade.create(vo);
-        
+
         return "success";
     }
-    
 }
