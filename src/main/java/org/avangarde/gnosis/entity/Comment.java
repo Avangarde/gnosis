@@ -52,21 +52,21 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     private int disliked;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     private List<LikeDislike> likeDislikeList;
-    @JoinColumns({
-        @JoinColumn(name = "Tutor_Subject_Tutor_tutorId", referencedColumnName = "Tutor_tutorId", insertable = false, updatable = false),
-        @JoinColumn(name = "Tutor_Subject_Subject_code", referencedColumnName = "Subject_code", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private TutorSubject tutorSubject;
-    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "idTopic", insertable = false, updatable = false)
+//    @JoinColumns({
+//        @JoinColumn(name = "Tutor_Subject_TutorId", referencedColumnName = "TutorId", insertable = false, updatable = false),
+//        @JoinColumn(name = "Tutor_Subject_SubjectCode", referencedColumnName = "SubjectCode", insertable = false, updatable = false)})
+//    @ManyToOne(optional = false)
+//    private TutorSubject tutorSubject;
+    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Topic topic;
-    @JoinColumn(name = "Activity_idActivity", referencedColumnName = "idActivity", insertable = false, updatable = false)
+    @JoinColumn(name = "Activity_idActivity", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Activity activity;
-    @JoinColumn(name = "Publication_idPublication", referencedColumnName = "idPublication", insertable = false, updatable = false)
+    @JoinColumn(name = "Publication_idPublication", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Publication publication;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
 
@@ -122,13 +122,13 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         this.likeDislikeList = likeDislikeList;
     }
 
-    public TutorSubject getTutorSubject() {
-        return tutorSubject;
-    }
-
-    public void setTutorSubject(TutorSubject tutorSubject) {
-        this.tutorSubject = tutorSubject;
-    }
+//    public TutorSubject getTutorSubject() {
+//        return tutorSubject;
+//    }
+//
+//    public void setTutorSubject(TutorSubject tutorSubject) {
+//        this.tutorSubject = tutorSubject;
+//    }
 
     public Topic getTopic() {
         return topic;
@@ -179,7 +179,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         vo.setPublicationId(getPublication().getId());
         vo.setStudentId(getStudent().getId());
         vo.setTopicId(getTopic().getId());
-        vo.setTutorSubjectId(getTutorSubject().getId());
+//        vo.setTutorSubjectId(getTutorSubject().getId());
         return vo;
     }
    

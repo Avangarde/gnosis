@@ -44,14 +44,14 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     @NotNull
     @Column(name = "reputation")
     private double reputation;
-    @ManyToMany(mappedBy = "tutorSubjectList")
-    private List<Student> studentList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
-    private List<Comment> commentList;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
+//    @ManyToMany(mappedBy = "tutorSubjectList")
+//    private List<Student> studentList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
+//    private List<Comment> commentList;
+    @JoinColumn(name = "SubjectCode", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Subject subject;
-    @JoinColumn(name = "Tutor_tutorId", referencedColumnName = "tutorId", insertable = false, updatable = false)
+    @JoinColumn(name = "TutorId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Tutor tutor;
 
@@ -74,23 +74,23 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         this.reputation = reputation;
     }
 
-    @XmlTransient
-    public List<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
-    }
-
-    @XmlTransient
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
+//    @XmlTransient
+//    public List<Student> getStudentList() {
+//        return studentList;
+//    }
+//
+//    public void setStudentList(List<Student> studentList) {
+//        this.studentList = studentList;
+//    }
+//
+//    @XmlTransient
+//    public List<Comment> getCommentList() {
+//        return commentList;
+//    }
+//
+//    public void setCommentList(List<Comment> commentList) {
+//        this.commentList = commentList;
+//    }
 
     public Subject getSubject() {
         return subject;
@@ -112,16 +112,16 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public TutorSubjectVo toVo() {
         TutorSubjectVo vo = new TutorSubjectVo();
         List<CommentVo> listVo = new ArrayList<CommentVo>();
-        for(Comment entity : getCommentList()){
-            listVo.add(entity.toVo());
-        }
+//        for(Comment entity : getCommentList()){
+//            listVo.add(entity.toVo());
+//        }
         vo.setCommentList(listVo);
         vo.setId(getId());
         vo.setReputation(getReputation());
         List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
-        for(Student entity : getStudentList()){
-            listStudentVo.add(entity.toVo());
-        }
+//        for(Student entity : getStudentList()){
+//            listStudentVo.add(entity.toVo());
+//        }
         vo.setStudentList(listStudentVo);
         vo.setTutorId(getTutor().getId());
         return vo;

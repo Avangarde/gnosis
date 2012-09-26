@@ -2,6 +2,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
@@ -20,13 +21,13 @@
                                 <legend><h1>Entra</h1></legend>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" id="userName" required="true" placeholder="Correo o Usuario"
+                                        <h:inputText id="userName" required="true" placeholder="Correo o Usuario"
                                                value="#{loginBean.userName}"/>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="password" id="password" placeholder="Contraseña" required="true" 
+                                        <h:inputSecret id="password" placeholder="Contraseña" required="true" 
                                                value="#{loginBean.password}"/>
                                     </div>
                                 </div>
@@ -46,20 +47,20 @@
                                 <h:messages for="signUpForm" class="alert alert-error"/>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" id="firstName" placeholder="Como te llamas?" required="true" 
+                                        <h:inputText id="firstName" placeholder="Como te llamas?" required="true" 
                                                value="#{signUpBean.firstName}"/>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" id="lastName" placeholder="Y tu Apellido?" required="true" 
+                                        <h:inputText id="lastName" placeholder="Y tu Apellido?" required="true" 
                                                value="#{signUpBean.lastName}"/>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
                                         <div class="input-append">
-                                            <input class="span2" type="text" id="email" placeholder="¿Cuál es tu correo?" required="true" 
+                                            <h:inputText class="span2" id="email" placeholder="¿Cuál es tu correo?" required="true" 
                                                    value="#{signUpBean.userName}"/><span class="add-on">@unal.edu.co</span>
                                         </div>
                                     </div>

@@ -54,7 +54,7 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
     private int questionReceived;
     @Column(name = "number_students")
     private int numberStudents;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
     @OneToMany(mappedBy = "tutor")

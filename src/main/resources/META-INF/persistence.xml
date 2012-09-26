@@ -3,7 +3,19 @@
   <persistence-unit name="GnosisPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>gnosis</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>org.avangarde.gnosis.entity.Activity</class>
+    <class>org.avangarde.gnosis.entity.Comment</class>
+    <class>org.avangarde.gnosis.entity.Event</class>
+    <class>org.avangarde.gnosis.entity.LikeDislike</class>
+    <class>org.avangarde.gnosis.entity.Program</class>
+    <class>org.avangarde.gnosis.entity.Publication</class>
+    <class>org.avangarde.gnosis.entity.Student</class>
+    <class>org.avangarde.gnosis.entity.Studygroup</class>
+    <class>org.avangarde.gnosis.entity.Subject</class>
+    <class>org.avangarde.gnosis.entity.Topic</class>
+    <class>org.avangarde.gnosis.entity.Tutor</class>
+    <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
     </properties>

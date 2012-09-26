@@ -36,10 +36,10 @@ public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
     private boolean liked;
     @Column(name = "disliked")
     private boolean disliked;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
-    @JoinColumn(name = "Comment_idComment", referencedColumnName = "idComment", insertable = false, updatable = false)
+    @JoinColumn(name = "Comment_idComment", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Comment comment;
 

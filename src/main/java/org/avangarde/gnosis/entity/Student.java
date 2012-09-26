@@ -55,18 +55,18 @@ public class Student implements Serializable, IEntity<StudentVo> {
     @Column(name = "url_Photo")
     private String urlPhoto;
     @JoinTable(name = "student_studygroup", joinColumns = {
-        @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId")}, inverseJoinColumns = {
-        @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "idStudyGroup")})
+        @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "id")})
     @ManyToMany
     private List<Studygroup> studygroupList;
-    @JoinTable(name = "student_has_tutor_subject", joinColumns = {
-        @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId")}, inverseJoinColumns = {
-        @JoinColumn(name = "Tutor_Subject_Tutor_tutorId", referencedColumnName = "Tutor_tutorId"),
-        @JoinColumn(name = "Tutor_Subject_Subject_code", referencedColumnName = "Subject_code")})
-    @ManyToMany
-    private List<TutorSubject> tutorSubjectList;
+//    @JoinTable(name = "student_has_tutor_subject", joinColumns = {
+//        @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
+//        @JoinColumn(name = "Tutor_Subject_TutorId", referencedColumnName = "TutorId"),
+//        @JoinColumn(name = "Tutor_Subject_SubjectCode", referencedColumnName = "SubjectCode")})
+//    @ManyToMany
+//    private List<TutorSubject> tutorSubjectList;
     @JoinTable(name = "student_subject", joinColumns = {
-        @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId")}, inverseJoinColumns = {
+        @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "Subject_code", referencedColumnName = "code")})
     @ManyToMany
     private List<Subject> subjectList;
@@ -164,14 +164,14 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.studygroupList = studygroupList;
     }
 
-    @XmlTransient
-    public List<TutorSubject> getTutorSubjectList() {
-        return tutorSubjectList;
-    }
-
-    public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
-        this.tutorSubjectList = tutorSubjectList;
-    }
+//    @XmlTransient
+//    public List<TutorSubject> getTutorSubjectList() {
+//        return tutorSubjectList;
+//    }
+//
+//    public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
+//        this.tutorSubjectList = tutorSubjectList;
+//    }
 
     @XmlTransient
     public List<Subject> getSubjectList() {
@@ -277,10 +277,10 @@ public class Student implements Serializable, IEntity<StudentVo> {
         
         
         
-        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
-        for (TutorSubject entity : getTutorSubjectList()) {
-            listTutorSubjectVo.add(entity.toVo());
-        }
+//        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+//        for (TutorSubject entity : getTutorSubjectList()) {
+//            listTutorSubjectVo.add(entity.toVo());
+//        }
         
         ArrayList<SubjectVo> listSubjectVo = new ArrayList<SubjectVo>();
         for (Subject entity : getSubjectList()) {
@@ -323,7 +323,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         }
              
         vo.setStudygroupList(listStudygroupVo);
-        vo.setTutorSubjectList(listTutorSubjectVo);
+//        vo.setTutorSubjectList(listTutorSubjectVo);
         vo.setSubjectList(listSubjectVo);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);

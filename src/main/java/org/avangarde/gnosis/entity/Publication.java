@@ -60,7 +60,7 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     private Date date;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
     private List<Comment> commentList;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
     @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)

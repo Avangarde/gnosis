@@ -46,7 +46,7 @@ public class Event implements Serializable, IEntity<EventVo> {
     private Date hour;
     @Column(name = "description")
     private String description;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
     @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)

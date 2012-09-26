@@ -52,16 +52,16 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     private String url;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private List<Comment> commentList;
-    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "idTopic", insertable = false, updatable = false)
+    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Topic topic;
     @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Subject subject;
-    @JoinColumn(name = "Tutor_tutorId", referencedColumnName = "tutorId")
+    @JoinColumn(name = "Tutor_tutorId", referencedColumnName = "id")
     @ManyToOne
     private Tutor tutor;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "studentId", insertable = false, updatable = false)
+    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Student student;
 
