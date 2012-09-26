@@ -264,7 +264,9 @@ public class Student implements Serializable, IEntity<StudentVo> {
         vo.setLastName(getLastName());
         vo.setId(getId());
         vo.setPassword(getPassword());
-        vo.setProgramId(getProgram().getCode());
+        if (getProgram() != null) {
+            vo.setProgramId(getProgram().getCode());
+        }
         vo.setUrlPhoto(getUrlPhoto());
         vo.setUserName(getUserName());
 
