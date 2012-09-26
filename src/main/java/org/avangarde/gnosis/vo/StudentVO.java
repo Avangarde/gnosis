@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Zergio
  */
-public class StudentVo {
+public class StudentVO {
     //Atributos nativos
     private int id;
     private String userName;
