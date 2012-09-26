@@ -14,7 +14,7 @@ import org.avangarde.gnosis.entity.Program;
  * @author Alexander
  */
 public class StudentService implements IService<StudentVo> {
-    
+
     private static StudentService instance;
 
     public static synchronized StudentService getInstance() {
@@ -32,10 +32,10 @@ public class StudentService implements IService<StudentVo> {
         entity.setUserName(vo.getUserName());
         entity.setEmail(vo.getEmail());
         entity.setPassword(vo.getPassword());
-        
+
         //Program program = DAOFactory.getInstance().getProgramDAO().find(vo.getProgramId(), em);
         //entity.setProgram(program);
-        
+
         DAOFactory.getInstance().getStudentDAO().persist(entity, em);
     }
 
@@ -58,9 +58,14 @@ public class StudentService implements IService<StudentVo> {
     public List<StudentVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public StudentVo login(StudentVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student entity = new Student();
+        entity.setUserName(vo.getUserName());
+        entity.setPassword(vo.getPassword());
+
+        Student alumno = new StudentDAO().login(entity, em);
+        return alumno != null? alumno.toVo():null;
+        
     }
-    
 }

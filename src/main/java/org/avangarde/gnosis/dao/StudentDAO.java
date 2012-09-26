@@ -2,6 +2,9 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.Query;
 import org.avangarde.gnosis.entity.Student;
 
 /**
@@ -45,6 +48,19 @@ public class StudentDAO implements IDAO<Student> {
     }
 
     public Student login(Student entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student student;
+        Query q = em.createQuery("SELECT u FROM Student u "
+                + "WHERE u.username LIKE :username "
+                + "AND u.password LIKE :password")
+                .setParameter("username", entity.getUserName())
+                .setParameter("password", entity.getPassword());
+        try {
+            student = (Student) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            student = (Student) q.getResultList().get(0);
+        } catch (NoResultException e) {
+            student = null;
+        }
+        return student;
     }
 }
