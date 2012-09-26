@@ -21,14 +21,14 @@
                                 <legend><h1>Entra</h1></legend>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <h:inputText id="userName" required="true" placeholder="Correo o Usuario"
-                                               value="#{loginBean.userName}"/>
+                                        <p:inputText id="userName" required="true" value="#{loginBean.userName}"/>
+                                        <p:watermark for="userName" value="Correo o Usuario" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <h:inputSecret id="password" placeholder="Contraseña" required="true" 
-                                               value="#{loginBean.password}"/>
+                                        <p:password id="password" required="true" value="#{loginBean.password}"/>
+                                        <p:watermark for="password" value="Contraseña" />
                                     </div>
                                 </div>
                                 <div class="form-actions">
@@ -47,21 +47,22 @@
                                 <h:messages for="signUpForm" class="alert alert-error"/>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <h:inputText id="firstName" placeholder="Como te llamas?" required="true" 
-                                               value="#{signUpBean.firstName}"/>
+                                        <p:inputText id="firstName" required="true" value="#{signUpBean.firstName}"/>
+                                        <p:watermark for="firstName" value="Como te llamas?" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <h:inputText id="lastName" placeholder="Y tu Apellido?" required="true" 
-                                               value="#{signUpBean.lastName}"/>
+                                        <p:inputText id="lastName" required="true" value="#{signUpBean.lastName}"/>
+                                        <p:watermark for="lastName" value="Y tu Apellido?" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
                                         <div class="input-append">
-                                            <h:inputText class="span2" id="email" placeholder="¿Cuál es tu correo?" required="true" 
+                                            <h:inputText class="span2" id="email" required="true" 
                                                    value="#{signUpBean.userName}"/><span class="add-on">@unal.edu.co</span>
+                                            <p:watermark for="email" value="¿Cuál es tu correo?" />
                                         </div>
                                     </div>
                                 </div>
