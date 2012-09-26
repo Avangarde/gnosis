@@ -9,12 +9,10 @@ import java.util.List;
 /**
  *
  * @author Zergio
- * Possible bugged file
  */
-public class StudentVo {
+public class StudentVO {
     //Atributos nativos
     private int id;
-    private int trash;//Eliminate
     private String userName;
     private String firstName;
     private String lastName;
