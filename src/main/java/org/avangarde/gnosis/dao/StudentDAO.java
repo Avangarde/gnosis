@@ -50,7 +50,7 @@ public class StudentDAO implements IDAO<Student> {
     public Student login(Student entity, EntityManager em) {
         Student student;
         Query q = em.createQuery("SELECT u FROM Student u "
-                + "WHERE u.userName LIKE :username "
+                + "WHERE u.username LIKE :username "
                 + "AND u.password LIKE :password")
                 .setParameter("username", entity.getUserName())
                 .setParameter("password", entity.getPassword());

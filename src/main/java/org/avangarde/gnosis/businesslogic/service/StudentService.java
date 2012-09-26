@@ -2,9 +2,12 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.avangarde.gnosis.dao.DAOFactory;
-import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.vo.StudentVo;
+import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.dao.ProgramDAO;
+import org.avangarde.gnosis.dao.StudentDAO;
+import org.avangarde.gnosis.entity.Program;
 
 /**
  *
@@ -61,7 +64,7 @@ public class StudentService implements IService<StudentVo> {
         entity.setUserName(vo.getUserName());
         entity.setPassword(vo.getPassword());
 
-        Student alumno = DAOFactory.getInstance().getStudentDAO().login(entity, em);
+        Student alumno = new StudentDAO().login(entity, em);
         return alumno != null? alumno.toVo():null;
         
     }
