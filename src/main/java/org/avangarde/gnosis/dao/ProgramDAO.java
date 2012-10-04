@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Program;
 
 /**
@@ -45,6 +47,9 @@ public class ProgramDAO implements IDAO<Program> {
 
     @Override
     public List<Program> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Program.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

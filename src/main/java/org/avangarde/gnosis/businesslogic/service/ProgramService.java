@@ -4,8 +4,11 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Program;
 import org.avangarde.gnosis.vo.ProgramVo;
 
 /**
@@ -45,6 +48,10 @@ public class ProgramService implements IService<ProgramVo> {
 
     @Override
     public List<ProgramVo> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<ProgramVo> list = new ArrayList<ProgramVo>();
+        for (Program program : DAOFactory.getInstance().getProgramDAO().getList(em)) {
+            list.add((program).toVo());
+        }
+        return list;
     }
 }

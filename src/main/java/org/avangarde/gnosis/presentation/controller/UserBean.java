@@ -12,18 +12,18 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class UserBean implements Serializable {
 
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String userName;
-    private Long programId;
+    private int programId;
     private boolean loggedIn;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,11 +51,11 @@ public class UserBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
-    public Long getProgramId() {
+    public int getProgramId() {
         return programId;
     }
 
-    public void setProgramId(Long programId) {
+    public void setProgramId(int programId) {
         this.programId = programId;
     }
 
@@ -71,8 +71,8 @@ public class UserBean implements Serializable {
         firstName = null;
         lastName = null;
         userName = null;
-        programId = null;
+        programId = 0;
         loggedIn = false;
-        return "home";
+        return "logout";
     }
 }

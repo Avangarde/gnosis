@@ -27,7 +27,7 @@ public class SignUpBean {
     private String lastName;
     private String email;
     private Integer programId;
-    @ManagedProperty(value = "#{user}")
+    @ManagedProperty(value = "#{userBean}")
     private UserBean user;
 
     public SignUpBean() {
