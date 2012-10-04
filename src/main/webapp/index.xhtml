@@ -21,14 +21,16 @@
                                 <legend><h1>Entra</h1></legend>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <p:inputText id="userName" required="true" value="#{loginBean.userName}"/>
+                                        <p:inputText id="userName" required="true" value="#{loginBean.userName}" 
+                                                     requiredMessage="Por favor completa este campo" />
                                         <p:watermark for="userName" value="Correo o Usuario" />
                                         <p:message id="userNameMessage" for="userName" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <p:password id="password" required="true" value="#{loginBean.password}"/>
+                                        <p:password id="password" required="true" value="#{loginBean.password}"
+                                                    requiredMessage="Por favor completa este campo"/>
                                         <p:watermark for="password" value="Contraseña" />
                                         <p:message id="passwordMessage" for="password" />
                                     </div>
@@ -39,7 +41,7 @@
                             </h:form>
                         </f:view>
                     </div>
-                    <iframe src="http://www.youtube.com/embed/jHnvK0SYYWk?list=SP5F907F818938859E&amp;hl=es_ES" frameborder="0"></iframe>
+                    <p:media value="http://www.youtube.com/v/jHnvK0SYYWk" player="flash"/>
                 </div>
                 <div class="span5 offset1">
                     <div class="hero-unit">
@@ -49,14 +51,16 @@
                                 <h:messages for="signUpForm" class="alert alert-error"/>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <p:inputText id="firstName" required="true" value="#{signUpBean.firstName}"/>
+                                        <p:inputText id="firstName" required="true" value="#{signUpBean.firstName}"
+                                                     requiredMessage="Por favor completa este campo"/>
                                         <p:watermark for="firstName" value="Como te llamas?" />
                                         <p:message id="firstNameMessage" for="firstName" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <p:inputText id="lastName" required="true" value="#{signUpBean.lastName}"/>
+                                        <p:inputText id="lastName" required="true" value="#{signUpBean.lastName}"
+                                                     requiredMessage="Por favor completa este campo"/>
                                         <p:watermark for="lastName" value="Y tu Apellido?" />
                                         <p:message id="lastNameMessage" for="lastName" />
                                     </div>
@@ -64,8 +68,8 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <div class="input-append">
-                                            <h:inputText class="span2" id="email" required="true" 
-                                                   value="#{signUpBean.userName}"/><span class="add-on">@unal.edu.co</span>
+                                            <h:inputText class="span2" id="email" required="true" requiredMessage="Por favor completa este campo"
+                                                         value="#{signUpBean.userName}"/><span class="add-on">@unal.edu.co</span>
                                             <p:watermark for="email" value="¿Cuál es tu correo?" />
                                             <p:message id="emailMessage" for="email" />
                                         </div>
@@ -73,10 +77,11 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <p:password id="passwordSignUp" required="true" value="#{signUpBean.password}"
+                                        <p:password id="passwordSignUp" required="true" requiredMessage="Por favor completa este campo" 
+                                                    value="#{signUpBean.password}"
                                                     feedback="true" promptLabel="Usa una contraseña segura" inline="true" 
                                                     weakLabel="Debil" goodLabel="Buena" strongLabel="Segura" 
-                                                    match="passwordSignUpR"/>
+                                                    match="passwordSignUpR" />
                                         <p:watermark for="passwordSignUp" value="Escribe una Contraseña" />
                                         <p:message id="passwordSignUpMessage" for="passwordSignUp" />
                                     </div>
@@ -84,14 +89,16 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
-                                        <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"/>
+                                        <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"
+                                                    requiredMessage="Por favor completa este campo"/>
                                         <p:message id="passwordSignUpRMessage" for="passwordSignUpR" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label " for="program">Qué Estudias?</label>
                                     <div class="controls">
-                                        <h:selectOneMenu id="program" value="#{signUpBean.programId}" required="true">
+                                        <h:selectOneMenu id="program" value="#{signUpBean.programId}" required="true" 
+                                                         requiredMessage="Por favor selecciona uno">
                                             <f:selectItem itemLabel=""/>
                                             <f:selectItems value="#{listsBean.programs}" />
                                             <f:validateLongRange minimum="1" />
