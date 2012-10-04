@@ -14,7 +14,29 @@
     <class>org.avangarde.gnosis.entity.Tutor</class>
     <class>org.avangarde.gnosis.entity.TutorSubject</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-gnosistest.j.rsnx.ru/gnosis"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gnosis"/>
+      <property name="javax.persistence.jdbc.password" value="BasesdeDatos"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="GnosisJelasticPU" transaction-type="RESOURCE_LOCAL">
+    <non-jta-data-source/>
+    <class>org.avangarde.gnosis.entity.Activity</class>
+    <class>org.avangarde.gnosis.entity.Comment</class>
+    <class>org.avangarde.gnosis.entity.Event</class>
+    <class>org.avangarde.gnosis.entity.LikeDislike</class>
+    <class>org.avangarde.gnosis.entity.Program</class>
+    <class>org.avangarde.gnosis.entity.Publication</class>
+    <class>org.avangarde.gnosis.entity.Student</class>
+    <class>org.avangarde.gnosis.entity.Studygroup</class>
+    <class>org.avangarde.gnosis.entity.Subject</class>
+    <class>org.avangarde.gnosis.entity.Topic</class>
+    <class>org.avangarde.gnosis.entity.Tutor</class>
+    <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-gnosistest.j.rsnx.ru:3306/gnosis"/>
       <property name="javax.persistence.jdbc.password" value="sDB6nhVr8w"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
