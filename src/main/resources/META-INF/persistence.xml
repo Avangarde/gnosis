@@ -13,6 +13,7 @@
     <class>org.avangarde.gnosis.entity.Topic</class>
     <class>org.avangarde.gnosis.entity.Tutor</class>
     <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gnosis"/>
       <property name="javax.persistence.jdbc.password" value="BasesdeDatos"/>
@@ -22,7 +23,6 @@
     </properties>
   </persistence-unit>
   <persistence-unit name="GnosisJelasticPU" transaction-type="RESOURCE_LOCAL">
-    <non-jta-data-source/>
     <class>org.avangarde.gnosis.entity.Activity</class>
     <class>org.avangarde.gnosis.entity.Comment</class>
     <class>org.avangarde.gnosis.entity.Event</class>
@@ -35,6 +35,7 @@
     <class>org.avangarde.gnosis.entity.Topic</class>
     <class>org.avangarde.gnosis.entity.Tutor</class>
     <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-gnosistest.j.rsnx.ru:3306/gnosis"/>
       <property name="javax.persistence.jdbc.password" value="sDB6nhVr8w"/>
