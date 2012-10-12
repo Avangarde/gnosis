@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.avangarde.gnosis.vo.ProgramVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.SubjectVo;
@@ -17,7 +15,6 @@ import org.avangarde.gnosis.vo.SubjectVo;
  */
 @Entity
 @Table(name = "program")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p"),
     @NamedQuery(name = "Program.findByCode", query = "SELECT p FROM Program p WHERE p.code = :code"),
@@ -67,7 +64,6 @@ public class Program implements Serializable, IEntity<ProgramVo> {
         this.name = name;
     }
 
-    @XmlTransient
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -76,7 +72,6 @@ public class Program implements Serializable, IEntity<ProgramVo> {
         this.subjectList = subjectList;
     }
 
-    @XmlTransient
     public List<Student> getStudentList() {
         return studentList;
     }
@@ -84,14 +79,6 @@ public class Program implements Serializable, IEntity<ProgramVo> {
     public void setStudentList(List<Student> studentList) {
         this.studentList = studentList;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (code != null ? code.hashCode() : 0);
-        return hash;
-    }
-
 
     @Override
     public ProgramVo toVo() {

@@ -2,7 +2,6 @@ package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.avangarde.gnosis.vo.LikeDislikeVo;
 
 /**
@@ -11,7 +10,6 @@ import org.avangarde.gnosis.vo.LikeDislikeVo;
  */
 @Entity
 @Table(name = "like_dislike")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LikeDislike.findAll", query = "SELECT l FROM LikeDislike l"),
     @NamedQuery(name = "LikeDislike.findByLike", query = "SELECT l FROM LikeDislike l WHERE l.liked = :like"),
@@ -27,11 +25,11 @@ public class LikeDislike implements Serializable, IEntity<LikeDislikeVo> {
     private boolean liked;
     @Column(name = "disliked")
     private boolean disliked;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
-    @JoinColumn(name = "Comment_idComment", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "idComment")
     private Comment comment;
 
     public LikeDislike() {

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.avangarde.gnosis.vo.*;
 
 /**
@@ -14,12 +12,10 @@ import org.avangarde.gnosis.vo.*;
  */
 @Entity
 @Table(name = "student")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findByUserName", query = "SELECT s FROM Student s WHERE s.userName = :userName"),
-    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
-    @NamedQuery(name = "Student.findByCareer", query = "SELECT s FROM Student s WHERE s.career = :career"),})
+    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),})
 public class Student implements Serializable, IEntity<StudentVo> {
 
     private static final long serialVersionUID = 1L;
@@ -37,8 +33,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "career")
-    private String career;
     @Column(name = "url_Photo")
     private String urlPhoto;
     @JoinTable(name = "student_studygroup", joinColumns = {
@@ -59,8 +53,8 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Topic> topicList;
-    @JoinColumn(name = "Program_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Program_code")
     private Program program;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Event> eventList;
@@ -125,15 +119,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getCareer() {
-        return career;
-    }
-
-    public void setCareer(String career) {
-        this.career = career;
-    }
-
+    
     public String getUrlPhoto() {
         return urlPhoto;
     }
@@ -142,7 +128,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.urlPhoto = urlPhoto;
     }
 
-    @XmlTransient
     public List<Studygroup> getStudygroupList() {
         return studygroupList;
     }
@@ -160,7 +145,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
 //        this.tutorSubjectList = tutorSubjectList;
 //    }
 
-    @XmlTransient
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -169,7 +153,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.subjectList = subjectList;
     }
 
-    @XmlTransient
     public List<Topic> getTopicList() {
         return topicList;
     }
@@ -186,7 +169,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.program = program;
     }
 
-    @XmlTransient
     public List<Event> getEventList() {
         return eventList;
     }
@@ -195,7 +177,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.eventList = eventList;
     }
 
-    @XmlTransient
     public List<Tutor> getTutorList() {
         return tutorList;
     }
@@ -204,7 +185,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.tutorList = tutorList;
     }
 
-    @XmlTransient
     public List<LikeDislike> getLikeDislikeList() {
         return likeDislikeList;
     }
@@ -213,7 +193,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.likeDislikeList = likeDislikeList;
     }
 
-    @XmlTransient
     public List<Comment> getCommentList() {
         return commentList;
     }
@@ -222,7 +201,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.commentList = commentList;
     }
 
-    @XmlTransient
     public List<Activity> getActivityList() {
         return activityList;
     }
@@ -231,7 +209,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.activityList = activityList;
     }
 
-    @XmlTransient
     public List<Publication> getPublicationList() {
         return publicationList;
     }
@@ -245,7 +222,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         StudentVo vo = new StudentVo();
 
         //atributos
-        vo.setCareer(getCareer());
         vo.setEmail(getEmail());
         vo.setFirstName(getFirstName());
         vo.setLastName(getLastName());

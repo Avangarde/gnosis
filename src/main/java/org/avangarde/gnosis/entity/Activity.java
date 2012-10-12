@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.CommentVo;
 
@@ -17,7 +15,6 @@ import org.avangarde.gnosis.vo.CommentVo;
  */
 @Entity
 @Table(name = "activity")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Activity.findAll", query = "SELECT a FROM Activity a"),})
 
@@ -40,17 +37,17 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     private String url;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private List<Comment> commentList;
-    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Topic topic;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Subject subject;
-    @JoinColumn(name = "Tutor_tutorId", referencedColumnName = "id")
     @ManyToOne
+    @JoinColumn(name = "idTopic")
+    private Topic topic;
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
+    private Subject subject;
+    @ManyToOne
+    @JoinColumn(name = "tutorId")
     private Tutor tutor;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
 
     public Activity() {
@@ -96,7 +93,6 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
         this.url = url;
     }
 
-    @XmlTransient
     public List<Comment> getCommentList() {
         return commentList;
     }

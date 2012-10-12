@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
@@ -16,7 +14,6 @@ import org.avangarde.gnosis.vo.TutorVo;
  */
 @Entity
 @Table(name = "tutor")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tutor.findAll", query = "SELECT t FROM Tutor t"),
     @NamedQuery(name = "Tutor.findByReputation", query = "SELECT t FROM Tutor t WHERE t.reputation = :reputation"),
@@ -45,8 +42,8 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
     private int questionReceived;
     @Column(name = "number_students")
     private int numberStudents;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
     @OneToMany(mappedBy = "tutor")
     private List<Activity> activityList;
@@ -120,7 +117,6 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
         this.student = student;
     }
 
-    @XmlTransient
     public List<Activity> getActivityList() {
         return activityList;
     }
@@ -129,7 +125,6 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
         this.activityList = activityList;
     }
 
-    @XmlTransient
     public List<TutorSubject> getTutorSubjectList() {
         return tutorSubjectList;
     }

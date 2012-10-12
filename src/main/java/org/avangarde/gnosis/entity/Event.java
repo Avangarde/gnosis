@@ -3,7 +3,6 @@ package org.avangarde.gnosis.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.avangarde.gnosis.vo.EventVo;
 
 /**
@@ -12,7 +11,6 @@ import org.avangarde.gnosis.vo.EventVo;
  */
 @Entity
 @Table(name = "event")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),})
 
@@ -27,19 +25,19 @@ public class Event implements Serializable, IEntity<EventVo> {
     private String name;
     @Column(name = "type")
     private String type;
-    @Column(name = "date")
+    @Column(name = "dateEvent")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Column(name = "hour")
+    @Column(name = "hourEvent")
     @Temporal(TemporalType.TIMESTAMP)
     private Date hour;
     @Column(name = "description")
     private String description;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
     private Subject subject;
 
     public Event() {

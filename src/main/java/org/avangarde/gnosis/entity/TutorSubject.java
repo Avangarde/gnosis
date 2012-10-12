@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
@@ -16,11 +15,9 @@ import org.avangarde.gnosis.vo.TutorSubjectVo;
  */
 @Entity
 @Table(name = "tutor_subject")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TutorSubject.findAll", query = "SELECT t FROM TutorSubject t"),
     @NamedQuery(name = "TutorSubject.findByReputation", query = "SELECT t FROM TutorSubject t WHERE t.reputation = :reputation")})
-
 public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
 
     private static final long serialVersionUID = 1L;
@@ -36,11 +33,11 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
 //    private List<Student> studentList;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
 //    private List<Comment> commentList;
-    @JoinColumn(name = "SubjectCode", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "SubjectCode")
     private Subject subject;
-    @JoinColumn(name = "TutorId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "TutorId")
     private Tutor tutor;
 
     public TutorSubject() {
@@ -79,7 +76,6 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
 //    public void setCommentList(List<Comment> commentList) {
 //        this.commentList = commentList;
 //    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -114,5 +110,4 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setTutorId(getTutor().getId());
         return vo;
     }
-  
 }
