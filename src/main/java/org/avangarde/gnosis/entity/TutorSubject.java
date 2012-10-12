@@ -29,10 +29,10 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     @NotNull
     @Column(name = "reputation")
     private double reputation;
-//    @ManyToMany(mappedBy = "tutorSubjectList")
-//    private List<Student> studentList;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
-//    private List<Comment> commentList;
+    @ManyToMany(mappedBy = "tutorSubjectList")
+    private List<Student> studentList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
+    private List<Comment> commentList;
     @ManyToOne
     @JoinColumn(name = "SubjectCode")
     private Subject subject;
@@ -59,23 +59,21 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         this.reputation = reputation;
     }
 
-//    @XmlTransient
-//    public List<Student> getStudentList() {
-//        return studentList;
-//    }
-//
-//    public void setStudentList(List<Student> studentList) {
-//        this.studentList = studentList;
-//    }
-//
-//    @XmlTransient
-//    public List<Comment> getCommentList() {
-//        return commentList;
-//    }
-//
-//    public void setCommentList(List<Comment> commentList) {
-//        this.commentList = commentList;
-//    }
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
     public Subject getSubject() {
         return subject;
     }
@@ -96,16 +94,16 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public TutorSubjectVo toVo() {
         TutorSubjectVo vo = new TutorSubjectVo();
         List<CommentVo> listVo = new ArrayList<CommentVo>();
-//        for(Comment entity : getCommentList()){
-//            listVo.add(entity.toVo());
-//        }
+        for(Comment entity : getCommentList()){
+            listVo.add(entity.toVo());
+        }
         vo.setCommentList(listVo);
         vo.setId(getId());
         vo.setReputation(getReputation());
         List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
-//        for(Student entity : getStudentList()){
-//            listStudentVo.add(entity.toVo());
-//        }
+        for(Student entity : getStudentList()){
+            listStudentVo.add(entity.toVo());
+        }
         vo.setStudentList(listStudentVo);
         vo.setTutorId(getTutor().getId());
         return vo;

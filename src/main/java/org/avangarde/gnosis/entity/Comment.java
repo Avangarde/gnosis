@@ -34,11 +34,9 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     private int disliked;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     private List<LikeDislike> likeDislikeList;
-//    @JoinColumns({
-//        @JoinColumn(name = "Tutor_Subject_TutorId", referencedColumnName = "TutorId", insertable = false, updatable = false),
-//        @JoinColumn(name = "Tutor_Subject_SubjectCode", referencedColumnName = "SubjectCode", insertable = false, updatable = false)})
-//    @ManyToOne(optional = false)
-//    private TutorSubject tutorSubject;
+    @ManyToOne
+    @JoinColumn(name = "idTutorSubject")
+    private TutorSubject tutorSubject;
     @ManyToOne
     @JoinColumn(name = "idTopic")
     private Topic topic;
@@ -103,13 +101,13 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         this.likeDislikeList = likeDislikeList;
     }
 
-//    public TutorSubject getTutorSubject() {
-//        return tutorSubject;
-//    }
-//
-//    public void setTutorSubject(TutorSubject tutorSubject) {
-//        this.tutorSubject = tutorSubject;
-//    }
+    public TutorSubject getTutorSubject() {
+        return tutorSubject;
+    }
+
+    public void setTutorSubject(TutorSubject tutorSubject) {
+        this.tutorSubject = tutorSubject;
+    }
     public Topic getTopic() {
         return topic;
     }
@@ -159,7 +157,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         vo.setPublicationId(getPublication().getId());
         vo.setStudentId(getStudent().getId());
         vo.setTopicId(getTopic().getId());
-//        vo.setTutorSubjectId(getTutorSubject().getId());
+        vo.setTutorSubjectId(getTutorSubject().getId());
         return vo;
     }
 }
