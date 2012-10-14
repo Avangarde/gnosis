@@ -3,17 +3,7 @@ package org.avangarde.gnosis.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.*;
 import org.avangarde.gnosis.vo.*;
 
 /**
@@ -22,7 +12,6 @@ import org.avangarde.gnosis.vo.*;
  */
 @Entity
 @Table(name = "subject")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s"),
     @NamedQuery(name = "Subject.findByCode", query = "SELECT s FROM Subject s WHERE s.code = :code"),
@@ -103,7 +92,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.numGroups = numGroups;
     }
 
-    @XmlTransient
     public List<Student> getStudentList() {
         return studentList;
     }
@@ -112,7 +100,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.studentList = studentList;
     }
 
-    @XmlTransient
     public List<Program> getProgramList() {
         return programList;
     }
@@ -121,7 +108,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.programList = programList;
     }
 
-    @XmlTransient
     public List<Topic> getTopicList() {
         return topicList;
     }
@@ -130,7 +116,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.topicList = topicList;
     }
 
-    @XmlTransient
     public List<Event> getEventList() {
         return eventList;
     }
@@ -139,7 +124,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.eventList = eventList;
     }
 
-    @XmlTransient
     public List<Studygroup> getStudygroupList() {
         return studygroupList;
     }
@@ -148,7 +132,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.studygroupList = studygroupList;
     }
 
-    @XmlTransient
     public List<Activity> getActivityList() {
         return activityList;
     }
@@ -157,7 +140,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.activityList = activityList;
     }
 
-    @XmlTransient
     public List<TutorSubject> getTutorSubjectList() {
         return tutorSubjectList;
     }
@@ -166,7 +148,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.tutorSubjectList = tutorSubjectList;
     }
 
-    @XmlTransient
     public List<Publication> getPublicationList() {
         return publicationList;
     }
@@ -195,10 +176,6 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "co.com.sextus.gnosis.Subject[ code=" + code + " ]";
-    }
 
     @Override
     public SubjectVo toVo() {

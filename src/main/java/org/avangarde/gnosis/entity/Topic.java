@@ -4,23 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.*;
+import javax.persistence.*;
+import org.avangarde.gnosis.vo.ActivityVo;
+import org.avangarde.gnosis.vo.CommentVo;
+import org.avangarde.gnosis.vo.TopicVo;
 
 /**
  *
@@ -28,14 +15,12 @@ import org.avangarde.gnosis.vo.*;
  */
 @Entity
 @Table(name = "topic")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Topic.findAll", query = "SELECT t FROM Topic t"),
     @NamedQuery(name = "Topic.findByDateStarted", query = "SELECT t FROM Topic t WHERE t.dateStarted = :dateStarted"),
     @NamedQuery(name = "Topic.findByTitle", query = "SELECT t FROM Topic t WHERE t.title = :title"),})
-
 public class Topic implements Serializable, IEntity<TopicVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -46,11 +31,11 @@ public class Topic implements Serializable, IEntity<TopicVo> {
     private Date dateStarted;
     @Column(name = "title")
     private String title;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
     private Subject subject;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Comment> commentList;
@@ -100,7 +85,6 @@ public class Topic implements Serializable, IEntity<TopicVo> {
         this.subject = subject;
     }
 
-    @XmlTransient
     public List<Comment> getCommentList() {
         return commentList;
     }
@@ -109,7 +93,6 @@ public class Topic implements Serializable, IEntity<TopicVo> {
         this.commentList = commentList;
     }
 
-    @XmlTransient
     public List<Activity> getActivityList() {
         return activityList;
     }
@@ -117,7 +100,7 @@ public class Topic implements Serializable, IEntity<TopicVo> {
     public void setActivityList(List<Activity> activityList) {
         this.activityList = activityList;
     }
-    
+
     @Override
     public TopicVo toVo() {
         TopicVo vo = new TopicVo();
@@ -128,15 +111,14 @@ public class Topic implements Serializable, IEntity<TopicVo> {
         vo.setTitle(getTitle());
         List<CommentVo> listCommentVo = new ArrayList<CommentVo>();
         List<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
-        for(Comment entity : getCommentList()){
+        for (Comment entity : getCommentList()) {
             listCommentVo.add(entity.toVo());
         }
-        for(Activity entity : getActivityList()){
+        for (Activity entity : getActivityList()) {
             listActivityVo.add(entity.toVo());
         }
         vo.setCommentList(listCommentVo);
         vo.setActivityList(listActivityVo);
         return vo;
     }
-   
 }

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  *
  * @author Zergio
+ * Possible bugged file
  */
 public class StudentVo {
     //Atributos nativos
@@ -18,7 +19,6 @@ public class StudentVo {
     private String lastName;
     private String email;
     private String password;
-    private String career;
     private String urlPhoto;
     //Atributo externo
     private Integer programId;
@@ -41,14 +41,6 @@ public class StudentVo {
 
     public void setActivityList(List<ActivityVo> activityList) {
         this.activityList = activityList;
-    }
-
-    public String getCareer() {
-        return career;
-    }
-
-    public void setCareer(String career) {
-        this.career = career;
     }
 
     public List<CommentVo> getCommentList() {

@@ -3,22 +3,7 @@ package org.avangarde.gnosis.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.*;
 import org.avangarde.gnosis.vo.*;
 
 /**
@@ -27,12 +12,10 @@ import org.avangarde.gnosis.vo.*;
  */
 @Entity
 @Table(name = "student")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findByUserName", query = "SELECT s FROM Student s WHERE s.userName = :userName"),
-    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),
-    @NamedQuery(name = "Student.findByCareer", query = "SELECT s FROM Student s WHERE s.career = :career"),})
+    @NamedQuery(name = "Student.findByEmail", query = "SELECT s FROM Student s WHERE s.email = :email"),})
 public class Student implements Serializable, IEntity<StudentVo> {
 
     private static final long serialVersionUID = 1L;
@@ -50,8 +33,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "career")
-    private String career;
     @Column(name = "url_Photo")
     private String urlPhoto;
     @JoinTable(name = "student_studygroup", joinColumns = {
@@ -59,12 +40,12 @@ public class Student implements Serializable, IEntity<StudentVo> {
         @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "id")})
     @ManyToMany
     private List<Studygroup> studygroupList;
-//    @JoinTable(name = "student_has_tutor_subject", joinColumns = {
-//        @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
-//        @JoinColumn(name = "Tutor_Subject_TutorId", referencedColumnName = "TutorId"),
-//        @JoinColumn(name = "Tutor_Subject_SubjectCode", referencedColumnName = "SubjectCode")})
-//    @ManyToMany
-//    private List<TutorSubject> tutorSubjectList;
+    @ManyToMany
+    @JoinTable(name = "student_has_tutor_subject", joinColumns = {
+        @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "TutorSubject_TutorId", referencedColumnName = "TutorId"),
+        @JoinColumn(name = "TutorSubject_SubjectCode", referencedColumnName = "SubjectCode")})
+    private List<TutorSubject> tutorSubjectList;
     @JoinTable(name = "student_subject", joinColumns = {
         @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "Subject_code", referencedColumnName = "code")})
@@ -72,8 +53,8 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Topic> topicList;
-    @JoinColumn(name = "Program_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Program_code")
     private Program program;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Event> eventList;
@@ -139,14 +120,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.password = password;
     }
 
-    public String getCareer() {
-        return career;
-    }
-
-    public void setCareer(String career) {
-        this.career = career;
-    }
-
     public String getUrlPhoto() {
         return urlPhoto;
     }
@@ -155,7 +128,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.urlPhoto = urlPhoto;
     }
 
-    @XmlTransient
     public List<Studygroup> getStudygroupList() {
         return studygroupList;
     }
@@ -164,16 +136,13 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.studygroupList = studygroupList;
     }
 
-//    @XmlTransient
-//    public List<TutorSubject> getTutorSubjectList() {
-//        return tutorSubjectList;
-//    }
-//
-//    public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
-//        this.tutorSubjectList = tutorSubjectList;
-//    }
+    public List<TutorSubject> getTutorSubjectList() {
+        return tutorSubjectList;
+    }
 
-    @XmlTransient
+    public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
+        this.tutorSubjectList = tutorSubjectList;
+    }
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -182,7 +151,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.subjectList = subjectList;
     }
 
-    @XmlTransient
     public List<Topic> getTopicList() {
         return topicList;
     }
@@ -199,7 +167,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.program = program;
     }
 
-    @XmlTransient
     public List<Event> getEventList() {
         return eventList;
     }
@@ -208,7 +175,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.eventList = eventList;
     }
 
-    @XmlTransient
     public List<Tutor> getTutorList() {
         return tutorList;
     }
@@ -217,7 +183,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.tutorList = tutorList;
     }
 
-    @XmlTransient
     public List<LikeDislike> getLikeDislikeList() {
         return likeDislikeList;
     }
@@ -226,7 +191,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.likeDislikeList = likeDislikeList;
     }
 
-    @XmlTransient
     public List<Comment> getCommentList() {
         return commentList;
     }
@@ -235,7 +199,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.commentList = commentList;
     }
 
-    @XmlTransient
     public List<Activity> getActivityList() {
         return activityList;
     }
@@ -244,7 +207,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.activityList = activityList;
     }
 
-    @XmlTransient
     public List<Publication> getPublicationList() {
         return publicationList;
     }
@@ -258,7 +220,6 @@ public class Student implements Serializable, IEntity<StudentVo> {
         StudentVo vo = new StudentVo();
 
         //atributos
-        vo.setCareer(getCareer());
         vo.setEmail(getEmail());
         vo.setFirstName(getFirstName());
         vo.setLastName(getLastName());
@@ -274,58 +235,58 @@ public class Student implements Serializable, IEntity<StudentVo> {
 
         ArrayList<StudygroupVo> listStudygroupVo = new ArrayList<StudygroupVo>();
         for (Studygroup entity : getStudygroupList()) {
-             listStudygroupVo.add(entity.toVo());
+            listStudygroupVo.add(entity.toVo());
         }
-        
-        
-        
-//        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
-//        for (TutorSubject entity : getTutorSubjectList()) {
-//            listTutorSubjectVo.add(entity.toVo());
-//        }
-        
+
+
+
+        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+        for (TutorSubject entity : getTutorSubjectList()) {
+            listTutorSubjectVo.add(entity.toVo());
+        }
+
         ArrayList<SubjectVo> listSubjectVo = new ArrayList<SubjectVo>();
         for (Subject entity : getSubjectList()) {
             listSubjectVo.add(entity.toVo());
         }
-        
+
         ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
             listTopicVo.add(entity.toVo());
         }
-        
+
         ArrayList<EventVo> listEventVo = new ArrayList<EventVo>();
         for (Event entity : getEventList()) {
             listEventVo.add(entity.toVo());
         }
-        
+
         ArrayList<TutorVo> listTutorVo = new ArrayList<TutorVo>();
         for (Tutor entity : getTutorList()) {
             listTutorVo.add(entity.toVo());
         }
-        
+
         ArrayList<LikeDislikeVo> listLikeDislikeVo = new ArrayList<LikeDislikeVo>();
         for (LikeDislike entity : getLikeDislikeList()) {
             listLikeDislikeVo.add(entity.toVo());
         }
-        
+
         ArrayList<CommentVo> listCommentVo = new ArrayList<CommentVo>();
         for (Comment entity : getCommentList()) {
             listCommentVo.add(entity.toVo());
         }
-        
+
         ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
         for (Activity entity : getActivityList()) {
             listActivityVo.add(entity.toVo());
         }
-        
+
         ArrayList<PublicationVo> listPublicationVo = new ArrayList<PublicationVo>();
         for (Publication entity : getPublicationList()) {
             listPublicationVo.add(entity.toVo());
         }
-             
+
         vo.setStudygroupList(listStudygroupVo);
-//        vo.setTutorSubjectList(listTutorSubjectVo);
+        vo.setTutorSubjectList(listTutorSubjectVo);
         vo.setSubjectList(listSubjectVo);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
@@ -334,7 +295,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         vo.setCommentList(listCommentVo);
         vo.setActivityList(listActivityVo);
         vo.setPublicationList(listPublicationVo);
-        
+
         return vo;
 
     }

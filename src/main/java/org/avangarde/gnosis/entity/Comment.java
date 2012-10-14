@@ -4,23 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.*;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.LikeDislikeVo;
 
@@ -30,12 +14,10 @@ import org.avangarde.gnosis.vo.LikeDislikeVo;
  */
 @Entity
 @Table(name = "comment")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),})
-
 public class Comment implements Serializable, IEntity<CommentVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -43,7 +25,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     private int id;
     @Column(name = "content")
     private String content;
-    @Column(name = "date")
+    @Column(name = "dateComment")
     @Temporal(TemporalType.DATE)
     private Date date;
     @Column(name = "liked")
@@ -52,22 +34,20 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     private int disliked;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     private List<LikeDislike> likeDislikeList;
-//    @JoinColumns({
-//        @JoinColumn(name = "Tutor_Subject_TutorId", referencedColumnName = "TutorId", insertable = false, updatable = false),
-//        @JoinColumn(name = "Tutor_Subject_SubjectCode", referencedColumnName = "SubjectCode", insertable = false, updatable = false)})
-//    @ManyToOne(optional = false)
-//    private TutorSubject tutorSubject;
-    @JoinColumn(name = "Topic_idTopic", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "idTutorSubject")
+    private TutorSubject tutorSubject;
+    @ManyToOne
+    @JoinColumn(name = "idTopic")
     private Topic topic;
-    @JoinColumn(name = "Activity_idActivity", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "idActivity")
     private Activity activity;
-    @JoinColumn(name = "Publication_idPublication", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "idPublication")
     private Publication publication;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
 
     public Comment() {
@@ -80,7 +60,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getContent() {
         return content;
     }
@@ -113,7 +93,6 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         this.disliked = dislike;
     }
 
-    @XmlTransient
     public List<LikeDislike> getLikeDislikeList() {
         return likeDislikeList;
     }
@@ -122,14 +101,13 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         this.likeDislikeList = likeDislikeList;
     }
 
-//    public TutorSubject getTutorSubject() {
-//        return tutorSubject;
-//    }
-//
-//    public void setTutorSubject(TutorSubject tutorSubject) {
-//        this.tutorSubject = tutorSubject;
-//    }
+    public TutorSubject getTutorSubject() {
+        return tutorSubject;
+    }
 
+    public void setTutorSubject(TutorSubject tutorSubject) {
+        this.tutorSubject = tutorSubject;
+    }
     public Topic getTopic() {
         return topic;
     }
@@ -164,14 +142,14 @@ public class Comment implements Serializable, IEntity<CommentVo> {
 
     @Override
     public CommentVo toVo() {
-        CommentVo vo =new CommentVo();
+        CommentVo vo = new CommentVo();
         vo.setActivityId(getActivity().getId());
         vo.setContent(getContent());
         vo.setDate(getDate());
         vo.setDisliked(getDislike());
         vo.setId(getId());
-        List<LikeDislikeVo> listVo =new ArrayList<LikeDislikeVo>();
-        for(LikeDislike entity:getLikeDislikeList()){
+        List<LikeDislikeVo> listVo = new ArrayList<LikeDislikeVo>();
+        for (LikeDislike entity : getLikeDislikeList()) {
             listVo.add(entity.toVo());
         }
         vo.setLikeDislikeList(listVo);
@@ -179,8 +157,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         vo.setPublicationId(getPublication().getId());
         vo.setStudentId(getStudent().getId());
         vo.setTopicId(getTopic().getId());
-//        vo.setTutorSubjectId(getTutorSubject().getId());
+        vo.setTutorSubjectId(getTutorSubject().getId());
         return vo;
     }
-   
 }

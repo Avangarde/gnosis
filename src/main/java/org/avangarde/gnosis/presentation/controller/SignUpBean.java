@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.presentation.controller;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -110,7 +111,30 @@ public class SignUpBean {
         vo.setProgramId(getProgramId());
 
         facade.create(vo);
+         
+        StudentVo studentVo = new StudentVo();
+        StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
 
-        return "success";
+        studentVo.setUserName(getUserName());
+        studentVo.setPassword(getPassword());
+
+        StudentVo login = studentFacade.login(studentVo);
+        if (login != null) {
+            user.setId(login.getId());
+            user.setFirstName(login.getFirstName());
+            user.setLastName(login.getLastName());
+            user.setUserName(login.getUserName());
+            user.setProgramId(login.getProgramId());
+            user.setLoggedIn(true);
+            return "success";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    "loginForm:userName", new FacesMessage(
+                    "Nombre de usuario o contraseña inválidos"));
+            FacesContext.getCurrentInstance().addMessage(
+                    "loginForm:password", new FacesMessage(
+                    "Nombre de usuario o contraseña inválidos"));
+            return "failure";
+        }
     }
 }

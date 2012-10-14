@@ -3,19 +3,7 @@ package org.avangarde.gnosis.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.*;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.StudygroupVo;
 
@@ -25,7 +13,6 @@ import org.avangarde.gnosis.vo.StudygroupVo;
  */
 @Entity
 @Table(name = "studygroup")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Studygroup.findAll", query = "SELECT s FROM Studygroup s"),})
 
@@ -40,8 +27,8 @@ public class Studygroup implements Serializable, IEntity<StudygroupVo> {
     private String name;
     @ManyToMany(mappedBy = "studygroupList")
     private List<Student> studentList;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
     private Subject subject;
 
     public Studygroup() {
@@ -63,7 +50,6 @@ public class Studygroup implements Serializable, IEntity<StudygroupVo> {
         this.name = name;
     }
 
-    @XmlTransient
     public List<Student> getStudentList() {
         return studentList;
     }

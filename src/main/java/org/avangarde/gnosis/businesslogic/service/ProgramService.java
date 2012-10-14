@@ -5,6 +5,8 @@
 package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
@@ -52,6 +54,15 @@ public class ProgramService implements IService<ProgramVo> {
         for (Program program : DAOFactory.getInstance().getProgramDAO().getList(em)) {
             list.add((program).toVo());
         }
+        Collections.sort(list, new Comparator() {
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                ProgramVo p1 = (ProgramVo) o1;
+                ProgramVo p2 = (ProgramVo) o2;
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
         return list;
     }
 }

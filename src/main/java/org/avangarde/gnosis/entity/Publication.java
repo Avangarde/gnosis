@@ -4,23 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.avangarde.gnosis.vo.*;
+import javax.persistence.*;
+import org.avangarde.gnosis.vo.CommentVo;
+import org.avangarde.gnosis.vo.PublicationVo;
 
 /**
  *
@@ -28,7 +14,6 @@ import org.avangarde.gnosis.vo.*;
  */
 @Entity
 @Table(name = "publication")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Publication.findAll", query = "SELECT p FROM Publication p"),
     @NamedQuery(name = "Publication.findByTitle", query = "SELECT p FROM Publication p WHERE p.title = :title"),
@@ -37,9 +22,8 @@ import org.avangarde.gnosis.vo.*;
     @NamedQuery(name = "Publication.findByRating", query = "SELECT p FROM Publication p WHERE p.rating = :rating"),
     @NamedQuery(name = "Publication.findByUrl", query = "SELECT p FROM Publication p WHERE p.url = :url"),
     @NamedQuery(name = "Publication.findByDate", query = "SELECT p FROM Publication p WHERE p.date = :date")})
-
 public class Publication implements Serializable, IEntity<PublicationVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -55,16 +39,16 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     private Double rating;
     @Column(name = "url")
     private String url;
-    @Column(name = "date")
+    @Column(name = "datePublication")
     @Temporal(TemporalType.DATE)
     private Date date;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
     private List<Comment> commentList;
-    @JoinColumn(name = "Student_studentId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "studentId")
     private Student student;
-    @JoinColumn(name = "Subject_code", referencedColumnName = "code", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
     private Subject subject;
 
     public Publication() {
@@ -126,7 +110,6 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         this.date = date;
     }
 
-    @XmlTransient
     public List<Comment> getCommentList() {
         return commentList;
     }
@@ -151,12 +134,11 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         this.subject = subject;
     }
 
-        
     @Override
     public PublicationVo toVo() {
         PublicationVo vo = new PublicationVo();
         List<CommentVo> listVo = new ArrayList<CommentVo>();
-        for(Comment entity : getCommentList()){
+        for (Comment entity : getCommentList()) {
             listVo.add(entity.toVo());
         }
         vo.setCommentList(listVo);
@@ -170,6 +152,6 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setType(getType());
         vo.setUrl(getUrl());
         return vo;
-        
+
     }
 }
