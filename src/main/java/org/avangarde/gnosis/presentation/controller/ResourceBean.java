@@ -22,15 +22,12 @@ import org.primefaces.model.TreeNode;
 @ApplicationScoped
 public class ResourceBean {
 
-    private TreeNode root;  
-      
+    private TreeNode root; 
     private TreeNode selectedNode;  
-      
     private TreeNode[] selectedNodes;  
       
     public ResourceBean() {  
         root = new DefaultTreeNode("root", null);  
-          
         TreeNode resource1 = new DefaultTreeNode(new Publication("Investigación Interactiva", "Tipos de Investigación", "Word Document"), root);
         TreeNode resource2 = new DefaultTreeNode(new Publication("Métodos para hallar puntos de función", "Puntos de Función", "Power Point Presentation"), root);
         TreeNode resource3 = new DefaultTreeNode(new Publication("Técnicas de estimación de costos", "Ingeniería de Software", "PDF Document"), root);

@@ -48,7 +48,7 @@
                             </p:column>  
 
                             <f:facet name="footer">  
-                                <p:commandButton value="Ver" icon="ui-icon-search"  
+                                <p:commandButton value="Detalles" icon="ui-icon-search"  
                                         update=":form:documentPanel" oncomplete="documentDialog.show()"/>  
                             </f:facet>  
                         </p:treeTable>  
@@ -63,6 +63,9 @@
 
                                     <h:outputLabel for="type" value="Tipo: " />  
                                     <h:outputText id="type" value="#{resourceBean.selectedNode.data.type}" style="font-weight:bold" />  
+                                    
+                                    <h:commandButton action="#" value="VER" class="btn btn-success"/>
+                                    
                                 </h:panelGrid>  
 
                                 <p:dataList value="#{documentsController.selectedNodes}"   
@@ -85,7 +88,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="control-group">
-                                    <label class="control-label" for="title">Título</label>
+                                    <label class="control-label" for="title">Título:</label>
                                     <div class="controls">
                                         <p:inputText id="title" required="true" value="#{resourseBean.title}" 
                                                      requiredMessage="Por favor completa este campo" />
@@ -93,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="topic">Tema</label>
+                                    <label class="control-label" for="topic">Tema:</label>
                                     <div class="controls">
                                         <p:inputText id="topic" required="true" value="#{resourseBean.topic}" 
                                                      requiredMessage="Por favor completa este campo" />
@@ -101,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="resourse">Recurso</label>
+                                    <label class="control-label" for="resourse">Recurso:</label>
                                     <div class="controls">
                                         <p:inputText id="resourse" required="true" value="#{resourseBean.resourse}" 
                                                      requiredMessage="Por favor completa este campo" />
@@ -109,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="type">Tipo</label>
+                                    <label class="control-label" for="type">Tipo:</label>
                                     <div class="controls">
                                         <p:inputText id="type" required="true" value="#{resourseBean.type}" 
                                                      requiredMessage="Por favor completa este campo" />
