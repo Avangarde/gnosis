@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>Google Picker Example</title>
+        <script src="http://www.google.com/jsapi?key=API_KEY"></script>
+        <script type="text/javascript">
+            google.setOnLoadCallback(createPicker);
+            google.load("picker", "1",{"language":"es"});
+            function createPicker() {
+                var picker = new google.picker.PickerBuilder().
+                    addView(google.picker.ViewId.IMAGE_SEARCH).
+                    addView(google.picker.ViewId.PHOTO_UPLOAD).
+                    addView(google.picker.ViewId.PHOTOS).
+                    setCallback(pickerCallback).
+                    build();
+                picker.setVisible(true);
+            }
+            function pickerCallback(data) {
+                var message = "Archivo seleccionado: " +
+                    ((data.action == google.picker.Action.PICKED) ? data.docs[0].url : "nothing"); //thumbnails[1].url
+                document.getElementById("result").appendChild( document.createTextNode(message) );
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <div id="result"></div>
+    </h:body>
+</html>
+
