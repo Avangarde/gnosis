@@ -1,16 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package org.avangarde.gnosis.vo;
 
 import java.util.List;
 
 /**
- *
- * @author Zergio
- * Possible bugged file
- */
+*
+* @author Zergio
+* Possible bugged file
+*/
 public class StudentVo {
     //Atributos nativos
     private int id;
@@ -178,6 +178,6 @@ public class StudentVo {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
+       
     
 }
