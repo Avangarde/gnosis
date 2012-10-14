@@ -92,9 +92,15 @@
 
         <div class="container-fluid">
             <!--content-->
-            <ui:insert name="content">
+            <div class="container">
+                <div class="row">
+                    <div class="span12 offset0">
+                        <ui:insert name="content">
 
-            </ui:insert>
+                        </ui:insert>
+                    </div>           
+                </div>
+            </div>
             <p:dock>  
                 <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="#"/>  
                 <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="#"/>  

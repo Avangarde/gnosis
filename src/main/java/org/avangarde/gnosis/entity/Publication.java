@@ -54,6 +54,12 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     public Publication() {
     }
 
+    public Publication(String title, String topic, String type) {
+        this.title = title;
+        this.topic = topic;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }
