@@ -34,15 +34,15 @@
                         <span class="icon-bar"></span>
                     </a>
 
-                    <a class="brand" href="#">Gnosis</a>
+                    <a class="brand" href="#{request.contextPath}/dashboard.xhtml">Gnosis</a>
 
                     <div class="nav-collapse">
                         <ui:fragment rendered="#{userBean.loggedIn}">
                             <ul class="nav pull-left">
-                                <li><a href="#">Mi Escritorio</a></li>
-                                <li><a href="#">Mis Materias</a></li>
-                                <li><a href="#">Mis Tutores</a></li>
-                                <li><a href="#">Mi Calendario</a></li>
+                                <li><a href="#{request.contextPath}/desktop.xhtml">Mi Escritorio</a></li>
+                                <li><a href="#{request.contextPath}/subject.xhtml">Mis Materias</a></li>
+                                <li><a href="#{request.contextPath}/truknow.xhtml">Mis Tutores</a></li>
+                                <li><a href="#{request.contextPath}/schedule.xhtml">Mi Calendario</a></li>
                             </ul> 
                             <ul class="nav pull-right">
                                 <li class="dropdown">
@@ -97,8 +97,8 @@
             </ui:insert>
             <p:dock>  
                 <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="#"/>  
-                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="#"/>  
-                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="#"/>  
+                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml"/>  
+                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml"/>  
                 <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="#"/>  
                 <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="#"/>  
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>   
