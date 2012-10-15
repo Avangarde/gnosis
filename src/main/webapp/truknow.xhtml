@@ -1,39 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./WEB-INF/templates/subjectTemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                template="./WEB-INF/templates/default.xhtml">
 
     <ui:define name="title">
-        - TruKnow
+        TruKnow
     </ui:define>
+
     <ui:define name="content">
-        <h:form id="form">  
+        <div    class="container-fluid">
+            <div class="hero-unit"><h1>TruKnow </h1></div>
 
-            <p:growl id="messages" showDetail="true"/>  
+            <div class="row-fluid">
+                <div class="span8">
+                    <div class="hero-unit">
 
-            <h:panelGrid columns="2" cellpadding="5">  
+                        <h2>UserName</h2>
+                        <div class="well">
 
-                <h:outputText value="Ajax Rate:" />  
-                <p:rating value="#{ratingBean.rating3}">  
-                    <p:ajax event="rate" listener="#{ratingBean.onrate(rateEvent)}" update="messages" />  
-                    <p:ajax event="cancel" listener="#{ratingBean.oncancel()}" update="messages" />  
-                </p:rating>  
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="http://placehold.it/140x140" class="img-polaroid"></img>
 
-            </h:panelGrid>  
+                                </div>
+                                <div class="span8">
+                                    <h4>Actualmente tienes nivel Cuero</h4>
+                                    <div class="progress">
+                                        <!-- cambiar color dependiendo del nivel -->
+                                        <div class="bar" style ="width: 99%;">
+                                            <!-- obtener el progreso a traves de la cantidad de ratings que se le haya dado -->
+                                            <h4>Hacen falta 3 estrellas para el siguiente nivel</h4>
+                                        </div>
+                                    </div>
 
-            <p:commandButton value="Submit" id="submit" update="display" oncomplete="dlg.show()" style="margin:5px"/>  
+                                </div>
 
-            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">  
-                <h:panelGrid id="display" columns="2" cellpadding="5">  
-                    <h:outputText value="Rating 3:" />  
-                    <h:outputText value="#{ratingBean.rating3}" />  
-                </h:panelGrid>  
-            </p:dialog>  
 
-        </h:form>  
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-unit">
+                        <h2>Enseñas en:</h2>
+
+                        <div class="well">
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="http://placehold.it/140x140" class="img-polaroid"></img>
+
+                                </div>
+                                <div class="span8">
+                                    <ul class="unstyled">
+                                        <li>CourseName</li>
+                                        <li>Contiene: N Púpilos</li>
+                                        <link><a href="#{request.contextPath}/truknow.xhtml">¡Llevame a mi pagina de tutor!</a></link>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="span4">
+                    <div class="hero-unit">
+                        <h2>Estadisticas</h2>
+
+                        <div class="well">
+                            <ul class="unstyled">
+                                <li>Número de aportes: X</li>
+                                <li>Número de tutores: X</li>
+                                <li>Número de tutores desde el inicio: X</li>
+                                <li>Número de pupilos: X</li>
+                                <li>Número de pupilos desde el inicio: X</li>
+                            </ul>
+                        </div>
+                        <h5>Ranking en la red TruKnow <strong> #Ranking </strong> </h5>
+
+
+                    </div>
+
+                    <div class="hero-unit">
+                        <h2>Maestros</h2>
+                        <div class="well">
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="http://placehold.it/140x140" class="img-polaroid"></img>
+
+                                </div>
+                                <div class="span8">
+                                    <ul class="unstyled">
+                                        <li>UserName</li>
+                                        <li>Te enseña: CourseName</li>
+                                        <link><a href="#{request.contextPath}/truknow.xhtml">¡Llevame a la pagina del tutor!</a></link>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ui:define>
+
 </ui:composition>

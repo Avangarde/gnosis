@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - TruKnow
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="form">  
+
+            <p:growl id="messages" showDetail="true"/>  
+
+            <h:panelGrid columns="2" cellpadding="5">  
+
+                <h:outputText value="Ajax Rate:" />  
+                <p:rating value="#{ratingBean.rating3}">  
+                    <p:ajax event="rate" listener="#{ratingBean.onrate(rateEvent)}" update="messages" />  
+                    <!-- 
+
+                    <p:ajax event="cancel" listener="#{ratingBean.oncancel()}" update="messages" />  comentario html válido -->
+                </p:rating>  
+
+            </h:panelGrid>  
+
+            <p:commandButton value="Submit" id="submit" update="display" oncomplete="dlg.show()" style="margin:5px"/>  
+
+            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">  
+                <h:panelGrid id="display" columns="2" cellpadding="5">  
+                    <h:outputText value="Rating 3:" />  
+                    <h:outputText value="#{ratingBean.rating3}" />  
+                </h:panelGrid>  
+            </p:dialog>  
+
+        </h:form>  
+    </ui:define>
+</ui:composition>
