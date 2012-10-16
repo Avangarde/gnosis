@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.presentation.controller;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,7 +22,7 @@ import org.primefaces.model.TreeNode;
  */
 @ManagedBean
 @SessionScoped
-public class ResourceBean {
+public class ResourceBean implements Serializable{
 
     private TreeNode root; 
     private TreeNode selectedNode;  
@@ -57,7 +58,7 @@ public class ResourceBean {
         
         facade.create(vo);
         
-        return "succes";
+        return "success";
         
     }
       

@@ -30,7 +30,7 @@ public class SubjectDAO implements IDAO<Subject> {
 
     @Override
     public Subject find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Subject) em.find(Subject.class, id);
     }
 
     @Override

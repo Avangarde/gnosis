@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.presentation.controller;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -9,7 +10,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class SubjectBean {
+public class SubjectBean implements Serializable{
 
     private Integer code;
     private String name;
