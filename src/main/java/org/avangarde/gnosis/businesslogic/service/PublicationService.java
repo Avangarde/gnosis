@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
@@ -65,5 +66,20 @@ public class PublicationService implements IService<PublicationVo> {
     @Override
     public List<PublicationVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<String> getTopics(EntityManager em) {
+
+        List<String> list = DAOFactory.getInstance().getPublicationDAO().getTopics(em);
+            
+        return list;
+    }
+
+    public List<PublicationVo> getPublicationsByTopic(String topic, EntityManager em) {
+        List<PublicationVo> list = new ArrayList<PublicationVo>();
+        for (Publication publication : DAOFactory.getInstance().getPublicationDAO().getPublicationsByTopic(topic, em)) {
+            list.add((publication).toVo());
+        }
+        return list;
     }
 }

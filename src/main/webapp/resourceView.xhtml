@@ -12,14 +12,13 @@
     </ui:define>
 
     <ui:define name="content">
-        
+
         <div class="container">
             <div class="row">
-                <div class="span7 offset0">
+                <div class="span12 offset0">
                     <div class="hero-unit">
-                        <p:panel id="pnl" header="Nombre_Recurso">  
-                            <h:graphicImage id="pic" value="/resources/images/logo_pdf.jpg"/>
-                        </p:panel>
+                        <h1>#{resourceBean.title}</h1>
+                        <iframe src="#{resourceBean.url}" width="100%" height="600px"></iframe>
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">  
                                 <p:graphicImage value="/design/ajaxloadingbar.gif" />  
@@ -32,7 +31,9 @@
                         </h:panelGrid>
                     </div>
                 </div>
-                <div class="span5 offset0">
+            </div>
+            <div class="row">
+                <div class="span12 offset0">
                     <div class="hero-unit">
                         <f:view>
                             <span class="label label-important">CALIFICAR</span>
@@ -61,13 +62,13 @@
                                 </div>
                                 <div class="pagination">
                                     <ul>
-                                    <li class="disabled"><a href="#">Prev</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li class="disabled"><a href="#">2</a></li>
-                                    <li class="disabled"><a href="#">3</a></li>
-                                    <li class="disabled"><a href="#">4</a></li>
-                                    <li class="disabled"><a href="#">5</a></li>
-                                    <li class="disabled"><a href="#">Sig</a></li>
+                                        <li class="disabled"><a href="#">Prev</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li class="disabled"><a href="#">2</a></li>
+                                        <li class="disabled"><a href="#">3</a></li>
+                                        <li class="disabled"><a href="#">4</a></li>
+                                        <li class="disabled"><a href="#">5</a></li>
+                                        <li class="disabled"><a href="#">Sig</a></li>
                                     </ul>
                                 </div>
                             </div>

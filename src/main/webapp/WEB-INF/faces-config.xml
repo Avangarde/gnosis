@@ -37,6 +37,11 @@
             <from-outcome>success</from-outcome>
             <to-view-id>/resources.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-action>#{resourceBean.viewResource()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/resourceView.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/dashboard.xhtml</from-view-id>

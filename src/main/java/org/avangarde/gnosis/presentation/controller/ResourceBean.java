@@ -6,15 +6,16 @@ package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.PublicationFacade;
-import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.vo.PublicationVo;
 import org.primefaces.model.DefaultTreeNode;  
 import org.primefaces.model.TreeNode;
+
 
 /**
  *
@@ -25,22 +26,36 @@ import org.primefaces.model.TreeNode;
 public class ResourceBean implements Serializable{
 
     private TreeNode root; 
-    private TreeNode selectedNode;  
-    private TreeNode[] selectedNodes;
+    private TreeNode selectedNode;
     private String title;
     private String topic;
     private String type;
     private String url;
+    private String sharedBy;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
     @ManagedProperty(value = "#{subjectBean}")
     private SubjectBean subject;
       
     public ResourceBean() {  
-        root = new DefaultTreeNode("root", null);  
-        TreeNode resource1 = new DefaultTreeNode(new Publication("Investigación Interactiva", "Tipos de Investigación", "Word Document"), root);
-        TreeNode resource2 = new DefaultTreeNode(new Publication("Métodos para hallar puntos de función", "Puntos de Función", "Power Point Presentation"), root);
-        TreeNode resource3 = new DefaultTreeNode(new Publication("Técnicas de estimación de costos", "Ingeniería de Software", "PDF Document"), root);
+        root = new DefaultTreeNode("root", null);
+        for (String topic : getTopics()){
+            PublicationVo vo = new PublicationVo();
+            vo.setTitle(topic);
+            new DefaultTreeNode(vo, root);
+        }
+        
+        for (TreeNode node : root.getChildren()){
+            List<PublicationVo> publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByTopic(((PublicationVo)node.getData()).getTitle());
+            for (PublicationVo publication : publications){
+                new DefaultTreeNode(publication, node);
+            }
+        }        
+    }
+    
+    public List<String> getTopics() {
+        List<String> topics = FacadeFactory.getInstance().getPublicationFacade().getTopics();
+        return topics;
     }
     
     public String saveResource(){
@@ -61,6 +76,20 @@ public class ResourceBean implements Serializable{
         return "success";
         
     }
+    
+    public String viewResource(){
+        
+        setTitle(((PublicationVo)getSelectedNode().getData()).getTitle());
+        setTopic(((PublicationVo)getSelectedNode().getData()).getTopic());
+        setType(((PublicationVo)getSelectedNode().getData()).getType());
+        String url = ((PublicationVo)getSelectedNode().getData()).getUrl();        
+        int edit = url.lastIndexOf("/");
+        url = (url.substring(0, edit) + "/preview");
+        setUrl(url);
+        setSharedBy(((PublicationVo)getSelectedNode().getData()).getStudentName());
+        
+        return "success";
+    }
       
     public TreeNode getRoot() {  
         return root;  
@@ -77,14 +106,6 @@ public class ResourceBean implements Serializable{
     public void setSelectedNode(TreeNode selectedNode) {  
         this.selectedNode = selectedNode;  
     }  
-  
-    public TreeNode[] getSelectedNodes() {  
-        return selectedNodes;  
-    }  
-  
-    public void setSelectedNodes(TreeNode[] selectedNodes) {  
-        this.selectedNodes = selectedNodes;  
-    }
 
     public String getTitle() {
         return title;
@@ -133,4 +154,13 @@ public class ResourceBean implements Serializable{
     public void setSubject(SubjectBean subject) {
         this.subject = subject;
     }
+
+    public String getSharedBy() {
+        return sharedBy;
+    }
+
+    public void setSharedBy(String sharedBy) {
+        this.sharedBy = sharedBy;
+    }
+
 }

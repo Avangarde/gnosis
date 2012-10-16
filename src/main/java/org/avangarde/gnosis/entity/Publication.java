@@ -152,6 +152,7 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setId(getId());
         vo.setRating(getRating());
         vo.setStudentId(getStudent().getId());
+        vo.setStudentName(getStudent().getUserName());
         vo.setSubjectCode(getSubject().getCode());
         vo.setTitle(getTitle());
         vo.setTopic(getTopic());
