@@ -31,6 +31,14 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/resources.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{resourceBean.saveResource()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/resources.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>

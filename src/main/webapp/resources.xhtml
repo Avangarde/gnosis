@@ -11,7 +11,7 @@
 
 
     <ui:define name="title">
-        - Recursos de Materia
+        - Recursos de #{subjectBean.name}
     </ui:define>
 
     <ui:define name="content">
@@ -140,16 +140,32 @@
                                 <div class="control-group">
                                     <label class="control-label" for="topic">Tema:</label>
                                     <div class="controls">
-                                        <p:inputText id="topic" required="true" value="#{resourceBean.topic}" 
-                                                     requiredMessage="Por favor completa este campo" />
+                                        <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
+                                                         requiredMessage="Por favor completa este campo" editable="true"/>
+                                        <f:selectItem itemLabel=""/>
+                                        <f:selectItems value="#{listsBean.topics}" />
+                                        <p:watermark for="topic" value="Crea un tema o selecciona uno" />
                                         <p:message id="topicMessage" for="topic" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="type">Tipo:</label>
                                     <div class="controls">
-                                        <p:inputText id="type" required="true" value="#{resourceBean.type}" 
-                                                     requiredMessage="Por favor completa este campo" />
+                                        <p:outputPanel id="customPanel">
+                                            <p:selectOneRadio id="type" required="true" value="#{resourceBean.type}" layout="custom">  
+                                                <f:selectItem itemLabel="Aporte Personal" itemValue="Aporte Personal" />  
+                                                <f:selectItem itemLabel="Grupo" itemValue="Grupo" />
+                                            </p:selectOneRadio>
+                                            <h:panelGrid columns="3">  
+                                                <p:radioButton id="personalContribution" for="type" itemIndex="0"/>  
+                                                <h:outputLabel for="personalContribution" value="Aporte Personal" />  
+                                                <h:outputLabel for="personalContribution" value="" />  
+
+                                                <p:radioButton id="group" for="type" itemIndex="1"/>  
+                                                <h:outputLabel for="group" value="Grupo" />  
+                                                <!--<p:spinner id="numGroup" min="1" max="#{subjectBean.numGroups}" size="3"/> -->
+                                            </h:panelGrid>  
+                                        </p:outputPanel>  
                                         <p:message id="typeMessage" for="type" />
                                     </div>
                                 </div>  

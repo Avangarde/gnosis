@@ -6,6 +6,10 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Publication;
+import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.PublicationVo;
 
 /**
@@ -25,7 +29,22 @@ public class PublicationService implements IService<PublicationVo> {
 
     @Override
     public void create(PublicationVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Publication entity = new Publication();
+        entity.setDate(vo.getDate());
+        entity.setTitle(vo.getTitle());
+        entity.setTopic(vo.getTopic());
+        entity.setType(vo.getType());
+        entity.setUrl(vo.getUrl());
+
+        Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
+        student.getPublicationList().add(entity);
+        entity.setStudent(student);
+        
+        Subject subject = DAOFactory.getInstance().getSubjectDAO().find(vo.getSubjectCode(), em);
+        subject.getPublicationList().add(entity);
+        entity.setSubject(subject);
+
+        DAOFactory.getInstance().getPublicationDAO().persist(entity, em);
     }
 
     @Override

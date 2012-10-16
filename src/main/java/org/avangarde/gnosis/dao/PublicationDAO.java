@@ -25,7 +25,7 @@ public class PublicationDAO implements IDAO<Publication> {
 
     @Override
     public void persist(Publication entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override

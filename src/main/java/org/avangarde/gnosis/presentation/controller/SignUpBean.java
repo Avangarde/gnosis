@@ -7,7 +7,6 @@ package org.avangarde.gnosis.presentation.controller;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
 import org.avangarde.gnosis.vo.StudentVo;
