@@ -7,11 +7,41 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+
+
+
     <ui:define name="title">
         - Recursos de Materia
     </ui:define>
 
     <ui:define name="content">
+        <script src="http://www.google.com/jsapi?key=API_KEY"></script>
+        <script src="https://apis.google.com/js/client.js?onload=load"></script>
+        <script type="text/javascript">
+            google.load("picker", "1",{"language":"es"});
+            function createPicker() {
+                $('#shareModal').modal('hide')
+                var picker = new google.picker.PickerBuilder().
+                    addView(google.picker.ViewId.DOCS).
+                    addView(new google.picker.DocsUploadView()).
+                    addView(google.picker.ViewId.RECENTLY_PICKED).
+                    addView(google.picker.ViewId.VIDEO_SEARCH).
+                    setCallback(pickerCallback).
+                    build();
+                picker.setVisible(true);
+            }
+            function pickerCallback(data) { 
+                if (data.action == google.picker.Action.PICKED) {
+                    
+                    var fileUrl = data.docs[0].url;
+                    var fileName = data.docs[0].name;
+                    document.getElementById("shareForm:resource").value = fileUrl;
+                    document.getElementById("shareForm:title").value = fileName;
+                    $('#shareModal').modal('show')
+                }
+            }
+        </script>
+
         <div class="hero-unit">
             <div class="row">
                 <div class="span7">
@@ -24,7 +54,7 @@
                     <h1><a data-toggle="modal" href="#shareModal" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
                 </div>
                 <div class="span11">
-                     <h:form id="form">  
+                    <h:form id="form">  
                         <p:growl id="messages" showDetail="true" />  
                         <p:treeTable value="#{resourceBean.root}" var="document"  
                                      selection="#{resourceBean.selectedNode}" selectionMode="single">  
@@ -49,7 +79,7 @@
 
                             <f:facet name="footer">  
                                 <p:commandButton value="Detalles" icon="ui-icon-search"  
-                                        update=":form:documentPanel" oncomplete="documentDialog.show()"/>  
+                                                 update=":form:documentPanel" oncomplete="documentDialog.show()"/>  
                             </f:facet>  
                         </p:treeTable>  
                         <p:dialog header="Detalles" showEffect="fade" widgetVar="documentDialog" modal="true">  
@@ -63,9 +93,9 @@
 
                                     <h:outputLabel for="type" value="Tipo: " />  
                                     <h:outputText id="type" value="#{resourceBean.selectedNode.data.type}" style="font-weight:bold" />  
-                                    
+
                                     <h:commandButton action="#" value="VER" class="btn btn-success"/>
-                                    
+
                                 </h:panelGrid>  
 
                                 <p:dataList value="#{documentsController.selectedNodes}"   
@@ -87,10 +117,22 @@
                                 <h2>Nuevo recurso:</h2>
                             </div>
                             <div class="modal-body">
+                                <p class="text-info">Recuerda cambiar la privacidad de tu documento a "Publica"
+                                    para que todos puedan tener acceso</p>
+                                <div class="control-group">
+                                    <label class="control-label" for="title">Recurso:</label>
+                                    <div class="input-append">
+                                        <div class="controls">
+                                            <p:inputText id="resource" required="true" value="#{resourceBean.url}" 
+                                                         requiredMessage="Por favor completa este campo" />
+                                            <input type="button" name="Select" value="Selecciona" OnClick="createPicker();" class="btn btn-info"></input>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="control-group">
                                     <label class="control-label" for="title">Título:</label>
                                     <div class="controls">
-                                        <p:inputText id="title" required="true" value="#{resourseBean.title}" 
+                                        <p:inputText id="title" required="true" value="#{resourceBean.title}" 
                                                      requiredMessage="Por favor completa este campo" />
                                         <p:message id="titleMessage" for="title" />
                                     </div>
@@ -98,21 +140,15 @@
                                 <div class="control-group">
                                     <label class="control-label" for="topic">Tema:</label>
                                     <div class="controls">
-                                        <p:inputText id="topic" required="true" value="#{resourseBean.topic}" 
+                                        <p:inputText id="topic" required="true" value="#{resourceBean.topic}" 
                                                      requiredMessage="Por favor completa este campo" />
                                         <p:message id="topicMessage" for="topic" />
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="resourse">Recurso:</label>
-                                    <div class="controls">
-                                        <p:fileUpload value="#{fileUploadController.file}" mode="simple"/>
-                                    </div>
-                                </div>
-                                <div class="control-group">
                                     <label class="control-label" for="type">Tipo:</label>
                                     <div class="controls">
-                                        <p:inputText id="type" required="true" value="#{resourseBean.type}" 
+                                        <p:inputText id="type" required="true" value="#{resourceBean.type}" 
                                                      requiredMessage="Por favor completa este campo" />
                                         <p:message id="typeMessage" for="type" />
                                     </div>

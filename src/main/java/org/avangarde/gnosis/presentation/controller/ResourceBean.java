@@ -5,12 +5,8 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ApplicationScoped;
-import java.io.Serializable;  
-import javax.faces.application.FacesMessage;  
-import javax.faces.context.FacesContext;  
+import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.entity.Publication;
-  
 import org.primefaces.model.DefaultTreeNode;  
 import org.primefaces.model.TreeNode;
 
@@ -19,12 +15,16 @@ import org.primefaces.model.TreeNode;
  * @author andres
  */
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class ResourceBean {
 
     private TreeNode root; 
     private TreeNode selectedNode;  
-    private TreeNode[] selectedNodes;  
+    private TreeNode[] selectedNodes;
+    private String title;
+    private String topic;
+    private String type;
+    private String url;
       
     public ResourceBean() {  
         root = new DefaultTreeNode("root", null);  
@@ -55,5 +55,37 @@ public class ResourceBean {
   
     public void setSelectedNodes(TreeNode[] selectedNodes) {  
         this.selectedNodes = selectedNodes;  
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
