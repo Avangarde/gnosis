@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - Perfil de usuario
+    </ui:define>
+
+
+
+
+    <ui:define name="content">
+
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" style="background-color: mediumseagreen" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span2" >
+                                <div class="hero-unit" style="background-color: black;color: white">
+                                    Imagen
+                                </div>
+                            </div>
+                            <div class="span3">
+                                <p:inputTextarea autoResize="true" disabled="true" readonly="true" value="Descripción de mis actividades e intereses" style="color: black">
+
+                                </p:inputTextarea>
+                                <div class="row">
+                                    <div class="span4">
+
+                                        <br><div class="span1"><h4><h:outputText value="¿Soy tutor?: " style="color: white" /></h4></div>
+                                            <div class="span1"><p:selectBooleanButton value="Soy tutor?" onLabel="Yes" offLabel="No" /></div></br>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span6" >
+            <div class="container-fluid">
+                <div class="hero-unit" style="background-color: greenyellow" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span3">
+                                <h2 style="color: green">NOMBRE DE USUARIO</h2>
+
+                                <h3>Nombres y apellidos</h3>
+
+                                <h3 style="color: maroon">Carrera</h3>
+                            </div>
+                            <div class="span2" >
+                                <div class="hero-unit" style="background-color: black;color: white">
+                                    Imagen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span2" >
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li class="active">
+                                        <a href="#">Parciales</a>
+                                    </li>
+                                    <li><a href="#">Talleres</a></li>
+                                    <li><a href="#">Tareas</a></li>
+                                    <li><a href="#">Quices</a></li>
+                                    <li><a href="#">Entregas</a></li>
+                                    <li><a href="#">Reuniones</a></li>
+                                </ul>
+                            </div>
+                            <div class="span3">
+                                <div class="hero-unit" style="background-color: windowframe">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span5" >
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#">Hoy</a>
+                                    </li>
+                                    <li><a href="#">Ultimos 7 Días</a></li>
+                                    <li><a href="#">Ultimos 30 Días</a></li>
+                                    <li><a href="#">Todo</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="hero-unit" style="background-color: blue">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="span6">
+                    <div class="hero-unit">
+                        <div class="span2"><ul class="nav nav-tabs nav-stacked">
+
+                                <li class="active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li><a href="#">...</a></li>
+                                <li><a href="#">...</a></li>
+                            </ul></div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="span6">
+                <div class="hero-unit">
+
+                </div>
+            </div>
+            <div class="span4">
+
+                <h:form>  
+                    <p:growl id="growl" showDetail="true" />  
+                    <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500">  
+                        <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
+                        <h:panelGrid columns="2" cellpadding="10">    
+                            "TUTORES" 
+                        </h:panelGrid>  
+                    </p:fieldset>
+                    <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
+                        <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
+                        <h:panelGrid columns="2" cellpadding="10">    
+                            "APRENDICES"
+                        </h:panelGrid>  
+                    </p:fieldset>
+                </h:form>              
+            </div>
+        </div> 
+    </ui:define>
+
+</ui:composition>
