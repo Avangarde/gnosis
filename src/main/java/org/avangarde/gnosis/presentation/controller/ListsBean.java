@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
-import org.avangarde.gnosis.vo.ProgramVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -17,7 +17,8 @@ import org.avangarde.gnosis.vo.ProgramVo;
 public class ListsBean {
 
     private List<SelectItem> programs;
-
+    private List<SelectItem> subjects;
+    
     public ListsBean() {
     }
 
@@ -34,4 +35,18 @@ public class ListsBean {
         }
         return programs;
     }
+    public List<SelectItem> getSubjects() {
+        if (subjects == null) {
+            subjects = new ArrayList<SelectItem>();
+            List<SubjectVo> subjectsList = FacadeFactory.getInstance().getSubjectFacade().getList();
+            if (subjectsList != null) {
+                for (SubjectVo program : subjectsList) {
+                    subjects.add(new SelectItem(program.getCode(),
+                            program.getName()));
+                }
+            }
+        }
+        return subjects;
+    }    
+    
 }

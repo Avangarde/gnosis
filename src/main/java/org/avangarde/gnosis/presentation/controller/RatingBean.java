@@ -14,17 +14,21 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.*;
 
 @ManagedBean
-@RequestScoped  
+@RequestScoped
+
 public class RatingBean {  
-    
+  
 
     private Integer rating1;  
   
     private Integer rating2;  
-    @ManagedProperty(value = "#{ratingBean}")  
-    private Integer rating3;
-
     
+    private Integer rating3;  
+      
+    private Integer rating4 = 3; 
+    @ManagedProperty(value = "#{userBean}")
+    private UserBean user;
+      
     public void onrate(RateEvent rateEvent) {  
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());  
   
@@ -36,8 +40,7 @@ public class RatingBean {
   
         FacesContext.getCurrentInstance().addMessage(null, message);  
     }  
-    public RatingBean() {
-    }      
+      
     public Integer getRating1() {  
         return rating1;  
     }  
@@ -61,5 +64,19 @@ public class RatingBean {
     public void setRating3(Integer rating3) {  
         this.rating3 = rating3;  
     }  
-}    
+  
+    public Integer getRating4() {  
+        return rating4;  
+    }  
+  
+    public void setRating4(Integer rating4) {  
+        this.rating4 = rating4;  
+    }
+    public UserBean getUser() {
+        return user;
+    }
 
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
+}  

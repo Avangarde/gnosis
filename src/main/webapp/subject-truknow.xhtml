@@ -8,34 +8,54 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="title">
-        - TruKnow
+        - Subject TruKnow
     </ui:define>
     <ui:define name="content">
-        <h:form id="form">  
+        <div class="container">
+            <div class="row">
+                <div class="span6">
+                    <div class="hero-unit">
+                        <h2>Tutores de </h2>
+                        <h:form id="form">  
 
-            <p:growl id="messages" showDetail="true"/>  
+                            <p:growl id="messages" showDetail="true"/>  
 
-            <h:panelGrid columns="2" cellpadding="5">  
+                            <h:panelGrid columns="2" cellpadding="5">  
 
-                <h:outputText value="Ajax Rate:" />  
-                <p:rating value="#{ratingBean.rating3}">  
-                    <p:ajax event="rate" listener="#{ratingBean.onrate(rateEvent)}" update="messages" />  
-                    <!-- 
+                                <h:outputText value="Ajax Rate:" />  
+                                <p:rating value="#{ratingBean.rating3}">  
+                                    <p:ajax event="rate" listener="#{ratingBean.onrate}" update="messages" />  
 
-                    <p:ajax event="cancel" listener="#{ratingBean.oncancel()}" update="messages" />  comentario html válido -->
-                </p:rating>  
+                                </p:rating>  
 
-            </h:panelGrid>  
+                            </h:panelGrid>  
 
-            <p:commandButton value="Submit" id="submit" update="display" oncomplete="dlg.show()" style="margin:5px"/>  
+                            <p:commandButton value="Submit" id="submit" update="display" oncomplete="dlg.show()" style="margin:5px"/>  
 
-            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">  
-                <h:panelGrid id="display" columns="2" cellpadding="5">  
-                    <h:outputText value="Rating 3:" />  
-                    <h:outputText value="#{ratingBean.rating3}" />  
-                </h:panelGrid>  
-            </p:dialog>  
+                            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">  
+                                <h:panelGrid id="display" columns="2" cellpadding="5">  
+                                    <h:outputText value="Rating 1:" />  
+                                    <h:outputText value="#{ratingBean.rating1}" />  
 
-        </h:form>  
+                                    <h:outputText value="Rating 2:" />  
+                                    <h:outputText value="#{ratingBean.rating2}" />  
+
+                                    <h:outputText value="Rating 3:" />  
+                                    <h:outputText value="#{ratingBean.rating3}" />  
+                                </h:panelGrid>  
+                            </p:dialog>  
+                        </h:form>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="hero-unit">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>    
+            
+
+  
     </ui:define>
 </ui:composition>

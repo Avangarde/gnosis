@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - Welcome
+    </ui:define>
+    <ui:define name="content">
+        <div class="container">
+            <div class="row">
+                <div class="span10">
+                    <div class="hero-unit">
+                        <h:form>  
+  
+                            <p:growl id="growl" showDetail="true" />  
+
+                            <p:fieldset legend="Calculo en Varias Variables" toggleable="true" toggleSpeed="500">  
+                                <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
+                                <h:panelGrid columns="4" cellpadding="12">  
+                                    <p:graphicImage value="http://4.bp.blogspot.com/_U_BEf_yeYBA/TSFzWFghHTI/AAAAAAAAABQ/MwSwNxAZJzk/s1600/1266368823_74532441_1-Fotos-de-PROFESOR-DE-MATEMATICAS-CALCULO-FISICA.jpg" />  
+                                    <h:outputText value="Descripcion de la materia bla bla"/>;  
+                                </h:panelGrid>
+                                    <p:commandButton value="Agregar" update="growl" id="ajax"  
+                                    actionListener="#{studentBean.addSubject}" />  
+
+                                    <p:commandButton value="Eliminar" actionListener="#{studentBean.removeSubject}"   
+                                            ajax="false" /> 
+                            </p:fieldset>  
+
+                        </h:form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </ui:define>
+</ui:composition> 
