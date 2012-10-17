@@ -13,9 +13,8 @@ import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.PublicationFacade;
 import org.avangarde.gnosis.vo.PublicationVo;
-import org.primefaces.model.DefaultTreeNode;  
+import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
-
 
 /**
  *
@@ -23,9 +22,9 @@ import org.primefaces.model.TreeNode;
  */
 @ManagedBean
 @SessionScoped
-public class ResourceBean implements Serializable{
+public class ResourceBean implements Serializable {
 
-    private TreeNode root; 
+    private TreeNode root;
     private TreeNode selectedNode;
     private String title;
     private String topic;
@@ -36,32 +35,28 @@ public class ResourceBean implements Serializable{
     private UserBean user;
     @ManagedProperty(value = "#{subjectBean}")
     private SubjectBean subject;
-      
-    public ResourceBean() {  
+
+    public ResourceBean() {
         root = new DefaultTreeNode("root", null);
-        for (String topic : getTopics()){
+        List<String> topics = FacadeFactory.getInstance().getPublicationFacade().getTopics();
+        for (String topic : topics) {
             PublicationVo vo = new PublicationVo();
             vo.setTitle(topic);
             new DefaultTreeNode(vo, root);
         }
-        
-        for (TreeNode node : root.getChildren()){
-            List<PublicationVo> publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByTopic(((PublicationVo)node.getData()).getTitle());
-            for (PublicationVo publication : publications){
+
+        for (TreeNode node : root.getChildren()) {
+            List<PublicationVo> publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByTopic(((PublicationVo) node.getData()).getTitle());
+            for (PublicationVo publication : publications) {
                 new DefaultTreeNode(publication, node);
             }
-        }        
+        }
     }
-    
-    public List<String> getTopics() {
-        List<String> topics = FacadeFactory.getInstance().getPublicationFacade().getTopics();
-        return topics;
-    }
-    
-    public String saveResource(){
-        
+
+    public String saveResource() {
+
         PublicationFacade facade = FacadeFactory.getInstance().getPublicationFacade();
-        
+
         PublicationVo vo = new PublicationVo();
         vo.setTitle(getTitle());
         vo.setUrl(getUrl());
@@ -70,42 +65,42 @@ public class ResourceBean implements Serializable{
         vo.setDate(new GregorianCalendar().getTime());
         vo.setStudentId(getUser().getId());
         vo.setSubjectCode(getSubject().getCode());
-        
+
         facade.create(vo);
-        
+
         return "success";
-        
+
     }
-    
-    public String viewResource(){
-        
-        setTitle(((PublicationVo)getSelectedNode().getData()).getTitle());
-        setTopic(((PublicationVo)getSelectedNode().getData()).getTopic());
-        setType(((PublicationVo)getSelectedNode().getData()).getType());
-        String url = ((PublicationVo)getSelectedNode().getData()).getUrl();        
+
+    public String viewResource() {
+
+        setTitle(((PublicationVo) getSelectedNode().getData()).getTitle());
+        setTopic(((PublicationVo) getSelectedNode().getData()).getTopic());
+        setType(((PublicationVo) getSelectedNode().getData()).getType());
+        String url = ((PublicationVo) getSelectedNode().getData()).getUrl();
         int edit = url.lastIndexOf("/");
         url = (url.substring(0, edit) + "/preview");
         setUrl(url);
-        setSharedBy(((PublicationVo)getSelectedNode().getData()).getStudentName());
-        
+        setSharedBy(((PublicationVo) getSelectedNode().getData()).getStudentName());
+
         return "success";
     }
-      
-    public TreeNode getRoot() {  
-        return root;  
-    }  
-  
-    public void setRoot(TreeNode root) {  
-        this.root = root;  
-    }  
-  
-    public TreeNode getSelectedNode() {  
-        return selectedNode;  
-    }  
-  
-    public void setSelectedNode(TreeNode selectedNode) {  
-        this.selectedNode = selectedNode;  
-    }  
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
+
+    public TreeNode getSelectedNode() {
+        return selectedNode;
+    }
+
+    public void setSelectedNode(TreeNode selectedNode) {
+        this.selectedNode = selectedNode;
+    }
 
     public String getTitle() {
         return title;
@@ -162,5 +157,4 @@ public class ResourceBean implements Serializable{
     public void setSharedBy(String sharedBy) {
         this.sharedBy = sharedBy;
     }
-
 }

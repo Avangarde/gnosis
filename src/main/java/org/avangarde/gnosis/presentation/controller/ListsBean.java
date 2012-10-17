@@ -15,9 +15,10 @@ import org.avangarde.gnosis.vo.ProgramVo;
  */
 @ManagedBean
 @RequestScoped
-public class ListsBean implements Serializable{
+public class ListsBean implements Serializable {
 
     private List<SelectItem> programs;
+    private List<SelectItem> topics;
 
     public ListsBean() {
     }
@@ -34,5 +35,18 @@ public class ListsBean implements Serializable{
             }
         }
         return programs;
+    }
+
+    public List<SelectItem> getTopics() {
+        if (topics == null) {
+            topics = new ArrayList<SelectItem>();
+            List<String> topicList = FacadeFactory.getInstance().getPublicationFacade().getTopics();
+            if (topicList != null) {
+                for (String topic : topicList) {
+                    topics.add(new SelectItem(topic));
+                }
+            }
+        }
+        return topics;
     }
 }

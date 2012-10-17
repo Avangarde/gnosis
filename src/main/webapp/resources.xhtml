@@ -123,9 +123,10 @@
                                     <label class="control-label" for="topic">Tema:</label>
                                     <div class="controls">
                                         <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
-                                                         requiredMessage="Por favor completa este campo" editable="true"/>
-                                        <f:selectItem itemLabel=""/>
-                                        <f:selectItems value="#{resourceBean.getTopics()}" />
+                                                         requiredMessage="Por favor completa este campo" editable="true">
+                                            <f:selectItem itemLabel=""/>
+                                            <f:selectItems value="#{listsBean.topics}" />
+                                        </p:selectOneMenu>
                                         <p:watermark for="topic" value="Crea un tema o selecciona uno" />
                                         <p:message id="topicMessage" for="topic" />
                                     </div>
