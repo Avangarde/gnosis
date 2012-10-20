@@ -18,6 +18,7 @@ public class PublicationVo implements IValueObject{
     private Date date;
     private List<CommentVo> commentList;
     private int studentId;
+    private String studentName;
     private Integer SubjectCode;
 
     public int getId() {
@@ -90,6 +91,14 @@ public class PublicationVo implements IValueObject{
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Integer getSubjectCode() {

@@ -18,7 +18,7 @@
         <script type="text/javascript">
             $('.collapse').collapse();
         </script>
-
+        
     </h:head>
 
     <h:body>
@@ -78,7 +78,7 @@
                 <div class="span12 offset0">
                     <div class="hero-unit">
                         <div class="form-actions">
-                            <h1>Taller de proyectos de Ingeniería</h1>
+                            <h1>#{subjectBean.name}</h1>
                             <h1><small>Ingeniería de Sistemas</small></h1>
                         </div>
                         <div class="form-actions">
@@ -92,14 +92,21 @@
 
         <div class="container-fluid">
             <!--content-->
-            <ui:insert name="content">
+            <div class="container">
+                <div class="row">
+                    <div class="span12 offset0">
+                        <ui:insert name="content">
 
-            </ui:insert>
+                        </ui:insert>
+                    </div>           
+                </div>
+            </div>
+            <br></br><br></br><br></br><br></br>
             <p:dock>  
-                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="#"/>  
+                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml"/>  
                 <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml"/>  
                 <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml"/>  
-                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="#"/>  
+                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml"/>  
                 <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="#"/>  
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>   
             </p:dock>

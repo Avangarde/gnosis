@@ -29,7 +29,7 @@ public class StudentDAO implements IDAO<Student> {
 
     @Override
     public Student find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Student) em.find(Student.class, id);
     }
 
     @Override

@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+
+
+    <ui:define name="title">
+        - Recursos de #{subjectBean.name}
+    </ui:define>
+
+    <ui:define name="content">
+        <script src="http://www.google.com/jsapi?key=API_KEY"></script>
+        <script src="https://apis.google.com/js/client.js?onload=load"></script>
+        <script type="text/javascript">
+            google.load("picker", "1",{"language":"es"});
+            function createPicker() {
+                $('#shareModal').modal('hide')
+                var picker = new google.picker.PickerBuilder().
+                    addView(google.picker.ViewId.PDFS).
+                    addView(new google.picker.DocsUploadView()).
+                    addView(google.picker.ViewId.RECENTLY_PICKED).
+                    addView(google.picker.ViewId.VIDEO_SEARCH).
+                    setCallback(pickerCallback).
+                    build();
+                picker.setVisible(true);
+            }
+            function pickerCallback(data) { 
+                if (data.action == google.picker.Action.PICKED) {
+                    
+                    var fileUrl = data.docs[0].url;
+                    var fileName = data.docs[0].name;
+                    document.getElementById("shareForm:resource").value = fileUrl;
+                    document.getElementById("shareForm:title").value = fileName;
+                    $('#shareModal').modal('show')
+                }
+            }
+        </script>
+
+        <div class="hero-unit">
+            <div class="row">
+                <div class="span7">
+                    <h2 style="color:green">Recursos</h2>
+                    <marquee bgcolor="#F5F5E5" width="52%" scrolldelay="100" scrollamount="5" direction="left" loop="infinite">
+                        Aquí podrás encontrar todo el material relacionado con esta materia...
+                    </marquee>
+                </div>
+                <div class="span0">
+                    <h:form id="form">
+                        <h1><a data-toggle="modal" href="#shareModal" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
+                    </h:form>
+                </div>
+                <div class="span11">
+                    <h:form id="tableForm">   
+                        <p:treeTable value="#{resourceBean.root}" var="document"  
+                                     selection="#{resourceBean.selectedNode}" selectionMode="single">  
+                            <p:column style="width:140px">  
+                                <f:facet name="header">  
+                                    Título  
+                                </f:facet>   
+                                <h:outputText value="#{document.title}" />  
+                            </p:column>  
+                            <p:column style="width:140px">  
+                                <f:facet name="header">  
+                                    Tema  
+                                </f:facet>  
+                                <h:outputText value="#{document.topic}" />  
+                            </p:column>  
+                            <p:column style="width:70px">  
+                                <f:facet name="header">  
+                                    Tipo 
+                                </f:facet>  
+                                <h:outputText value="#{document.type}" />  
+                            </p:column><p:column style="width:70px">  
+                                <f:facet name="header">  
+                                    Compartido por 
+                                </f:facet>  
+                                <h:outputText value="#{document.studentName}" />  
+                            </p:column>  
+
+                            <f:facet name="footer">  
+                                <p:commandButton value="Ver" icon="ui-icon-search"  action="#{resourceBean.viewResource()}"/>  
+                            </f:facet>  
+                        </p:treeTable>  
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <h:form id="shareForm" class="form-horizontal form-no-margin">
+                        <div id="shareModal" class="modal hide fade">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h2>Nuevo recurso:</h2>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-info">Recuerda cambiar la privacidad de tu documento a "Publica"
+                                    para que todos puedan tener acceso</p>
+                                <div class="control-group">
+                                    <label class="control-label" for="title">Recurso:</label>
+                                    <div class="input-append">
+                                        <div class="controls">
+                                            <p:inputText id="resource" required="true" value="#{resourceBean.url}" 
+                                                         requiredMessage="Por favor completa este campo" />
+                                            <input type="button" name="Select" value="Selecciona" OnClick="createPicker();" class="btn btn-info"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="title">Título:</label>
+                                    <div class="controls">
+                                        <p:inputText id="title" required="true" value="#{resourceBean.title}" 
+                                                     requiredMessage="Por favor completa este campo" />
+                                        <p:message id="titleMessage" for="title" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="topic">Tema:</label>
+                                    <div class="controls">
+                                        <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
+                                                         requiredMessage="Por favor completa este campo" editable="true">
+                                            <f:selectItem itemLabel=""/>
+                                            <f:selectItems value="#{listsBean.topics}" />
+                                        </p:selectOneMenu>
+                                        <p:watermark for="topic" value="Crea un tema o selecciona uno" />
+                                        <p:message id="topicMessage" for="topic" />
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="type">Tipo:</label>
+                                    <div class="controls">
+                                        <p:outputPanel id="customPanel">
+                                            <p:selectOneRadio id="type" required="true" value="#{resourceBean.type}" layout="custom">  
+                                                <f:selectItem itemLabel="Aporte Personal" itemValue="Aporte Personal" />  
+                                                <f:selectItem itemLabel="Grupo" itemValue="Grupo" />
+                                            </p:selectOneRadio>
+                                            <h:panelGrid columns="3">  
+                                                <p:radioButton id="personalContribution" for="type" itemIndex="0"/>  
+                                                <h:outputLabel for="personalContribution" value="Aporte Personal" />  
+                                                <h:outputLabel for="personalContribution" value="" />  
+
+                                                <p:radioButton id="group" for="type" itemIndex="1"/>  
+                                                <h:outputLabel for="group" value="Grupo" />  
+                                                <!--<p:spinner id="numGroup" min="1" max="#{subjectBean.numGroups}" size="3"/> -->
+                                            </h:panelGrid>  
+                                        </p:outputPanel>  
+                                        <p:message id="typeMessage" for="type" />
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="modal-footer">
+                                <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success"
+                                                 update="tableForm"/>
+                            </div>        
+                        </div>
+                    </h:form>
+                </div>        
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

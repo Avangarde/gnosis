@@ -54,6 +54,12 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     public Publication() {
     }
 
+    public Publication(String title, String topic, String type) {
+        this.title = title;
+        this.topic = topic;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }
@@ -146,6 +152,7 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setId(getId());
         vo.setRating(getRating());
         vo.setStudentId(getStudent().getId());
+        vo.setStudentName(getStudent().getUserName());
         vo.setSubjectCode(getSubject().getCode());
         vo.setTitle(getTitle());
         vo.setTopic(getTopic());

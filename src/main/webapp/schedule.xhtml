@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
+
 <!DOCTYPE html>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./WEB-INF/templates/subjectTemplate.xhtml"
@@ -13,5 +10,47 @@ and open the template in the editor.
     <ui:define name="title">
         - Calendario
     </ui:define>
+    <ui:define name="content">
+        <h:form>  
 
+                         <p:growl id="messages" showDetail="true" />  
+
+                         <p:schedule value="#{scheduleBean.eventModel}" widgetVar="myschedule" locale="sp">  
+
+                             <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+                             <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+                             <p:ajax event="eventMove" listener="#{scheduleBean.onEventMove}" update="messages" />  
+                             <p:ajax event="eventResize" listener="#{scheduleBean.onEventResize}" update="messages" />  
+
+                         </p:schedule>  
+
+                         <p:dialog widgetVar="eventDialog" header="Detalles del Evento" showEffect="clip" hideEffect="clip">  
+                             <h:panelGrid id="eventDetails" columns="2">  
+                                 <h:outputLabel for="title" value="Titulo:" />  
+                                 <p:inputText id="title" value="#{scheduleBean.event.title}" required="true"/>  
+
+                                 <h:outputLabel for="from" value="Desde:" />  
+                                 <p:inputMask id="from" value="#{scheduleBean.event.startDate}" mask="99/99/9999">  
+                                     <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                 </p:inputMask>  
+
+                                 <h:outputLabel for="to" value="Hasta:" />  
+                                 <p:inputMask id="to" value="#{scheduleBean.event.endDate}" mask="99/99/9999">  
+                                     <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                 </p:inputMask>  
+
+                                 <h:outputLabel for="allDay" value="Todo el dia:" />  
+                                 <h:selectBooleanCheckbox id="allDay" value="#{scheduleBean.event.allDay}" />  
+
+                                 <p:commandButton type="reset" value="Limpiar" />  
+                                 <p:commandButton value="Guardar" actionListener="#{scheduleBean.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>  
+                             </h:panelGrid>  
+                         </p:dialog>  
+
+                     </h:form>  
+    </ui:define>
+                        
+
+
+    
 </ui:composition>

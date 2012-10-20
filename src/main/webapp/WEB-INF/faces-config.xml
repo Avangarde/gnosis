@@ -22,12 +22,33 @@
         <navigation-case>
             <from-action>#{signUpBean.signUp()}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>/dashboard.xhtml</to-view-id>
+            <to-view-id>/firstsignup.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{signUpBean.signUp()}</from-action>
             <from-outcome>failure</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/resources.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{resourceBean.saveResource()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/resources.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{resourceBean.viewResource()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/resourceView.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{testBean.subject()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/subject.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
