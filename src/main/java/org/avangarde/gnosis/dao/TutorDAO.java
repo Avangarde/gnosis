@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Tutor;
 
 /**
@@ -15,6 +17,9 @@ import org.avangarde.gnosis.entity.Tutor;
 public class TutorDAO implements IDAO<Tutor> {
 
     private static TutorDAO instance;
+    
+    private TutorDAO() {
+    }
 
     public static synchronized TutorDAO getInstance() {
         if (instance == null) {
@@ -25,26 +30,30 @@ public class TutorDAO implements IDAO<Tutor> {
 
     @Override
     public void persist(Tutor entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
     public Tutor find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Tutor) em.find(Tutor.class, id);
     }
 
     @Override
     public void update(Tutor entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Tutor tutor = (Tutor) em.getReference(Tutor.class, id);
+        em.remove(tutor);
     }
 
     @Override
     public List<Tutor> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Tutor.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

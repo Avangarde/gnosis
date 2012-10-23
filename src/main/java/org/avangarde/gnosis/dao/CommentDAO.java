@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Comment;
 
 /**
@@ -16,6 +18,9 @@ public class CommentDAO implements IDAO<Comment> {
 
     private static CommentDAO instance;
 
+    private CommentDAO() {
+    }
+
     public static synchronized CommentDAO getInstance() {
         if (instance == null) {
             instance = new CommentDAO();
@@ -25,26 +30,30 @@ public class CommentDAO implements IDAO<Comment> {
 
     @Override
     public void persist(Comment entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
     public Comment find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Comment) em.find(Comment.class, id);
     }
 
     @Override
     public void update(Comment entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Comment comment = (Comment) em.getReference(Comment.class, id);
+        em.remove(comment);
     }
 
     @Override
     public List<Comment> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Comment.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

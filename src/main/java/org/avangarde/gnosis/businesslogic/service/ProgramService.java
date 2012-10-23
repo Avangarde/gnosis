@@ -20,6 +20,9 @@ import org.avangarde.gnosis.vo.ProgramVo;
 public class ProgramService implements IService<ProgramVo> {
 
     private static ProgramService instance;
+    
+    private ProgramService() {
+    }
 
     public static synchronized ProgramService getInstance() {
         if (instance == null) {

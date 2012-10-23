@@ -20,6 +20,9 @@ import org.avangarde.gnosis.vo.PublicationVo;
 public class PublicationService implements IService<PublicationVo> {
 
     private static PublicationService instance;
+    
+    private PublicationService() {
+    }
 
     public static synchronized PublicationService getInstance() {
         if (instance == null) {

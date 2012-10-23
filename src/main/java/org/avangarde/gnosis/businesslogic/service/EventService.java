@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.EventVo;
 public class EventService implements IService<EventVo> {
 
     private static EventService instance;
+    
+    private EventService() {
+    }
 
     public static synchronized EventService getInstance() {
         if (instance == null) {

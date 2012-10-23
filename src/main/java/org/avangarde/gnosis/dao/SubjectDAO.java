@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Subject;
 
 /**
@@ -15,6 +17,9 @@ import org.avangarde.gnosis.entity.Subject;
 public class SubjectDAO implements IDAO<Subject> {
 
     private static SubjectDAO instance;
+    
+    private SubjectDAO() {
+    }
 
     public static synchronized SubjectDAO getInstance() {
         if (instance == null) {
@@ -25,7 +30,7 @@ public class SubjectDAO implements IDAO<Subject> {
 
     @Override
     public void persist(Subject entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
@@ -35,16 +40,20 @@ public class SubjectDAO implements IDAO<Subject> {
 
     @Override
     public void update(Subject entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Subject subject = (Subject) em.getReference(Subject.class, id);
+        em.remove(subject);
     }
 
     @Override
     public List<Subject> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Subject.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

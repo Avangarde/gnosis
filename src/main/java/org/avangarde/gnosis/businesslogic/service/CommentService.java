@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.CommentVo;
 public class CommentService implements IService<CommentVo> {
 
     private static CommentService instance;
+    
+    private CommentService() {
+    }
 
     public static synchronized CommentService getInstance() {
         if (instance == null) {

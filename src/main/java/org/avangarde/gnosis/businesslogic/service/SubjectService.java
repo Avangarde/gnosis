@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.SubjectVo;
 public class SubjectService implements IService<SubjectVo> {
 
     private static SubjectService instance;
+    
+    private SubjectService() {
+    }
 
     public static synchronized SubjectService getInstance() {
         if (instance == null) {
