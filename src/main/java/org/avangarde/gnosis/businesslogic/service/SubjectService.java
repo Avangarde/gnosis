@@ -4,8 +4,11 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
@@ -49,5 +52,14 @@ public class SubjectService implements IService<SubjectVo> {
     @Override
     public List<SubjectVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public List<SubjectVo> getSubjectsByProgram (Integer programCode, EntityManager em){
+        List<SubjectVo> subjects = new ArrayList<SubjectVo>();
+        List<Subject> entities = DAOFactory.getInstance().getSubjectDAO().getSubjectsByProgram(programCode, em);
+        for (Subject subject : entities){
+            subjects.add(subject.toVo());
+        }
+        return subjects;
     }
 }
