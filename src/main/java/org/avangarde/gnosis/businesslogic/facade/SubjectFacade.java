@@ -13,10 +13,10 @@ public class SubjectFacade extends Facade <SubjectVo> {
     public SubjectFacade(String PUName, SubjectService service) {
         super(PUName, service);
     }
-    
-    public List<SubjectVo> getSubjectsByProgram (Integer programCode){
+
+    public List<SubjectVo> getSubjectsByName(String query) {
         try {
-            return ((SubjectService)service).getSubjectsByProgram(programCode, em);
+            return ((SubjectService)service).getSubjectsByName(query, em);
         } finally {
             if (em != null) {
                 em.clear();

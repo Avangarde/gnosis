@@ -92,13 +92,13 @@ public class Program implements Serializable, IEntity<ProgramVo> {
         }
         vo.setStudentList(studentListVo);
         //</editor-fold>
-//        //<editor-fold defaultstate="collapsed" desc="vo.setSubjectList">
-//        List<SubjectVo> subjectListVo = new ArrayList<SubjectVo>();
-//        for (Subject entity : getSubjectList()){
-//            subjectListVo.add(entity.toVo());
-//        }
-//        vo.setSubjectList(subjectListVo);
-//        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="vo.setSubjectList">
+        List<SubjectVo> subjectListVo = new ArrayList<SubjectVo>();
+        for (Subject entity : getSubjectList()){
+            subjectListVo.add(entity.toVo());
+        }
+        vo.setSubjectList(subjectListVo);
+        //</editor-fold>
         return vo;
     }
     

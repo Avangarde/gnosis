@@ -53,10 +53,10 @@ public class SubjectService implements IService<SubjectVo> {
     public List<SubjectVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    public List<SubjectVo> getSubjectsByProgram (Integer programCode, EntityManager em){
+
+    public List<SubjectVo> getSubjectsByName(String query, EntityManager em) {
         List<SubjectVo> subjects = new ArrayList<SubjectVo>();
-        List<Subject> entities = DAOFactory.getInstance().getSubjectDAO().getSubjectsByProgram(programCode, em);
+        List<Subject> entities = DAOFactory.getInstance().getSubjectDAO().getSubjectsByname(query, em);
         for (Subject subject : entities){
             subjects.add(subject.toVo());
         }

@@ -191,10 +191,10 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
              listStudentVo.add(entity.toVo());
         }
         
-        ArrayList<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
-        for (Program entity : getProgramList()) {
-             listProgramVo.add(entity.toVo());
-        }
+//        ArrayList<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
+//        for (Program entity : getProgramList()) {
+//             listProgramVo.add(entity.toVo());
+//        }
         
         ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
@@ -227,7 +227,7 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         }
         
         vo.setStudentList(listStudentVo);
-        vo.setProgramList(listProgramVo);
+//        vo.setProgramList(listProgramVo);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
         vo.setStudygroupList(listStudygroupVo);
