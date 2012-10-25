@@ -1,8 +1,13 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
 
 /**
  *
@@ -10,12 +15,14 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class SubjectBean implements Serializable{
+public class SubjectBean implements Serializable {
 
     private Integer code;
     private String name;
     private String description;
     private int numGroups;
+    @ManagedProperty(value = "#{userBean}")
+    private UserBean user;
 
     public SubjectBean() {
     }
@@ -50,5 +57,27 @@ public class SubjectBean implements Serializable{
 
     public void setNumGroups(int numGroups) {
         this.numGroups = numGroups;
+    }
+
+    public void addMessage(FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public UserBean getUser() {
+        return user;
+    }
+
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
+    
+    public void subscribeStudent() {
+        if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Te has suscribido a la materia", ""));
+        } else {
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "No te pudiste suscribir a la materia", ""));
+        }
     }
 }
