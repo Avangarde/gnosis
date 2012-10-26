@@ -28,26 +28,47 @@
             <div class="row">
                 <div class="span10">
                     <div class="hero-unit">
-                        <h:form>  
-                            <ui:repeat value="#{searchBean.subjects}" var="subjects">
-                            <p:growl id="growl" showDetail="true" />  
-                            
-                                
-                            
-                            <p:fieldset legend="#{subjects.label}" toggleable="true" toggleSpeed="500">  
-                                <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
-                                <h:panelGrid columns="4" cellpadding="12">  
-                                    <p:graphicImage value="http://4.bp.blogspot.com/_U_BEf_yeYBA/TSFzWFghHTI/AAAAAAAAABQ/MwSwNxAZJzk/s1600/1266368823_74532441_1-Fotos-de-PROFESOR-DE-MATEMATICAS-CALCULO-FISICA.jpg" />  
-                                    <h:outputText value="Descripcion de la materia bla bla"/>;  
-                                </h:panelGrid>
-                                    <p:commandButton value="Agregar" update="growl" id="ajax"  
-                                    actionListener="#{studentBean.addSubject}" />  
+                        <h:form prependId="false">  
 
-                                    <p:commandButton value="Eliminar" actionListener="#{studentBean.removeSubject}"   
-                                            ajax="false" /> 
-                            </p:fieldset>  
-                            </ui:repeat>
-                        </h:form>
+                            <p:dataTable id="dataTable" var="subject" value="#{tableBean.subjects}"  
+                                         paginator="true" rows="10"  
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                         rowsPerPageTemplate="5,10,15">  
+                                <f:facet name="header">  
+                                    Ajax Pagination  
+                                </f:facet>  
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Codigo" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.code}" />  
+                                </p:column>  
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Nombre" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.name}" />  
+                                </p:column>  
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Descripcion" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.description}" />  
+                                </p:column>  
+
+                                <p:column>  
+                                   <p:commandButton value="Suscribirme" actionListener="#{studentBean.addSubject}" > 
+                                   </p:commandButton>
+                                   <p:commandButton value="Ver mas" actionListener="#{studentBean.removeSubject}" > 
+                                   </p:commandButton> 
+
+                                </p:column>  
+                            </p:dataTable>  
+
+                        </h:form>  
                         
                     </div>
                 </div>
