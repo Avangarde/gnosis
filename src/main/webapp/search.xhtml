@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="query" value="#{searchBean.query}"/>
     </f:metadata>
@@ -30,12 +30,17 @@
                     <div class="hero-unit">
                         <h:form prependId="false">  
 
-                            <p:dataTable id="dataTable" var="subject" value="#{tableBean.subjects}"  
+                            <p:dataTable id="dataTable" var="subject" value="#{searchBean.subjects}"  
                                          paginator="true" rows="10"  
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                          rowsPerPageTemplate="5,10,15">  
                                 <f:facet name="header">  
-                                    Ajax Pagination  
+                                    <ui:fragment rendered="#{searchBean.query == ''}">
+                                        Materias de tu carrera
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{searchBean.query != ''}">
+                                        Resultado de la busqueda
+                                    </ui:fragment>
                                 </f:facet>  
 
                                 <p:column>  
@@ -60,16 +65,18 @@
                                 </p:column>  
 
                                 <p:column>  
-                                   <p:commandButton value="Suscribirme" actionListener="#{studentBean.addSubject}" > 
-                                   </p:commandButton>
-                                   <p:commandButton value="Ver mas" actionListener="#{studentBean.removeSubject}" > 
-                                   </p:commandButton> 
-
+                                    <h:link value="Suscribirme"  class="btn btn-mini btn-info">
+                                    </h:link>
+                                    
+                                    
+                                    <h:link value="Ver Mas" outcome="subject.xhtml"  class="btn btn-mini btn-success">
+                                        <f:param name ="code" value ="#{subject.code}"/>
+                                    </h:link>
                                 </p:column>  
                             </p:dataTable>  
 
                         </h:form>  
-                        
+
                     </div>
                 </div>
             </div>
