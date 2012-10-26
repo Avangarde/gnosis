@@ -7,8 +7,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-
-
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}" required="true"/>
+        <f:event type="preRenderView" listener="#{resourceBean.preRenderView()}" />
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
 
     <ui:define name="title">
         - Recursos de #{subjectBean.name}
@@ -76,16 +79,29 @@
                                     Tipo 
                                 </f:facet>  
                                 <h:outputText value="#{document.type}" />  
-                            </p:column><p:column style="width:70px">  
+                            </p:column>
+                            <p:column style="width:70px">  
                                 <f:facet name="header">  
                                     Compartido por 
                                 </f:facet>  
                                 <h:outputText value="#{document.studentName}" />  
-                            </p:column>  
+                            </p:column>
+                            <p:column style="width:70px">  
+                                <f:facet name="header">  
+                                    Ver 
+                                </f:facet>  
+                                <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
+                                    <f:param name ="code" value ="#{subjectBean.code}"/>
+                                    <f:param name ="pubId" value ="#{document.id}"/>
+                                </h:link>  
+                            </p:column>
 
-                            <f:facet name="footer">  
-                                <p:commandButton value="Ver" icon="ui-icon-search"  action="#{resourceBean.viewResource()}"/>  
-                            </f:facet>  
+       <!--                     <f:facet name="footer">  
+                                <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
+                                    <f:param name ="code" value ="#{subjectBean.code}"/>
+                                    <f:param name ="pubId" value ="#{resourceBean.getId()}"/>
+                                </h:link>  
+                            </f:facet>  -->
                         </p:treeTable>  
                     </h:form>
                 </div>
@@ -125,7 +141,7 @@
                                         <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
                                                          requiredMessage="Por favor completa este campo" editable="true">
                                             <f:selectItem itemLabel=""/>
-                                            <f:selectItems value="#{listsBean.topics}" />
+                                            <f:selectItems value="#{resourceBean.topics}" />
                                         </p:selectOneMenu>
                                         <p:watermark for="topic" value="Crea un tema o selecciona uno" />
                                         <p:message id="topicMessage" for="topic" />
@@ -154,8 +170,9 @@
                                 </div>  
                             </div>
                             <div class="modal-footer">
-                                <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success"
-                                                 update="tableForm"/>
+                                <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success" >
+                                    <f:param name ="code" value ="#{subjectBean.code}"/>
+                                </h:commandButton>
                             </div>        
                         </div>
                     </h:form>

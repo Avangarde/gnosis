@@ -36,7 +36,12 @@ public class SubjectService implements IService<SubjectVo> {
 
     @Override
     public SubjectVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Subject subject = DAOFactory.getInstance().getSubjectDAO().find(id, em);
+        if (subject != null) {
+            return subject.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override

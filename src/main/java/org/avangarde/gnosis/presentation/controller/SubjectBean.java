@@ -2,14 +2,16 @@ package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
  *
  * @author Alexander
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SubjectBean implements Serializable{
 
     private Integer code;
@@ -50,5 +52,14 @@ public class SubjectBean implements Serializable{
 
     public void setNumGroups(int numGroups) {
         this.numGroups = numGroups;
+    }
+    
+    public void preRenderView(){
+        if (getCode() != null){
+            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());
+            setName(subject.getName());
+            setDescription(subject.getDescription());
+            setNumGroups(subject.getNumGroups());
+        }
     }
 }

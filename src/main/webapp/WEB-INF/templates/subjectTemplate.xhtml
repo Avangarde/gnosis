@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -18,7 +19,7 @@
         <script type="text/javascript">
             $('.collapse').collapse();
         </script>
-        
+
     </h:head>
 
     <h:body>
@@ -72,7 +73,7 @@
             </div>
         </div>
         <!--end navbar-->
-
+        
         <div class="container">
             <div class="row">
                 <div class="span12 offset0">
@@ -103,10 +104,10 @@
             </div>
             <br></br><br></br><br></br><br></br>
             <p:dock>  
-                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml"/>  
-                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml"/>  
-                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml"/>  
-                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml"/>  
+                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml?code=#{subjectBean.code}" />  
+                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="#"/>  
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>   
             </p:dock>
