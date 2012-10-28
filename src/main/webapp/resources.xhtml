@@ -89,19 +89,21 @@
                             <p:column style="width:70px">  
                                 <f:facet name="header">  
                                     Ver 
-                                </f:facet>  
-                                <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
-                                    <f:param name ="code" value ="#{subjectBean.code}"/>
-                                    <f:param name ="pubId" value ="#{document.id}"/>
-                                </h:link>  
+                                </f:facet>
+                                <ui:fragment rendered="#{document.url != null}">
+                                    <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
+                                        <f:param name ="code" value ="#{subjectBean.code}"/>
+                                        <f:param name ="pubId" value ="#{document.id}"/>
+                                    </h:link>
+                                </ui:fragment>
                             </p:column>
 
-       <!--                     <f:facet name="footer">  
-                                <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
-                                    <f:param name ="code" value ="#{subjectBean.code}"/>
-                                    <f:param name ="pubId" value ="#{resourceBean.getId()}"/>
-                                </h:link>  
-                            </f:facet>  -->
+                            <!--                     <f:facet name="footer">  
+                                                     <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
+                                                         <f:param name ="code" value ="#{subjectBean.code}"/>
+                                                         <f:param name ="pubId" value ="#{resourceBean.getId()}"/>
+                                                     </h:link>  
+                                                 </f:facet>  -->
                         </p:treeTable>  
                     </h:form>
                 </div>
