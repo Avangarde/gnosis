@@ -12,4 +12,6 @@ public class SubjectFacade extends Facade <SubjectVo> {
     public SubjectFacade(String PUName, SubjectService service) {
         super(PUName, service);
     }
+    
+    
 }
