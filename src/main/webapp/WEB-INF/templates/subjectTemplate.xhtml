@@ -18,7 +18,7 @@
         <script type="text/javascript">
             $('.collapse').collapse();
         </script>
-        
+
     </h:head>
 
     <h:body>
@@ -82,11 +82,11 @@
                             <h1><small>Ingeniería de Sistemas</small></h1>
                         </div>
                         <div class="form-actions">
-                            <p:growl id="mensajes" showDetail="true"/>
-                            <h:commandButton action="#" value="¡Quiero ser tutor!" 
-                                             class="btn btn-success"
-                                             update="mensajes"/>
-                            <a data-toggle="modal" href="#" class="btn btn-info" action="#{subjectBean.subscribeStudent()}">Suscribirme a ésta materia</a>                                
+                            <h:form id="titleForm">
+                                <p:growl id="mensajes" showDetail="true"/>
+                                <p:commandButton action="#" value="¡Quiero ser tutor!" update="mensajes"/>
+                                <p:commandButton action="#{subjectBean.subscribeStudent()}" value="¡Suscribirme a esta materia!" update="mensajes"/>        
+                            </h:form>
                         </div> 
                     </div>
                 </div>           
