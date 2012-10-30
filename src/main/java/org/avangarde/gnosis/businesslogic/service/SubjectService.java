@@ -6,6 +6,8 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
@@ -33,7 +35,12 @@ public class SubjectService implements IService<SubjectVo> {
 
     @Override
     public SubjectVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Subject subject = DAOFactory.getInstance().getSubjectDAO().find(id, em);
+        if(subject!=null){
+            return subject.toVo();
+        }else{
+            return null;
+        }
     }
 
     @Override

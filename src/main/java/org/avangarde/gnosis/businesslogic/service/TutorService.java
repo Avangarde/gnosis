@@ -6,6 +6,9 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.vo.TutorVo;
 
 /**
@@ -28,7 +31,24 @@ public class TutorService implements IService<TutorVo> {
 
     @Override
     public void create(TutorVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Tutor entity = new Tutor();
+        entity.setId(vo.getId());
+        entity.setNumberStudents(vo.getNumberStudents());
+        entity.setNumberVotes(vo.getNumberVotes());
+        entity.setPublishedResources(vo.getPublishedResources());
+        entity.setQuestionReceived(vo.getQuestionReceived());
+        entity.setReputation(vo.getReputation());
+        entity.setUserName(vo.getUserName());
+        
+        
+        
+        
+        
+        //codigo para obtener el student
+        Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
+        entity.setStudent(student);
+
+        DAOFactory.getInstance().getTutorDAO().persist(entity, em);
     }
 
     @Override

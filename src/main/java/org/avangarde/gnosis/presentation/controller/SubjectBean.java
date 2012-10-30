@@ -12,6 +12,7 @@ import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
 import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
 import org.avangarde.gnosis.businesslogic.facade.TutorFacade;
+import org.avangarde.gnosis.businesslogic.facade.TutorSubjectFacade;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.SubjectVo;
@@ -68,55 +69,53 @@ public class SubjectBean implements Serializable {
         this.numGroups = numGroups;
     }
 
-    public String becomeTutor() {
+    public String becomeTutorOnSubject() {
+        
         //TODO revisar cuando no se esta suscrito a la materia
-        SubjectVo subjectVo = new SubjectVo();
-        SubjectFacade subjectFacade = FacadeFactory.getInstance().getSubjectFacade();
+
 
         //Logique
         //Si usuario actual aun no es tutor haz:
         //Crear nuevo tutor a partir de la información del usuario
 
         if (user.isLoggedIn()) {
+
             StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
-            TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
 
             TutorVo tutorVo = new TutorVo();
 
             tutorVo.setId(user.getId());
+            tutorVo.setStudentId(user.getId());
 
             if (!studentFacade.isTutor(tutorVo)) {
-                //retorna un tutor vacio, que se debe crear antes de continuar
-                //rellenar
-                tutorVo.setStudentId(tutorVo.getId());
 
-                //defecto
-                int def = 0;
-                tutorVo.setNumberStudents(def);
-                tutorVo.setNumberVotes(def);
-                tutorVo.setPublishedResources(def);
-                tutorVo.setQuestionReceived(def);
-                tutorVo.setReputation(def);
+                becomeTutor(tutorVo);
 
-                tutorFacade.create(tutorVo);
             }
 
             //continuando
+
+
+            SubjectFacade subjectFacade = FacadeFactory.getInstance().getSubjectFacade();
             int subjectCode = code;
 
-            subjectVo = subjectFacade.find(code);
+            SubjectVo subjectVo = subjectFacade.find(code);
 
             List<TutorSubjectVo> tutorList = subjectVo.getTutorSubjectList();
 
             TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
-            tutorSubjectVo.setId(tutorVo.getId());
+
             tutorSubjectVo.setSubjectCode(subjectCode);
             tutorSubjectVo.setReputation(0);
+            tutorSubjectVo.setTutorId(tutorVo.getId());
 
+            TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
+            
+            tutorSubjectFacade.create(tutorSubjectVo);
 
-            tutorList.add(tutorSubjectVo);
-            subjectVo.setTutorSubjectList(tutorList);
-            subjectFacade.update(subjectVo);
+//            tutorList.add(tutorSubjectVo);
+//            subjectVo.setTutorSubjectList(tutorList);
+//            boolean flag = subjectFacade.update(subjectVo);
 
             //Bean de tutor
 
@@ -128,7 +127,29 @@ public class SubjectBean implements Serializable {
         //agrega al tutor
 
         //clausura de cosas
-        return "¡Felicidades! Eres el nuevo tutor de " + name;
+        return "success";
+
+    }
+
+    public void becomeTutor(TutorVo tutorVo) {
+        TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
+
+        //retorna un tutor vacio, que se debe crear antes de continuar
+        //rellenar
+        tutorVo.setStudentId(tutorVo.getId());
+
+        //defecto
+        int def = 0;
+        tutorVo.setNumberStudents(def);
+        tutorVo.setNumberVotes(def);
+        tutorVo.setPublishedResources(def);
+        tutorVo.setQuestionReceived(def);
+        tutorVo.setReputation(def);
+
+        tutorVo.setUserName(user.getUserName());
+
+
+        tutorFacade.create(tutorVo);
 
     }
 

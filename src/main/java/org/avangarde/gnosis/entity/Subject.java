@@ -32,8 +32,8 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
     private int numGroups;
     @ManyToMany(mappedBy = "subjectList")
     private List<Student> studentList;
-    @ManyToMany(mappedBy = "subjectList")
-    private List<Program> programList;
+    //@ManyToMany(mappedBy = "subjectList")
+    //private List<Program> programList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
     private List<Topic> topicList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
@@ -100,13 +100,13 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.studentList = studentList;
     }
 
-    public List<Program> getProgramList() {
-        return programList;
-    }
-
-    public void setProgramList(List<Program> programList) {
-        this.programList = programList;
-    }
+//    public List<Program> getProgramList() {
+//        return programList;
+//    }
+//
+//    public void setProgramList(List<Program> programList) {
+//        this.programList = programList;
+//    }
 
     public List<Topic> getTopicList() {
         return topicList;
@@ -186,48 +186,48 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         vo.setDescription(getDescription());
         vo.setNumGroups(getNumGroups());
         //Listas
-        ArrayList<StudentVo> listStudentVo = new ArrayList<StudentVo>();
+        List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
         for (Student entity : getStudentList()) {
              listStudentVo.add(entity.toVo());
         }
+//        
+//        List<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
+//        for (Program entity : getProgramList()) {
+//             listProgramVo.add(entity.toVo());
+//        }
         
-        ArrayList<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
-        for (Program entity : getProgramList()) {
-             listProgramVo.add(entity.toVo());
-        }
-        
-        ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
+        List<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
             listTopicVo.add(entity.toVo());
         }
         
-        ArrayList<EventVo> listEventVo = new ArrayList<EventVo>();
+        List<EventVo> listEventVo = new ArrayList<EventVo>();
         for (Event entity : getEventList()) {
             listEventVo.add(entity.toVo());
         }
         
-        ArrayList<StudygroupVo> listStudygroupVo = new ArrayList<StudygroupVo>();
+        List<StudygroupVo> listStudygroupVo = new ArrayList<StudygroupVo>();
         for (Studygroup entity : getStudygroupList()) {
              listStudygroupVo.add(entity.toVo());
         }
         
-        ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        List<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
         for (Activity entity : getActivityList()) {
             listActivityVo.add(entity.toVo());
         }
         
-        ArrayList<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
+        List<TutorSubjectVo> listTutorSubjectVo = new ArrayList<TutorSubjectVo>();
         for (TutorSubject entity : getTutorSubjectList()) {
             listTutorSubjectVo.add(entity.toVo());
         }
         
-        ArrayList<PublicationVo> listPublicationVo = new ArrayList<PublicationVo>();
+        List<PublicationVo> listPublicationVo = new ArrayList<PublicationVo>();
         for (Publication entity : getPublicationList()) {
             listPublicationVo.add(entity.toVo());
         }
         
         vo.setStudentList(listStudentVo);
-        vo.setProgramList(listProgramVo);
+//        vo.setProgramList(listProgramVo);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
         vo.setStudygroupList(listStudygroupVo);

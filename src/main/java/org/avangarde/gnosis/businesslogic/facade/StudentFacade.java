@@ -33,7 +33,11 @@ public class StudentFacade extends Facade <StudentVo> {
         
         try {
             em = emf.createEntityManager();
-            vo = ((TutorService)service).find(vo, em);
+            
+            //metodo para obtener el vo de un tutor
+            //condicional
+            flag = false;
+            
         }finally{
             if (em!=null){
                 em.clear();
