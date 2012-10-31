@@ -56,4 +56,16 @@ public class TutorDAO implements IDAO<Tutor> {
         Query q = em.createQuery(cq);
         return q.getResultList();
     }
+
+    public Tutor findByUsername(Tutor entity, EntityManager em) {
+        Tutor tutor = new Tutor();
+        Query q = em.createQuery("SELECT p FROM Tutor p WHERE p.userName LIKE :userName ").
+                setParameter("userName", entity.getUserName());
+        try {
+            tutor = (Tutor) q.getSingleResult();
+        } catch (Exception e) {
+            tutor = null;
+        }
+        return tutor;
+    }
 }

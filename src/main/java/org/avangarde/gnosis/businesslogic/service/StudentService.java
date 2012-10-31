@@ -5,7 +5,9 @@ import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Program;
 import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.vo.StudentVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -14,7 +16,7 @@ import org.avangarde.gnosis.vo.StudentVo;
 public class StudentService implements IService<StudentVo> {
 
     private static StudentService instance;
-    
+
     private StudentService() {
     }
 
@@ -67,7 +69,22 @@ public class StudentService implements IService<StudentVo> {
         entity.setPassword(vo.getPassword());
 
         Student alumno = DAOFactory.getInstance().getStudentDAO().login(entity, em);
-        return alumno != null? alumno.toVo():null;
-        
+        return alumno != null ? alumno.toVo() : null;
+
+    }
+
+    public boolean isTutor(TutorVo vo, EntityManager em) {
+        Tutor entity = new Tutor();
+        entity.setUserName(vo.getUserName());
+
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().findByUsername(entity, em);
+        if (tutor != null) {
+            vo = tutor.toVo();
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 }
