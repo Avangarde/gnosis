@@ -13,6 +13,7 @@ public class TopicVo implements IValueObject{
     private Date dateStarted;
     private String title;
     private int studentId;
+    private String studentName;
     private Integer subjectCode;
     private List<CommentVo> commentList;
     private List<ActivityVo> activityList;
@@ -47,6 +48,14 @@ public class TopicVo implements IValueObject{
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Integer getSubjectCode() {

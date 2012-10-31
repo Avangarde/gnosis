@@ -143,7 +143,9 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     @Override
     public CommentVo toVo() {
         CommentVo vo = new CommentVo();
-        vo.setActivityId(getActivity().getId());
+        if (getActivity() != null) {
+            vo.setActivityId(getActivity().getId());
+        }
         vo.setContent(getContent());
         vo.setDate(getDate());
         vo.setDisliked(getDislike());
@@ -154,10 +156,18 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         }
         vo.setLikeDislikeList(listVo);
         vo.setLiked(getLike());
-        vo.setPublicationId(getPublication().getId());
-        vo.setStudentId(getStudent().getId());
-        vo.setTopicId(getTopic().getId());
-        vo.setTutorSubjectId(getTutorSubject().getId());
+        if (getPublication() != null) {
+            vo.setPublicationId(getPublication().getId());
+        }
+        if (getStudent() != null) {
+            vo.setStudentId(getStudent().getId());
+        }
+        if (getTopic() != null) {
+            vo.setTopicId(getTopic().getId());
+        }
+        if (getTutorSubject() != null) {
+            vo.setTutorSubjectId(getTutorSubject().getId());
+        }
         return vo;
     }
 }

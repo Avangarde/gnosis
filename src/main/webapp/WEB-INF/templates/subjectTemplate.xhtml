@@ -94,13 +94,9 @@
         <div class="container-fluid">
             <!--content-->
             <div class="container">
-                <div class="row">
-                    <div class="span12 offset0">
                         <ui:insert name="content">
 
                         </ui:insert>
-                    </div>           
-                </div>
             </div>
             <br></br><br></br><br></br><br></br>
             <p:dock>  
@@ -108,7 +104,7 @@
                 <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml?code=#{subjectBean.code}"/>  
-                <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="#"/>  
+                <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="forum.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>   
             </p:dock>
         </div>

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}" required="true"/>
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
+
+    <ui:define name="title">
+        - Foro de #{subjectBean.name}
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="hero-unit">
+            <div class="row">
+                <div class="span12">
+                    <h1>Foro</h1>
+                    <h:form id="form">
+                        <h1><a data-toggle="modal" href="#newTopicModal" class="btn btn-large btn-primary">+ Nuevo Tema</a></h1>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span11">
+                    <p:dataTable id="dataTable" var="topic" value="#{topicBean.topics}"  
+                                 paginator="true" rows="10"  
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15">  
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Tema" />  
+                            </f:facet>
+                            <h:link value="#{topic.title}" outcome="topicView.xhtml">
+                                <f:param name ="code" value ="#{subjectBean.code}"/>
+                                <f:param name ="topicId" value ="#{topic.id}"/>
+                            </h:link>  
+                        </p:column>  
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Cantidad de Respuestas" />  
+                            </f:facet>  
+                            <h:outputText value="#{topic.commentList.size()}" />  
+                        </p:column>  
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Creado por" />  
+                            </f:facet>  
+                            <h:outputText value="#{topic.studentName}" />  
+                        </p:column>  
+
+                    </p:dataTable>  
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h:form id="newTopicForm" class="form-horizontal form-no-margin">
+                    <div id="newTopicModal" class="modal hide fade">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h2>Nuevo Tema:</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-info">Verifica que el tema que vas a crear no haya sido creado aún</p>
+                            <div class="control-group">
+                                <p class="text-info"><strong>Título:</strong></p>
+                                <div class="input-append">
+                                    <p:inputText id="title" required="true" value="#{topicBean.title}" 
+                                                 requiredMessage="Por favor completa este campo" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p class="text-info"><strong>Mensaje</strong></p>
+                                <div class="input-append">
+                                    <p:inputTextarea rows="6" value="#{topicBean.firstComment}"/> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton action="#{topicBean.createTopic()}" value="Crear" class="btn btn-success" >
+                                <f:param name ="code" value ="#{subjectBean.code}"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

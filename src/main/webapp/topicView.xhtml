@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}" required="true"/>
+        <f:viewParam name="topicId" value="#{topicBean.id}" required="true"/>
+        <f:event type="preRenderView" listener="#{topicBean.preRenderView()}" />
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
+
+    <ui:define name="title">
+        - Foro de #{subjectBean.name}
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="hero-unit">
+            <div class="row">
+                <div class="span12">
+                    <h1>Foro</h1>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
