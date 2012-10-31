@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="query" value="#{searchBean.query}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        - Busqueda
+    </ui:define>
+    <ui:define name="content">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <form class="form-search" method="get" action="#{request.contextPath}/search.xhtml" >
+                        <input type="text" name="query" value="#{searchBean.query}" class="search-query"   placeholder = "Busca un tutor">
+                            <button id="searchButton" type="submit" class="btn"><i class="icon-search icon-blue" /></button>
+                        </input>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <div class="hero-unit">
+                        <h:form prependId="false">  
+
+                            <p:dataTable id="dataTable" var="tutor" value="#{searchBean.tutors}"  
+                                         paginator="true" rows="10"  
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                         rowsPerPageTemplate="5,10,15">  
+                                <f:facet name="header">  
+                                    <ui:fragment rendered="#{searchBean.query == ''}">
+                                        Tutores de la materia
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{searchBean.query != ''}">
+                                        Resultado de la busqueda
+                                    </ui:fragment>
+                                </f:facet> 
+                                
+                                
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Número de aprendices" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{tutor.numberStudents}" />  
+                                </p:column>  
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Veces calificado" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{tutor.numberVotes}" />  
+                                </p:column>  
+                                
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Recursos compartidos" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{tutor.publishedResources}" />  
+                                </p:column>  
+
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Preguntas resueltas" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{tutor.questionReceived}" />  
+                                </p:column> 
+                                
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Reputación" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.description}" />  
+                                </p:column> 
+
+                                <p:column>  
+                                    <h:link value="¡Quiero aprender de él!"  class="btn btn-mini btn-success">
+                                    </h:link>
+                                </p:column>  
+                            </p:dataTable>  
+
+                        </h:form>  
+
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </ui:define>
+</ui:composition> 

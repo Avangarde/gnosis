@@ -39,6 +39,15 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     @ManyToOne
     @JoinColumn(name = "TutorId")
     private Tutor tutor;
+    @Column(name = "number_votes")
+    private int numberVotes;
+    @Column(name = "published_resources")
+    private int publishedResources;
+    @Column(name = "question_received")
+    private int questionReceived;
+    @Column(name = "number_students")
+    private int numberStudents;
+    
 
     public TutorSubject() {
     }
@@ -90,6 +99,39 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         this.tutor = tutor;
     }
 
+    public int getNumberVotes() {
+        return numberVotes;
+    }
+
+    public void setNumberVotes(int numberVotes) {
+        this.numberVotes = numberVotes;
+    }
+
+    public int getPublishedResources() {
+        return publishedResources;
+    }
+
+    public void setPublishedResources(int publishedResources) {
+        this.publishedResources = publishedResources;
+    }
+
+    public int getQuestionReceived() {
+        return questionReceived;
+    }
+
+    public void setQuestionReceived(int questionReceived) {
+        this.questionReceived = questionReceived;
+    }
+
+    public int getNumberStudents() {
+        return numberStudents;
+    }
+
+    public void setNumberStudents(int numberStudents) {
+        this.numberStudents = numberStudents;
+    }
+    
+        
     @Override
     public TutorSubjectVo toVo() {
         TutorSubjectVo vo = new TutorSubjectVo();
@@ -106,6 +148,10 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         }
         vo.setStudentList(listStudentVo);
         vo.setTutorId(getTutor().getId());
+        vo.setNumberStudents(getNumberStudents());
+        vo.setNumberVotes(getNumberVotes());
+        vo.setPublishedResources(getPublishedResources());
+        vo.setQuestionReceived(getQuestionReceived());
         return vo;
     }
 }

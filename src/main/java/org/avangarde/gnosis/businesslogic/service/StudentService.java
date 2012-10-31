@@ -67,7 +67,6 @@ public class StudentService implements IService<StudentVo> {
         entity.setPassword(vo.getPassword());
 
         Student alumno = DAOFactory.getInstance().getStudentDAO().login(entity, em);
-        return alumno != null? alumno.toVo():null;
-        
+        return alumno != null? alumno.toVo():null;  
     }
 }
