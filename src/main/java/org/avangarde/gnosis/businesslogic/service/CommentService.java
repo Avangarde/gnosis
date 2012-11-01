@@ -4,7 +4,12 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Comment;
@@ -32,20 +37,25 @@ public class CommentService implements IService<CommentVo> {
 
     @Override
     public void create(CommentVo vo, EntityManager em) {
-        Comment entity =  new Comment();
-        entity.setContent(vo.getContent());
-        entity.setDate(vo.getDate());
-        if (vo.getStudentId() != 0) {
-            Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
-            entity.setStudent(student);
-            student.getCommentList().add(entity);
+        try {
+            Comment entity =  new Comment();
+            entity.setContent(vo.getContent());
+            SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+            entity.setDate(format.parse(vo.getDate()));
+            if (vo.getStudentId() != 0) {
+                Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
+                entity.setStudent(student);
+                student.getCommentList().add(entity);
+            }
+            if (vo.getTopicId() != 0) {
+                Topic topic = DAOFactory.getInstance().getTopicDAO().find(vo.getTopicId(), em);
+                entity.setTopic(topic);
+                topic.getCommentList().add(entity);
+            }
+            DAOFactory.getInstance().getCommentDAO().persist(entity, em);
+        } catch (ParseException ex) {
+            Logger.getLogger(CommentService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (vo.getTopicId() != 0) {
-            Topic topic = DAOFactory.getInstance().getTopicDAO().find(vo.getTopicId(), em);
-            entity.setTopic(topic);
-            topic.getCommentList().add(entity);
-        }
-        DAOFactory.getInstance().getCommentDAO().persist(entity, em);
     }
 
     @Override
@@ -66,5 +76,14 @@ public class CommentService implements IService<CommentVo> {
     @Override
     public List<CommentVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<CommentVo> getCommentsByTopic(EntityManager em, Integer topicId) {
+        List<CommentVo> commentVo = new ArrayList<CommentVo>();
+        List<Comment> comments = DAOFactory.getInstance().getCommentDAO().getCommentsByTopic(em, topicId);
+        for (Comment entity : comments ){
+            commentVo.add(entity.toVo());
+        }    
+        return commentVo;
     }
 }

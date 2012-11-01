@@ -33,6 +33,7 @@ public class StudentService implements IService<StudentVo> {
         entity.setUserName(vo.getUserName());
         entity.setEmail(vo.getEmail());
         entity.setPassword(vo.getPassword());
+        entity.setUrlPhoto("./resources/images/childish_User.png");
 
         Program program = DAOFactory.getInstance().getProgramDAO().find(vo.getProgramId(), em);
         program.getStudentList().add(entity);

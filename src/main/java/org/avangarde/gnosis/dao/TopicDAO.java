@@ -67,7 +67,7 @@ public class TopicDAO implements IDAO<Topic> {
     }
 
     public List<Topic> getTopicsBySubject(EntityManager em, Integer subjectCode) {
-        List<Topic> topics = new ArrayList<Topic>();
+        List<Topic> topics;
         Query q = em.createQuery("SELECT t FROM Topic t WHERE t.subject.code LIKE :subjectCode").setParameter("subjectCode", subjectCode.toString());
         try {
             topics = q.getResultList();

@@ -5,6 +5,7 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,7 +29,7 @@ public class TopicBean implements Serializable{
     private Date dateStarted;
     private String title;
     private String firstComment;
-    private List<CommentVo> commentList;
+    private List<CommentVo> commentList = new ArrayList<CommentVo>();
     private List<TopicVo> topics = new ArrayList<TopicVo>();
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
@@ -60,7 +61,8 @@ public class TopicBean implements Serializable{
         
         CommentVo commentVo = new CommentVo();
         commentVo.setContent(getFirstComment());
-        commentVo.setDate(new GregorianCalendar().getTime());
+        SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+        commentVo.setDate(format.format(new GregorianCalendar().getTime()));
         commentVo.setStudentId(getUser().getId());
         commentVo.setTopicId(topicVo.getId());
         
@@ -128,6 +130,9 @@ public class TopicBean implements Serializable{
     }
 
     public List<CommentVo> getCommentList() {
+        if (commentList.isEmpty()) {
+            loadComments();
+        }
         return commentList;
     }
 
@@ -138,6 +143,11 @@ public class TopicBean implements Serializable{
     private void loadTopics() {
         topics = new ArrayList<TopicVo>();
         topics = FacadeFactory.getInstance().getTopicFacade().getTopicsbySubject(getSubject().getCode());
+    }
+
+    private void loadComments() {
+        commentList = new ArrayList<CommentVo>();
+        commentList = FacadeFactory.getInstance().getCommentFacade().getCommentsbyTopic(getId());
     }
         
 }

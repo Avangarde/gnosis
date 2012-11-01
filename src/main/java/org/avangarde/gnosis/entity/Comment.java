@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "content")
+    @Column(name = "content", length = 1000)
     private String content;
     @Column(name = "dateComment")
     @Temporal(TemporalType.DATE)
@@ -147,7 +148,9 @@ public class Comment implements Serializable, IEntity<CommentVo> {
             vo.setActivityId(getActivity().getId());
         }
         vo.setContent(getContent());
-        vo.setDate(getDate());
+        
+        SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+        vo.setDate(format.format(getDate()));
         vo.setDisliked(getDislike());
         vo.setId(getId());
         List<LikeDislikeVo> listVo = new ArrayList<LikeDislikeVo>();
@@ -161,6 +164,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         }
         if (getStudent() != null) {
             vo.setStudentId(getStudent().getId());
+            vo.setStudentName(getStudent().getUserName());
         }
         if (getTopic() != null) {
             vo.setTopicId(getTopic().getId());

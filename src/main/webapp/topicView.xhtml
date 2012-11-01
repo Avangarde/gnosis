@@ -21,8 +21,18 @@
     <ui:define name="content">
         <div class="hero-unit">
             <div class="row">
-                <div class="span12">
-                    <h1>Foro</h1>
+                <div class="span11">
+                    <h:form>
+                        <h1>Foro</h1>
+                        <ui:repeat value="#{topicBean.commentList}" var="comment">
+                            <p:panel id="pnl-#{comment.id}" header="#{comment.studentName}" toggleable="true" toggleSpeed="500" widgetVar="panel-#{comment.id}" footer="#{comment.date}">  
+                                <h:panelGrid columns="2" cellpadding="10"> 
+                                    <p:graphicImage value="./resources/images/childish_User.png"/>
+                                    <h:outputText value="#{comment.content}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </ui:repeat>
+                    </h:form>
                 </div>
             </div>
         </div>
