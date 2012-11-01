@@ -145,7 +145,7 @@ public class TopicBean implements Serializable{
         topics = FacadeFactory.getInstance().getTopicFacade().getTopicsbySubject(getSubject().getCode());
     }
 
-    private void loadComments() {
+    public void loadComments() {
         commentList = new ArrayList<CommentVo>();
         commentList = FacadeFactory.getInstance().getCommentFacade().getCommentsbyTopic(getId());
     }

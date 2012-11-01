@@ -24,14 +24,22 @@
                 <div class="span11">
                     <h:form>
                         <h1>Foro</h1>
-                        <ui:repeat value="#{topicBean.commentList}" var="comment">
-                            <p:panel id="pnl-#{comment.id}" header="#{comment.studentName}" toggleable="true" toggleSpeed="500" widgetVar="panel-#{comment.id}" footer="#{comment.date}">  
-                                <h:panelGrid columns="2" cellpadding="10"> 
-                                    <p:graphicImage value="./resources/images/childish_User.png"/>
-                                    <h:outputText value="#{comment.content}"/>
-                                </h:panelGrid>
-                            </p:panel>
-                        </ui:repeat>
+                        <p:panel id="panel">
+                            <ui:repeat value="#{topicBean.commentList}" var="comment">
+                                <p:panel id="pnl-#{comment.id}" header="#{comment.studentName}" toggleable="true" toggleSpeed="500" widgetVar="panel-#{comment.id}" footer="#{comment.date}">  
+                                    <h:panelGrid columns="2" cellpadding="10"> 
+                                        <p:graphicImage value="./resources/images/childish_User.png"/>
+                                        <h:outputText value="#{comment.content}" escape="false"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </ui:repeat>
+                        </p:panel>
+                        <br></br>
+                        <h2>Responder:</h2>
+                        <p:editor id="editor" value="#{commentBean.content}" />
+                        <br></br>
+                        <p:commandButton id="response" value="Responder" update="panel" action="#{commentBean.createComment()}"/>
+                        <p:blockUI block="panel" trigger="response" /> 
                     </h:form>
                 </div>
             </div>
