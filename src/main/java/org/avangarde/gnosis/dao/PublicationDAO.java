@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Publication;
 
 /**
@@ -17,6 +18,9 @@ import org.avangarde.gnosis.entity.Publication;
 public class PublicationDAO implements IDAO<Publication> {
 
     private static PublicationDAO instance;
+
+    private PublicationDAO() {
+    }
 
     public static synchronized PublicationDAO getInstance() {
         if (instance == null) {
@@ -32,30 +36,35 @@ public class PublicationDAO implements IDAO<Publication> {
 
     @Override
     public Publication find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Publication) em.find(Publication.class, id);
     }
 
     @Override
     public void update(Publication entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Publication publication = (Publication) em.getReference(Publication.class, id);
+        em.remove(publication);
     }
 
     @Override
     public List<Publication> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Publication.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 
-    public List<String> getTopics(EntityManager em) {
+    public List<String> getTopicsBySubject(EntityManager em, Integer subjectCode) {
         List<String> list;
-        Query q = em.createQuery("SELECT DISTINCT p.topic FROM Publication p");
-        try{
+        Query q = em.createQuery("SELECT DISTINCT p.topic FROM Subject s INNER JOIN s.publicationList p "
+                + "WHERE s.code LIKE :subjectCode").setParameter("subjectCode", subjectCode.toString());
+        try {
             list = q.getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             list = new ArrayList<String>();
         }
         return list;
@@ -63,13 +72,19 @@ public class PublicationDAO implements IDAO<Publication> {
 
     public List<Publication> getPublicationsByTopic(String topic, EntityManager em) {
         List<Publication> list;
-        Query q = em.createQuery("SELECT p FROM Publication p WHERE p.topic LIKE :topic " 
+        Query q = em.createQuery("SELECT p FROM Publication p WHERE p.topic LIKE :topic "
                 + "ORDER BY p.title").setParameter("topic", topic);
-        try{
+        try {
             list = q.getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             list = new ArrayList<Publication>();
         }
         return list;
+    }
+    
+    public int getNewId(EntityManager em){
+        Integer newId;
+        newId = ((Integer)em.createQuery("SELECT MAX(p.id) FROM Publication p").getSingleResult());
+        return newId+1;
     }
 }

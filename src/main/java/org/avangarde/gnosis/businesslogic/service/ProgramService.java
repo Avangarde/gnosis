@@ -20,6 +20,9 @@ import org.avangarde.gnosis.vo.ProgramVo;
 public class ProgramService implements IService<ProgramVo> {
 
     private static ProgramService instance;
+    
+    private ProgramService() {
+    }
 
     public static synchronized ProgramService getInstance() {
         if (instance == null) {
@@ -35,7 +38,12 @@ public class ProgramService implements IService<ProgramVo> {
 
     @Override
     public ProgramVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Program program = DAOFactory.getInstance().getProgramDAO().find(id, em);
+        if (program != null) {
+            return program.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override

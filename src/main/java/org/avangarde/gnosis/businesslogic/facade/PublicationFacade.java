@@ -14,10 +14,10 @@ public class PublicationFacade extends Facade <PublicationVo> {
         super(PUName, service);
     } 
 
-    public List<String> getTopics() {
+    public List<String> getTopicsBySubject(Integer subjectCode) {
         try {
             em = emf.createEntityManager();
-            return ((PublicationService)service).getTopics(em);
+            return ((PublicationService)service).getTopicsBySubject(em, subjectCode);
         } finally {
             if (em != null) {
                 em.clear();

@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.TutorSubjectVo;
 public class TutorSubjectService implements IService<TutorSubjectVo> {
 
     private static TutorSubjectService instance;
+    
+    private TutorSubjectService() {
+    }
 
     public static synchronized TutorSubjectService getInstance() {
         if (instance == null) {

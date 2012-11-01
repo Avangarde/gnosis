@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.LikeDislikeVo;
 public class LikeDislikeService implements IService<LikeDislikeVo> {
 
     private static LikeDislikeService instance;
+    
+    private LikeDislikeService() {
+    }
 
     public static synchronized LikeDislikeService getInstance() {
         if (instance == null) {

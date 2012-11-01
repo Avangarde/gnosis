@@ -5,11 +5,13 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.PublicationFacade;
 import org.avangarde.gnosis.vo.PublicationVo;
@@ -21,24 +23,73 @@ import org.primefaces.model.TreeNode;
  * @author andres
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ResourceBean implements Serializable {
 
     private TreeNode root;
     private TreeNode selectedNode;
+    private int id;
     private String title;
     private String topic;
     private String type;
     private String url;
     private String sharedBy;
+    private List<SelectItem> topics;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
     @ManagedProperty(value = "#{subjectBean}")
     private SubjectBean subject;
 
     public ResourceBean() {
+    }
+
+    public void saveResource() {
+
+        PublicationFacade facade = FacadeFactory.getInstance().getPublicationFacade();
+
+        PublicationVo vo = new PublicationVo();
+        vo.setTitle(getTitle());
+        vo.setTopic(getTopic());
+        vo.setType(getType());
+        vo.setDate(new GregorianCalendar().getTime());
+        vo.setStudentId(getUser().getId());
+        vo.setSubjectCode(getSubject().getCode());
+        
+        String newURL = getUrl();
+        if (newURL.startsWith("http://docs")) {
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/preview");
+        } else if (newURL.startsWith("http://www.youtube")){
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/embed/" + newURL.substring(edit + 9));
+        }
+        vo.setUrl(newURL);
+        
+        facade.create(vo);
+        
+        setId(16);
+
+        TreeNode nodeCurrentTopic = null;
+        for (TreeNode node : root.getChildren()) {
+            if (((PublicationVo) (node).getData()).getTitle().equals(vo.getTopic())) {
+                nodeCurrentTopic = node;
+            }
+        }
+        if (nodeCurrentTopic == null) {
+            PublicationVo newVo = new PublicationVo();
+            newVo.setTitle(vo.getTopic());
+            nodeCurrentTopic = new DefaultTreeNode(newVo, root);
+        }
+
+        new DefaultTreeNode(vo, nodeCurrentTopic);
+
+//        return "success";
+
+    }
+
+    public void preRenderView() {
         root = new DefaultTreeNode("root", null);
-        List<String> topics = FacadeFactory.getInstance().getPublicationFacade().getTopics();
+        List<String> topics = FacadeFactory.getInstance().getPublicationFacade().getTopicsBySubject(subject.getCode());
         for (String topic : topics) {
             PublicationVo vo = new PublicationVo();
             vo.setTitle(topic);
@@ -53,52 +104,17 @@ public class ResourceBean implements Serializable {
         }
     }
 
-    public String saveResource() {
-
-        PublicationFacade facade = FacadeFactory.getInstance().getPublicationFacade();
-
-        PublicationVo vo = new PublicationVo();
-        vo.setTitle(getTitle());
-        vo.setUrl(getUrl());
-        vo.setTopic(getTopic());
-        vo.setType(getType());
-        vo.setDate(new GregorianCalendar().getTime());
-        vo.setStudentId(getUser().getId());
-        vo.setSubjectCode(getSubject().getCode());
-
-        facade.create(vo);
-
-        TreeNode nodeCurrentTopic = null;
-        for (TreeNode node : root.getChildren()) {
-            if(((PublicationVo)(node).getData()).getTitle().equals(vo.getTopic())){
-                nodeCurrentTopic = node;
+    public List<SelectItem> getTopics() {
+        if (topics == null) {
+            topics = new ArrayList<SelectItem>();
+            List<String> topicList = FacadeFactory.getInstance().getPublicationFacade().getTopicsBySubject(subject.getCode());
+            if (topicList != null) {
+                for (String topic : topicList) {
+                    topics.add(new SelectItem(topic));
+                }
             }
         }
-        if (nodeCurrentTopic == null){
-            PublicationVo newVo = new PublicationVo();
-            newVo.setTitle(vo.getTopic());
-            nodeCurrentTopic = new DefaultTreeNode(newVo, root);
-        }
-        
-        new DefaultTreeNode(vo, nodeCurrentTopic);
-
-
-        return "success";
-
-    }
-
-    public String viewResource() {
-
-        setTitle(((PublicationVo) getSelectedNode().getData()).getTitle());
-        setTopic(((PublicationVo) getSelectedNode().getData()).getTopic());
-        setType(((PublicationVo) getSelectedNode().getData()).getType());
-        String url = ((PublicationVo) getSelectedNode().getData()).getUrl();
-        int edit = url.lastIndexOf("/");
-        url = (url.substring(0, edit) + "/preview");
-        setUrl(url);
-        setSharedBy(((PublicationVo) getSelectedNode().getData()).getStudentName());
-
-        return "success";
+        return topics;
     }
 
     public void update() {
@@ -118,6 +134,18 @@ public class ResourceBean implements Serializable {
 
     public void setSelectedNode(TreeNode selectedNode) {
         this.selectedNode = selectedNode;
+    }
+
+    public int getId() {
+        if (selectedNode != null) {
+            return ((PublicationVo) (selectedNode.getData())).getId();
+        } else {
+            return id;
+        }
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.TopicVo;
 public class TopicService implements IService<TopicVo> {
 
     private static TopicService instance;
+    
+    private TopicService() {
+    }
 
     public static synchronized TopicService getInstance() {
         if (instance == null) {

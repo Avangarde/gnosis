@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.LikeDislike;
 
 /**
@@ -15,6 +17,9 @@ import org.avangarde.gnosis.entity.LikeDislike;
 public class LikeDislikeDAO implements IDAO<LikeDislike> {
 
     private static LikeDislikeDAO instance;
+    
+    private LikeDislikeDAO() {
+    }
 
     public static synchronized LikeDislikeDAO getInstance() {
         if (instance == null) {
@@ -25,26 +30,30 @@ public class LikeDislikeDAO implements IDAO<LikeDislike> {
 
     @Override
     public void persist(LikeDislike entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
     public LikeDislike find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (LikeDislike) em.find(LikeDislike.class, id);
     }
 
     @Override
     public void update(LikeDislike entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        LikeDislike likeDislike = (LikeDislike) em.getReference(LikeDislike.class, id);
+        em.remove(likeDislike);
     }
 
     @Override
     public List<LikeDislike> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(LikeDislike.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

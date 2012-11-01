@@ -18,6 +18,9 @@ public class ProgramDAO implements IDAO<Program> {
 
     private static ProgramDAO instance;
 
+    private ProgramDAO() {
+    }
+
     public static synchronized ProgramDAO getInstance() {
         if (instance == null) {
             instance = new ProgramDAO();
@@ -27,7 +30,7 @@ public class ProgramDAO implements IDAO<Program> {
 
     @Override
     public void persist(Program entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
@@ -37,12 +40,13 @@ public class ProgramDAO implements IDAO<Program> {
 
     @Override
     public void update(Program entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Program program = (Program) em.getReference(Program.class, id);
+        em.remove(program);
     }
 
     @Override

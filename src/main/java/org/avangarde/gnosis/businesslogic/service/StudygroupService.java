@@ -15,6 +15,9 @@ import org.avangarde.gnosis.vo.StudygroupVo;
 public class StudygroupService implements IService<StudygroupVo> {
 
     private static StudygroupService instance;
+    
+    private StudygroupService() {
+    }
 
     public static synchronized StudygroupService getInstance() {
         if (instance == null) {

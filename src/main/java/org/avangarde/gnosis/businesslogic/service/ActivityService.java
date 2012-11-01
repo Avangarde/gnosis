@@ -16,6 +16,9 @@ public class ActivityService implements IService<ActivityVo> {
 
     private static ActivityService instance;
 
+    private ActivityService() {
+    }
+
     public static synchronized ActivityService getInstance() {
         if (instance == null) {
             instance = new ActivityService();

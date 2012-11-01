@@ -6,6 +6,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Event;
 
 /**
@@ -16,6 +18,9 @@ public class EventDAO implements IDAO<Event> {
 
     private static EventDAO instance;
 
+    private EventDAO() {
+    }
+
     public static synchronized EventDAO getInstance() {
         if (instance == null) {
             instance = new EventDAO();
@@ -25,26 +30,30 @@ public class EventDAO implements IDAO<Event> {
 
     @Override
     public void persist(Event entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.persist(entity);
     }
 
     @Override
     public Event find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Event) em.find(Event.class, id);
     }
 
     @Override
     public void update(Event entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Event event = (Event) em.getReference(Event.class, id);
+        em.remove(event);
     }
 
     @Override
     public List<Event> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Event.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

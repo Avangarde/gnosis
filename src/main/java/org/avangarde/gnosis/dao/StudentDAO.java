@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Student;
 
 /**
@@ -14,6 +15,9 @@ import org.avangarde.gnosis.entity.Student;
 public class StudentDAO implements IDAO<Student> {
 
     private static StudentDAO instance;
+
+    private StudentDAO() {
+    }
 
     public static synchronized StudentDAO getInstance() {
         if (instance == null) {
@@ -34,17 +38,21 @@ public class StudentDAO implements IDAO<Student> {
 
     @Override
     public void update(Student entity, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.merge(entity);
     }
 
     @Override
     public void delete(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student student = (Student) em.getReference(Student.class, id);
+        em.remove(student);
     }
 
     @Override
     public List<Student> getList(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Student.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 
     public Student login(Student entity, EntityManager em) {
