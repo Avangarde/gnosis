@@ -43,6 +43,7 @@ public class CommentBean implements Serializable {
         commentFacade.create(commentVo);
         
         getTopic().loadComments();
+        setContent("");
     }
 
     public String getContent() {

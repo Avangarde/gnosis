@@ -39,7 +39,9 @@
                         <p:editor id="editor" value="#{commentBean.content}" />
                         <br></br>
                         <p:commandButton id="response" value="Responder" update="panel" action="#{commentBean.createComment()}"/>
-                        <p:blockUI block="panel" trigger="response" /> 
+                        <p:blockUI block="response" trigger="response" />
+                        <p:blockUI block="editor" trigger="response" />
+                        <p:blockUI block="panel" trigger="response" />
                     </h:form>
                 </div>
             </div>
