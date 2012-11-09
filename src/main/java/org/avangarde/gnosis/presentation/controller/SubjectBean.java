@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
-import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
+import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
  *
@@ -23,6 +23,7 @@ public class SubjectBean implements Serializable {
     private int numGroups;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
+    String buttonValue;
 
     public SubjectBean() {
     }
@@ -70,14 +71,40 @@ public class SubjectBean implements Serializable {
     public void setUser(UserBean user) {
         this.user = user;
     }
-    
+
     public void subscribeStudent() {
-        if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
-            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Te has suscribido a la materia", ""));
+        if ("Suscribirme a la materia".equals(buttonValue)) {
+            if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Te has suscrito a la materia", ""));
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No te pudiste suscribir a la materia", ""));
+            }
         } else {
-            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "No te pudiste suscribir a la materia", ""));
+            if (FacadeFactory.getInstance().getSubjectFacade().unSubscribeStudent(new Integer(user.getId()), getCode())) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Has abandonado la materia", ""));
+
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No pudiste abandonar la materia", ""));
+            }
+        }
+    }
+
+    public String changeButtonValue() {
+        return buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode()) ? 
+                "Abandonar" : "Suscribirme a la materia";
+    }
+
+    public void preRenderView() {
+        if (getCode() != null) {
+            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());
+            setName(subject.getName());
+            setDescription(subject.getDescription());
+            setNumGroups(subject.getNumGroups());
         }
     }
 }
