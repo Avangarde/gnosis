@@ -12,8 +12,10 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="form"> 
-            <h:commandButton id="buton" value="Taller de Proyectos de Ingenieria" action="#{testBean.subject()}" class="btn btn-success"></h:commandButton>
+        <h:form id="form" > 
+            <h:link value="Calculo Diferencial" outcome="subject.xhtml"  class="btn btn-mini btn-success">
+                <f:param name ="code" value ="1000004"/>
+            </h:link>
         </h:form>
     </ui:define>
 

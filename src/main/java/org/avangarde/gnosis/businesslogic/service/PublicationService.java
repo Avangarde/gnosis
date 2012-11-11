@@ -34,6 +34,7 @@ public class PublicationService implements IService<PublicationVo> {
     @Override
     public void create(PublicationVo vo, EntityManager em) {
         Publication entity = new Publication();
+        entity.setId(DAOFactory.getInstance().getPublicationDAO().getNewId(em));
         entity.setDate(vo.getDate());
         entity.setTitle(vo.getTitle());
         entity.setTopic(vo.getTopic());
@@ -53,7 +54,12 @@ public class PublicationService implements IService<PublicationVo> {
 
     @Override
     public PublicationVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Publication publication = DAOFactory.getInstance().getPublicationDAO().find(id, em);
+        if (publication != null) {
+            return publication.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -71,9 +77,9 @@ public class PublicationService implements IService<PublicationVo> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public List<String> getTopics(EntityManager em) {
+    public List<String> getTopicsBySubject(EntityManager em, Integer subjectCode) {
 
-        List<String> list = DAOFactory.getInstance().getPublicationDAO().getTopics(em);
+        List<String> list = DAOFactory.getInstance().getPublicationDAO().getTopicsBySubject(em, subjectCode);
             
         return list;
     }

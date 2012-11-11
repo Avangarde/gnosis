@@ -58,9 +58,10 @@ public class PublicationDAO implements IDAO<Publication> {
         return q.getResultList();
     }
 
-    public List<String> getTopics(EntityManager em) {
+    public List<String> getTopicsBySubject(EntityManager em, Integer subjectCode) {
         List<String> list;
-        Query q = em.createQuery("SELECT DISTINCT p.topic FROM Publication p");
+        Query q = em.createQuery("SELECT DISTINCT p.topic FROM Subject s INNER JOIN s.publicationList p "
+                + "WHERE s.code LIKE :subjectCode").setParameter("subjectCode", subjectCode.toString());
         try {
             list = q.getResultList();
         } catch (Exception e) {
@@ -79,5 +80,11 @@ public class PublicationDAO implements IDAO<Publication> {
             list = new ArrayList<Publication>();
         }
         return list;
+    }
+    
+    public int getNewId(EntityManager em){
+        Integer newId;
+        newId = ((Integer)em.createQuery("SELECT MAX(p.id) FROM Publication p").getSingleResult());
+        return newId+1;
     }
 }

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -18,7 +19,30 @@
         <script type="text/javascript">
             $('.collapse').collapse();
         </script>
-
+        <script type="text/javascript">
+            function replaceButtonText(buttonId, text)
+            {
+                if (document.getElementById)
+                {
+                    var button=document.getElementById(buttonId);
+                    if (button)
+                    {
+                        if (button.childNodes[0])
+                        {
+                            button.childNodes[0].nodeValue=text;
+                        }
+                        else if (button.value)
+                        {
+                            button.value=text;
+                        }
+                        else //if (button.innerHTML)
+                        {
+                            button.innerHTML=text;
+                        }
+                    }
+                }
+            }
+        </script>
     </h:head>
 
     <h:body>
@@ -81,21 +105,18 @@
                             <h1>#{subjectBean.name}</h1>
                             <h1><small>Ingeniería de Sistemas</small></h1>
                         </div>
-                        <h:form>
-
-
-                            <h:column >
-                                <h:commandButton action="#" value="¡Quiero suscribirme!" class="btn btn-success" /> 
-                            </h:column>
-                            <h:column >
-                                <h:commandButton action="#{subjectBean.becomeTutorOnSubject()}" value="¡Quiero ser tutor!" class="btn btn-navbar"  />
-                            </h:column>
-
-
-                        </h:form>
-
-
-
+                        <div class="form-actions">
+                            <f:view>
+                                <h:form id="titleForm">
+                                    <p:growl id="mensajes" showDetail="true"/>
+                                    <h:commandButton action="#" value="¡Quiero ser tutor!" update="mensajes"/>
+                                    <h:commandButton id="boton" 
+                                                     action="#{subjectBean.subscribeStudent()}"
+                                                     value="#{subjectBean.changeButtonValue()}" 
+                                                     onclick="replaceButtonText(boton, 'hola')"/>
+                                </h:form>
+                            </f:view>
+                        </div> 
                     </div>
                 </div>           
             </div>
@@ -114,12 +135,12 @@
             </div>
             <br></br><br></br><br></br><br></br>
             <p:dock>  
-                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml"/>  
-                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml"/>  
-                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml"/>  
-                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml"/>  
-                <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="#"/>  
-                <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>   
+                <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml?code=#{subjectBean.code}" />  
+                <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="forum.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>
             </p:dock>
         </div>
 

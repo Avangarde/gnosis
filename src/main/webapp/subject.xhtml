@@ -7,6 +7,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}"/>
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
+
     <ui:define name="title">
         - #{subjectBean.name}
     </ui:define>
@@ -16,6 +21,7 @@
             <div class="span8">
                 <div class="hero-unit">
                     <h1><small>Noticias!!</small></h1>
+                    <h:commandButton id="boton" value="Someter" onclick="replaceButtonText('boton', 'hola')"></h:commandButton>
                 </div>
             </div>
             <div class="span4">
@@ -23,13 +29,13 @@
                 <h:form>  
                     <p:growl id="growl" showDetail="true" />  
                     <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500">  
-                        <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
+                        <p:ajax event="toggle" />  
                         <h:panelGrid columns="2" cellpadding="10">    
                             "TUTORES" 
                         </h:panelGrid>  
                     </p:fieldset>
                     <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
-                        <p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}" update="growl" />  
+                        <p:ajax event="toggle" />  
                         <h:panelGrid columns="2" cellpadding="10">    
                             "APRENDICES"
                         </h:panelGrid>  
