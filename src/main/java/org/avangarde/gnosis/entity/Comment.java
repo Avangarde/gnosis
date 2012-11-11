@@ -27,7 +27,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     @Column(name = "content", length = 1000)
     private String content;
     @Column(name = "dateComment")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Column(name = "liked")
     private int liked;

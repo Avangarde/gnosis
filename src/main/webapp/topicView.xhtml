@@ -24,24 +24,37 @@
                 <div class="span11">
                     <h:form>
                         <h1>Foro</h1>
-                        <p:panel id="panel">
-                            <ui:repeat value="#{topicBean.commentList}" var="comment">
-                                <p:panel id="pnl-#{comment.id}" header="#{comment.studentName}" toggleable="true" toggleSpeed="500" widgetVar="panel-#{comment.id}" footer="#{comment.date}">  
-                                    <h:panelGrid columns="2" cellpadding="10"> 
-                                        <p:graphicImage value="./resources/images/childish_User.png"/>
-                                        <h:outputText value="#{comment.content}" escape="false"/>
-                                    </h:panelGrid>
-                                </p:panel>
-                            </ui:repeat>
-                        </p:panel>
+                        <p:dataList value="#{topicBean.commentList}" var="comment" id="panel"  
+                                    paginator="true" rows="5" effectSpeed="fast"  
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10" type="none">
+                            <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
+                                <h:panelGrid columns="2" cellpadding="10"> 
+                                    <p:graphicImage value="./resources/images/childish_User.png"/>
+                                    <h:outputText value="#{comment.content}" escape="false"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="4" cellpadding="10"> 
+                                    <p:commandLink update="panel" action="#{commentBean.like(comment.id)}">  
+                                        <p:graphicImage value="./resources/images/childish_Thumb-Up.png"/>
+                                    </p:commandLink> 
+                                    <h:outputText value="(#{comment.liked})"/>
+                                    <p:commandLink update="panel" actionListener="#{commentBean.dislike(comment.id)}">  
+                                        <p:graphicImage value="./resources/images/childish_Thumb-Down.png"/>
+                                    </p:commandLink> 
+                                    <h:outputText value="(#{comment.disliked})"/>
+                                </h:panelGrid> 
+                            </p:panel>
+                        </p:dataList>
+                        <p:dialog header="Car Detail" widgetVar="carDialog" modal="true" showEffect="fade">  
+
+
+                        </p:dialog> 
                         <br></br>
                         <h2>Responder:</h2>
-                        <p:editor id="editor" value="#{commentBean.content}" />
+                        <p:editor id="editor" value="#{commentBean.content}" widgetVar="editor"/>
                         <br></br>
-                        <p:commandButton id="response" value="Responder" update="panel" action="#{commentBean.createComment()}"/>
-                        <p:blockUI block="response" trigger="response" />
-                        <p:blockUI block="editor" trigger="response" />
-                        <p:blockUI block="panel" trigger="response" />
+                        <p:commandButton value="Responder" update="panel" oncomplete="location.reload(), editor.clear();" 
+                                         actionListener="#{commentBean.createComment}"/>
                     </h:form>
                 </div>
             </div>

@@ -6,6 +6,10 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.entity.Comment;
+import org.avangarde.gnosis.entity.LikeDislike;
+import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.vo.LikeDislikeVo;
 
 /**
@@ -28,7 +32,24 @@ public class LikeDislikeService implements IService<LikeDislikeVo> {
 
     @Override
     public void create(LikeDislikeVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        LikeDislike entity = new LikeDislike();
+        entity.setLike(vo.isLiked());
+        entity.setDislike(vo.isDisliked());
+        System.out.println(vo.getCommentId());
+        Comment comment = DAOFactory.getInstance().getCommentDAO().find(vo.getCommentId(), em);
+        comment.getLikeDislikeList().add(entity);
+        if (vo.isLiked()){
+            comment.setLike(comment.getLike() + 1);
+        } else if (vo.isDisliked()){
+            comment.setDislike(comment.getDislike() + 1);
+        }
+        DAOFactory.getInstance().getCommentDAO().update(comment, em);
+        entity.setComment(comment);
+        Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
+        student.getLikeDislikeList().add(entity);
+        entity.setStudent(student);
+        
+        DAOFactory.getInstance().getLikeDislikeDAO().persist(entity, em);
     }
 
     @Override
