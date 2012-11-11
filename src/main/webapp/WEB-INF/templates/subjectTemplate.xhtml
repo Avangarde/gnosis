@@ -109,7 +109,7 @@
                             <f:view>
                                 <h:form id="titleForm">
                                     <p:growl id="mensajes" showDetail="true"/>
-                                    <h:commandButton action="#" value="¡Quiero ser tutor!" update="mensajes"/>
+                                    <h:commandButton action="#{subjectBean.becomeTutorOnSubject()}" value="¡Quiero ser tutor!" class="btn btn-navbar"  />
                                     <h:commandButton id="boton" 
                                                      action="#{subjectBean.subscribeStudent()}"
                                                      value="#{subjectBean.changeButtonValue()}" 
