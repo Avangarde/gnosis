@@ -5,7 +5,9 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -26,22 +28,27 @@ import org.primefaces.model.ScheduleModel;
  */
 @ManagedBean
 @RequestScoped
-public class ScheduleBean {  
-  
+public class ScheduleBean {
+    
+    private Date date1 = new Date();
+    private Date date2 = new Date();
+    
     private ScheduleModel eventModel;  
-      
     private ScheduleModel lazyEventModel;  
-  
-    private ScheduleEvent event = new DefaultScheduleEvent();  
-      
+    private ScheduleEvent event = new DefaultScheduleEvent();    
     private String theme;  
   
-    public ScheduleBean() {  
-        eventModel = new DefaultScheduleModel();  
-       
-        lazyEventModel = new LazyScheduleModel() {  
-              
+    public ScheduleBean() {
+        
+        eventModel = new DefaultScheduleModel();
+        
+        Calendar c1 = GregorianCalendar.getInstance();
+        c1.set(2012, Calendar.NOVEMBER, 25);
+        date2 = c1.getTime();
             
+        eventModel.addEvent(new DefaultScheduleEvent("Parcial II", date1, date2));
+
+        lazyEventModel = new LazyScheduleModel() {  
             public void fetchEvents(Date start, Date end) {  
                 clear();  
                   
@@ -50,17 +57,12 @@ public class ScheduleBean {
                   
                 random = getRandomDate(start);  
                 addEvent(new DefaultScheduleEvent("Lazy Event 2", random, random));  
-            }     
-
+            } 
             private Date getRandomDate(Date start) {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };  
-    }
-    
-    public void previousDay8Pm(){
-    
-    }
+    }  
       
     public void addEvent(ActionEvent actionEvent) {  
         if(event.getId() == null) {
@@ -96,6 +98,8 @@ public class ScheduleBean {
     private void addMessage(FacesMessage message) {  
         FacesContext.getCurrentInstance().addMessage(null, message);  
     }  
+      
+    //Getters and Setters
 
     public ScheduleModel getEventModel() {
         return eventModel;
@@ -128,6 +132,5 @@ public class ScheduleBean {
     public void setTheme(String theme) {
         this.theme = theme;
     }
-      
-      
-}  
+    
+}

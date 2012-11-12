@@ -4,10 +4,12 @@
  */
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.entity.TutorSubject;
 
 /**
@@ -55,5 +57,19 @@ public class TutorSubjectDAO implements IDAO<TutorSubject> {
         cq.select(cq.from(TutorSubject.class));
         Query q = em.createQuery(cq);
         return q.getResultList();
+    }
+
+    public List<TutorSubject> getTutorsByname(String query, EntityManager em) {
+        List<TutorSubject> tutors = new ArrayList<TutorSubject>();
+        
+        Query q = em.createQuery("SELECT t FROM TutorSubject t WHERE t.userName LIKE :userName").
+                setParameter("userName", "%" + query + "%");
+
+        try {
+            tutors = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tutors;
     }
 }

@@ -49,6 +49,8 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
     private List<Activity> activityList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutor")
     private List<TutorSubject> tutorSubjectList;
+    @Column(name = "url_Photo")
+    private String urlPhoto;
 
     public Tutor() {
     }
@@ -133,6 +135,16 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
         this.tutorSubjectList = tutorSubjectList;
     }
 
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+    
+    
+
     @Override
     public TutorVo toVo() {
         TutorVo vo = new TutorVo();
@@ -154,6 +166,7 @@ public class Tutor implements Serializable, IEntity<TutorVo> {
         }
         vo.setTutorSubjectList(listTutorSubjectVo);
         vo.setUserName(getUserName());
+        vo.setUrlPhoto(getUrlPhoto());
         return vo;
     }
 }
