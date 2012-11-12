@@ -40,7 +40,16 @@ public class PublicationService implements IService<PublicationVo> {
         entity.setTitle(vo.getTitle());
         entity.setTopic(vo.getTopic());
         entity.setType(vo.getType());
-        entity.setUrl(vo.getUrl());
+                
+        String newURL = vo.getUrl();
+        if (newURL.startsWith("https://docs")) {
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/preview");
+        } else if (newURL.startsWith("http://www.youtube")){
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/embed/" + newURL.substring(edit + 9));
+        }
+        entity.setUrl(newURL);
 
         Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
         student.getPublicationList().add(entity);
