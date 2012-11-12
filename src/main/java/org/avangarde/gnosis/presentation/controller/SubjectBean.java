@@ -134,64 +134,65 @@ public class SubjectBean implements Serializable {
 
     public String becomeTutorOnSubject() {
 
-        //TODO revisar cuando no se esta suscrito a la materia
 
-
-        //Logique
-        //Si usuario actual aun no es tutor haz:
-        //Crear nuevo tutor a partir de la información del usuario
-
-        if (user.isLoggedIn()) {
-
-            StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
-
-            TutorVo tutorVo = new TutorVo();
-
-            tutorVo.setId(user.getId());
-            tutorVo.setStudentId(user.getId());
-
-            if (!studentFacade.isTutor(tutorVo)) {
-
-                becomeTutor(tutorVo);
-
-            }
-
-            //continuando
-
+        if (NOTATUTOR.equals(buttonTutorValue)) {
 
             SubjectFacade subjectFacade = FacadeFactory.getInstance().getSubjectFacade();
-            int subjectCode = code;
+            if (subjectFacade.isTheStudentSubscribed(user.getId(), code)) {
 
-            SubjectVo subjectVo = subjectFacade.find(code);
+                StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
 
-            List<TutorSubjectVo> tutorList = subjectVo.getTutorSubjectList();
+                TutorVo tutorVo = new TutorVo();
 
-            TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
 
-            tutorSubjectVo.setSubjectCode(subjectCode);
-            tutorSubjectVo.setReputation(0);
-            tutorSubjectVo.setTutorId(tutorVo.getId());
+                tutorVo.setStudentId(user.getId());
+                tutorVo.setUserName(user.getUserName());
 
-            TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
 
-            tutorSubjectFacade.create(tutorSubjectVo);
+                if (!studentFacade.isTutor(tutorVo)) {
 
-//            tutorList.add(tutorSubjectVo);
-//            subjectVo.setTutorSubjectList(tutorList);
-//            boolean flag = subjectFacade.update(subjectVo);
+                    becomeTutor(tutorVo);
+                    
+                    
+                }
 
-            //Bean de tutor
+                //continuando
+                
+                tutorVo = findTutorByUserName(user.getUserName());
+
+                int subjectCode = code;
+
+
+                TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
+
+                tutorSubjectVo.setSubjectCode(subjectCode);
+                tutorSubjectVo.setReputation(0);
+
+                //Hice un poco de trampa aquí
+                tutorSubjectVo.setTutorId(tutorVo.getId());
+
+                TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
+
+                tutorSubjectFacade.create(tutorSubjectVo);
+
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "¡Genial! Ahora eres tutor de la materia", ""));
+                return "success";
+
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Algo salio mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
+                return "failure";
+            }
+
+
+
+        } else {
+
+            //Navigation case
+            return "success";
 
         }
-
-
-        //Luego haz:
-        //Obtener lista de tutores de la materia
-        //agrega al tutor
-
-        //clausura de cosas
-        return "success";
-
     }
 
     public void becomeTutor(TutorVo tutorVo) {
@@ -199,7 +200,8 @@ public class SubjectBean implements Serializable {
 
         //retorna un tutor vacio, que se debe crear antes de continuar
         //rellenar
-        tutorVo.setStudentId(tutorVo.getId());
+        tutorVo.setId(user.getId());
+        tutorVo.setStudentId(user.getId());
 
         //defecto
         int def = 0;
@@ -208,11 +210,21 @@ public class SubjectBean implements Serializable {
         tutorVo.setPublishedResources(def);
         tutorVo.setQuestionReceived(def);
         tutorVo.setReputation(def);
-
         tutorVo.setUserName(user.getUserName());
 
 
         tutorFacade.create(tutorVo);
 
+    }
+
+    private TutorVo findTutorByUserName(String userName) {
+        
+        TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
+        
+        TutorVo tutorVo = new TutorVo();
+        tutorVo.setUserName(userName);
+        
+        return tutorFacade.findByUsername(tutorVo);
+        
     }
 }

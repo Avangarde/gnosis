@@ -70,4 +70,17 @@ public class TutorService implements IService<TutorVo> {
     public List<TutorVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public TutorVo findByUsername(TutorVo vo, EntityManager em) {
+        Tutor entity = new Tutor();
+        entity.setUserName(vo.getUserName());
+
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().findByUsername(entity, em);
+        if (tutor != null) {
+            vo = tutor.toVo();
+            return vo;
+        } else {
+            return null;
+        }
+    }
 }
