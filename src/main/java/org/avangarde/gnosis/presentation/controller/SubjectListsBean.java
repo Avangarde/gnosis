@@ -12,6 +12,7 @@ import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -41,7 +42,14 @@ public class SubjectListsBean {
         availables.add(one);
         availables.add(two);
         
-        
+        tutors = new ArrayList<TutorVo>(availables); 
+    }
+    
+    public List<TutorVo> getTutors() {  
+        return tutors;  
+    }  
+    public void setTutors(List<TutorVo> tutors) {  
+        this.tutors = tutors;  
     }
 }
 
