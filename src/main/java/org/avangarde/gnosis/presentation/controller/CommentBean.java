@@ -29,6 +29,8 @@ public class CommentBean implements Serializable {
     private SubjectBean subject;
     @ManagedProperty(value = "#{topicBean}")
     private TopicBean topic;
+    @ManagedProperty(value = "#{viewResourceBean}")
+    private ViewResourceBean viewResourceBean;
 
     public CommentBean() {
     }
@@ -42,6 +44,7 @@ public class CommentBean implements Serializable {
         commentVo.setDate(format.format(new GregorianCalendar().getTime()));
         commentVo.setStudentId(getUser().getId());
         commentVo.setTopicId(getTopic().getId());
+        commentVo.setPublicationId(getViewResourceBean().getId());
 
         commentFacade.create(commentVo);
 
@@ -111,6 +114,14 @@ public class CommentBean implements Serializable {
 
     public void setTopic(TopicBean topic) {
         this.topic = topic;
+    }
+
+    public ViewResourceBean getViewResourceBean() {
+        return viewResourceBean;
+    }
+
+    public void setViewResourceBean(ViewResourceBean viewResourceBean) {
+        this.viewResourceBean = viewResourceBean;
     }
 
     public int getId() {

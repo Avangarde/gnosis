@@ -1,10 +1,13 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.PublicationVo;
 
 /**
@@ -21,6 +24,7 @@ public class ViewResourceBean implements Serializable{
     private String type;
     private String url;
     private String sharedBy;
+    private List<CommentVo> commentList = new ArrayList<CommentVo>();
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
     @ManagedProperty(value = "#{subjectBean}")
@@ -100,5 +104,21 @@ public class ViewResourceBean implements Serializable{
 
     public void setSubject(SubjectBean subject) {
         this.subject = subject;
+    }
+    
+    public List<CommentVo> getCommentList() {
+        if (commentList.isEmpty()) {
+            loadComments();
+        }
+        return commentList;
+    }
+
+    public void setCommentList(List<CommentVo> commentList) {
+        this.commentList = commentList;
+    }
+    
+    public void loadComments() {
+        commentList = new ArrayList<CommentVo>();
+        commentList = FacadeFactory.getInstance().getCommentFacade().getCommentsbyPublication(getId());
     }
 }
