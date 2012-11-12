@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.businesslogic.facade;
 
+import java.util.List;
 import org.avangarde.gnosis.businesslogic.service.CommentService;
 import org.avangarde.gnosis.vo.CommentVo;
 
@@ -12,4 +13,16 @@ public class CommentFacade extends Facade <CommentVo> {
     public CommentFacade(String PUName, CommentService service) {
         super(PUName, service);
     }  
+
+    public List<CommentVo> getCommentsbyTopic(Integer topicId) {
+        try {
+            em = emf.createEntityManager();
+            return ((CommentService)service).getCommentsByTopic(em, topicId);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
 }

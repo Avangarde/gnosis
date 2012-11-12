@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -55,5 +56,16 @@ public class CommentDAO implements IDAO<Comment> {
         cq.select(cq.from(Comment.class));
         Query q = em.createQuery(cq);
         return q.getResultList();
+    }
+
+    public List<Comment> getCommentsByTopic(EntityManager em, Integer topicId) {
+        List<Comment> comments;
+        Query q = em.createQuery("SELECT c FROM Comment c WHERE c.topic.id LIKE :topicId").setParameter("topicId", topicId.toString());
+        try {
+            comments = q.getResultList();
+        } catch (Exception e) {
+            comments = new ArrayList<Comment>();
+        }
+        return comments;
     }
 }
