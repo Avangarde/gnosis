@@ -71,8 +71,8 @@
                                       controls="bold italic underline strikethrough"
                                       required="true" requiredMessage="Debes escribir una respuesta"/>
                             <br></br>
-                            <p:commandButton value="Comentar"  oncomplete="location.reload(), editor.clear();" 
-                                             actionListener="#{commentBean.createComment}"/>
+                            <p:commandButton id="comment" value="Comentar"  oncomplete="editor.clear();" 
+                                             update="panel" actionListener="#{commentBean.createComment}"/>
                         </h:form>
                     </div>
                 </div>

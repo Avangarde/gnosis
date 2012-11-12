@@ -49,6 +49,7 @@ public class CommentBean implements Serializable {
         commentFacade.create(commentVo);
 
         getTopic().loadComments();
+        getViewResourceBean().loadComments();
     }
 
     public void like(int commentId) {
