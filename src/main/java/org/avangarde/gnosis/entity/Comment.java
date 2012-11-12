@@ -165,6 +165,7 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         if (getStudent() != null) {
             vo.setStudentId(getStudent().getId());
             vo.setStudentName(getStudent().getUserName());
+            vo.setStudentUrlPhoto(getStudent().getUrlPhoto());
         }
         if (getTopic() != null) {
             vo.setTopicId(getTopic().getId());

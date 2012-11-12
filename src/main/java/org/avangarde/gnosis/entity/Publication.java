@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.PublicationVo;
+import org.avangarde.gnosis.vo.RatingVo;
 
 /**
  *
@@ -50,6 +51,8 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     @ManyToOne
     @JoinColumn(name = "Subject_code")
     private Subject subject;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
+    private List<Rating> ratingList;
 
     public Publication() {
     }
@@ -140,12 +143,24 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         this.subject = subject;
     }
 
+    public List<Rating> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<Rating> ratingList) {
+        this.ratingList = ratingList;
+    }
+
     @Override
     public PublicationVo toVo() {
         PublicationVo vo = new PublicationVo();
         List<CommentVo> listVo = new ArrayList<CommentVo>();
         for (Comment entity : getCommentList()) {
             listVo.add(entity.toVo());
+        }
+        ArrayList<RatingVo> listRatingVo = new ArrayList<RatingVo>();
+        for (Rating entity : getRatingList()) {
+            listRatingVo.add(entity.toVo());
         }
         vo.setCommentList(listVo);
         vo.setDate(getDate());
@@ -158,6 +173,8 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setTopic(getTopic());
         vo.setType(getType());
         vo.setUrl(getUrl());
+        vo.setRatingList(listRatingVo);
+        vo.setNumVotes(listRatingVo.size());
         return vo;
 
     }

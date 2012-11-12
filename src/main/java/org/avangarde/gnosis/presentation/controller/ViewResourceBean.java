@@ -7,8 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.businesslogic.facade.RatingFacade;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.PublicationVo;
+import org.avangarde.gnosis.vo.RatingVo;
 
 /**
  *
@@ -24,6 +26,9 @@ public class ViewResourceBean implements Serializable{
     private String type;
     private String url;
     private String sharedBy;
+    private Double rating;
+    private int vote;
+    private int numVotes;
     private List<CommentVo> commentList = new ArrayList<CommentVo>();
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
@@ -40,6 +45,23 @@ public class ViewResourceBean implements Serializable{
         setType(resource.getType());
         setUrl(resource.getUrl());
         setSharedBy(resource.getStudentName());
+        setRating(resource.getRating());
+        setNumVotes(resource.getNumVotes());
+    }
+    
+    public void rate(){
+        RatingFacade ratingFacade = FacadeFactory.getInstance().getRatingFacade();
+        
+        RatingVo vo = new RatingVo();
+        vo.setRating(getVote());
+        vo.setStudentId(getUser().getId());
+        vo.setPublicationId(getId());
+        
+        ratingFacade.create(vo);
+    }
+    
+    public boolean isVoted(){
+        return FacadeFactory.getInstance().getPublicationFacade().isVotedByUser(getUser().getId(), getId());
     }
 
     public int getId() {
@@ -120,5 +142,29 @@ public class ViewResourceBean implements Serializable{
     public void loadComments() {
         commentList = new ArrayList<CommentVo>();
         commentList = FacadeFactory.getInstance().getCommentFacade().getCommentsbyPublication(getId());
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public int getNumVotes() {
+        return numVotes;
+    }
+
+    public void setNumVotes(int numVotes) {
+        this.numVotes = numVotes;
+    }
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
     }
 }

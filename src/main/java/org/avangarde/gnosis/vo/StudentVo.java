@@ -34,6 +34,7 @@ public class StudentVo {
     private List<CommentVo> commentList;
     private List<ActivityVo> activityList;
     private List<PublicationVo> publicationList;
+    private List<RatingVo> ratingList;
 
     public List<ActivityVo> getActivityList() {
         return activityList;
@@ -178,6 +179,13 @@ public class StudentVo {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-       
-    
+
+    public List<RatingVo> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<RatingVo> ratingList) {
+        this.ratingList = ratingList;
+    }
+   
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Publication;
+import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.PublicationVo;
@@ -90,5 +91,16 @@ public class PublicationService implements IService<PublicationVo> {
             list.add((publication).toVo());
         }
         return list;
+    }
+    
+    public boolean isVotedByUser(int studentId, int pubId, EntityManager em){
+        Publication publication = DAOFactory.getInstance().getPublicationDAO().find(pubId, em);
+        
+        for (Rating rating : publication.getRatingList()){
+            if (rating.getStudent().getId() == studentId){
+                return true;
+            }
+        }
+        return false;
     }
 }

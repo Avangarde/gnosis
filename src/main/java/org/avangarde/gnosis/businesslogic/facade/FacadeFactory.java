@@ -60,6 +60,11 @@ public class FacadeFactory {
     public TutorSubjectFacade getTutorSubjectFacade() {
         return new TutorSubjectFacade(PU, ServiceFactory.getInstance().getTutorSubjectService());
     }
+    
+    public RatingFacade getRatingFacade() {
+        return new RatingFacade(PU, ServiceFactory.getInstance().getRatingService());
+    }
+    
     private static FacadeFactory instance;
 
     public static synchronized FacadeFactory getInstance() {
