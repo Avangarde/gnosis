@@ -2,6 +2,7 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface IService<VO> {
     void delete(Object id, EntityManager em);
 
     List<VO> getList(EntityManager em);
+
+    
 }

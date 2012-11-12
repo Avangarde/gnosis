@@ -109,11 +109,23 @@
                             <f:view>
                                 <h:form id="titleForm">
                                     <p:growl id="mensajes" showDetail="true"/>
-                                    <h:commandButton action="#{subjectBean.becomeTutorOnSubject()}" value="¡Quiero ser tutor!" class="btn btn-navbar"  />
-                                    <h:commandButton id="boton" 
+                                                                        
+                                    
+                                    
+                                    <h:commandButton id="botonSubscribe" 
                                                      action="#{subjectBean.subscribeStudent()}"
-                                                     value="#{subjectBean.changeButtonValue()}" 
-                                                     onclick="replaceButtonText(boton, 'hola')"/>
+                                                     value="#{subjectBean.changeButtonSubscribeValue()}" 
+                                                     onclick="replaceButtonText(botonSubscribe, 'hola')"
+                                                     class="btn btn-navbar"/>
+                                    
+                                    <p:spacer width="20" height="20" />
+                                    
+                                    <h:commandButton id="botonTutor" 
+                                                     action="#{subjectBean.becomeTutorOnSubject()}"
+                                                     value="#{subjectBean.changeButtonTutorValue()}" 
+                                                     onclick="replaceButtonText(botonTutor, 'hola')"
+                                                     class="btn btn-navbar"/>
+                                    
                                 </h:form>
                             </f:view>
                         </div> 

@@ -17,7 +17,7 @@ import org.avangarde.gnosis.entity.Tutor;
 public class TutorDAO implements IDAO<Tutor> {
 
     private static TutorDAO instance;
-    
+
     private TutorDAO() {
     }
 
