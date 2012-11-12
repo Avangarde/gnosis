@@ -43,7 +43,6 @@ public class LikeDislikeService implements IService<LikeDislikeVo> {
         } else if (vo.isDisliked()){
             comment.setDislike(comment.getDislike() + 1);
         }
-        DAOFactory.getInstance().getCommentDAO().update(comment, em);
         entity.setComment(comment);
         Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
         student.getLikeDislikeList().add(entity);
