@@ -65,9 +65,10 @@
                                 </p:column>  
 
                                 <p:column>  
-                                    <h:link value="Suscribirme"  class="btn btn-mini btn-info">
-                                    </h:link>
-                                    
+                                    <h:commandButton id="boton" class="btn btn-info"
+                                                     action="#{subjectBean.subscribeStudent(subject)}"
+                                                     value="#{subjectBean.changeButtonValue(subject.code)}" />
+                                    <p:spacer width="10" height="10" />
                                     
                                     <h:link value="Ver Mas" outcome="subject.xhtml"  class="btn btn-mini btn-success">
                                         <f:param name ="code" value ="#{subject.code}"/>
