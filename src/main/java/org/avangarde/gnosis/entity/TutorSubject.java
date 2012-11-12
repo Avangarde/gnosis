@@ -47,9 +47,10 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     private int questionReceived;
     @Column(name = "number_students")
     private int numberStudents;
-    
     @Column(name = "userName")
-    private String userName;  
+    private String userName; 
+    @Column(name = "url_Photo")
+    private String urlPhoto;
 
     public TutorSubject() {
     }
@@ -140,7 +141,14 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
         
     @Override
     public TutorSubjectVo toVo() {
@@ -163,6 +171,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setPublishedResources(getPublishedResources());
         vo.setQuestionReceived(getQuestionReceived());
         vo.setUserName(getUserName());
+        vo.setUrlPhoto(getUrlPhoto());
         return vo;
     }
 }

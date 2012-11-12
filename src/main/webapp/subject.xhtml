@@ -16,7 +16,7 @@
         - #{subjectBean.name}
     </ui:define>
 
-    <ui:define name="content">
+    <ui:define name="content" >
         <div class="row">
             <div class="span8">
                 <div class="hero-unit">
@@ -24,14 +24,21 @@
                 </div>
             </div>
             <div class="span4">
-
-                <h:form>  
+                <h:form >  
                     <p:growl id="growl" showDetail="true" />  
-                    <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500">  
-                        <p:ajax event="toggle" />  
-                        <h:panelGrid columns="2" cellpadding="10">    
-                            "TUTORES" 
-                        </h:panelGrid>  
+                    <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500" >  
+                        <p:pickList id="pojoPickList" value="#{searchBean.tutors}" var="tutor" effect="bounce"  
+                                    itemValue="#{tutor}" itemLabel="#{tutor.userName}" converter="tutor"  
+                                    showSourceControls="true" showTargetControls="true"   
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" > 
+                            <p:column style="width:25%">  
+                                <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />  
+                            </p:column>  
+
+                            <p:column style="width:75%;">  
+                                #{tutor.userName}  
+                            </p:column>  
+                        </p:pickList>   
                     </p:fieldset>
                     <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
                         <p:ajax event="toggle" />  
