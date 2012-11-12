@@ -86,8 +86,8 @@
                                 </li>
                             </ul>
 
-                            <form class="navbar-search pull-right">
-                                <input type="text" class="search-query" placeholder="Busca una materia"/>
+                            <form method="get" action="#{request.contextPath}/search.xhtml" class="navbar-search pull-right">
+                                <input type="text" name="query" value="#{searchBean.query}" class="search-query" placeholder="Busca una materia"/>
                                 <button type="submit" class="btn"><i class="icon-search icon-white" /></button>
                             </form>
                         </ui:fragment>          
@@ -137,19 +137,15 @@
         <div class="container-fluid">
             <!--content-->
             <div class="container">
-                <div class="row">
-                    <div class="span12 offset0">
-                        <ui:insert name="content">
+                <ui:insert name="content">
 
-                        </ui:insert>
-                    </div>           
-                </div>
+                </ui:insert>
             </div>
             <br></br><br></br><br></br><br></br>
             <p:dock>  
                 <p:menuitem value="Noticias" icon="./resources/images/childish_News.png" url="subject.xhtml?code=#{subjectBean.code}" />  
                 <p:menuitem value="Calendario" icon="./resources/images/childish_Calendar.png" url="/schedule.xhtml?code=#{subjectBean.code}"/>  
-                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/truknow.xhtml?code=#{subjectBean.code}"/>  
+                <p:menuitem value="Tutores" icon="./resources/images/childish_User.png" url="/tutors.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Recursos" icon="./resources/images/childish_Folder.png" url="resources.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Foro" icon="./resources/images/childish_Comments.png" url="forum.xhtml?code=#{subjectBean.code}"/>  
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="#"/>

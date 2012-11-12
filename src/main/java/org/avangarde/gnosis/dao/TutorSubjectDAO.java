@@ -4,10 +4,12 @@
  */
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.entity.TutorSubject;
 
 /**

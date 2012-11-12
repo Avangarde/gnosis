@@ -1,6 +1,5 @@
 package org.avangarde.gnosis.vo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ public class CommentVo implements IValueObject{
 
     private int id;
     private String content;
-    private Date date;
+    private String date;
     private int liked;
     private int disliked;
     private int tutorSubjectId;
@@ -19,6 +18,7 @@ public class CommentVo implements IValueObject{
     private int activityId;
     private int publicationId;
     private int studentId;
+    private String studentName;
     private List<LikeDislikeVo> likeDislikeList;
 
     public int getId() {
@@ -37,11 +37,11 @@ public class CommentVo implements IValueObject{
         this.content = content;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -107,6 +107,14 @@ public class CommentVo implements IValueObject{
 
     public void setLikeDislikeList(List<LikeDislikeVo> likeDislikeList) {
         this.likeDislikeList = likeDislikeList;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
     
     

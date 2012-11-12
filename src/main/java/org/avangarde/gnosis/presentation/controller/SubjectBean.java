@@ -89,19 +89,43 @@ public class SubjectBean implements Serializable {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Te has suscrito a la materia", ""));
+                        "Te has suscrito a la materia " + getName(), ""));
             } else {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "No te pudiste suscribir a la materia", ""));
+                        "No te pudiste suscribir a la materia " + getName(), ""));
             }
         } else {
             if (FacadeFactory.getInstance().getSubjectFacade().unSubscribeStudent(new Integer(user.getId()), getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Has abandonado la materia", ""));
+                        "Has abandonado la materia " + getName(), ""));
 
             } else {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "No pudiste abandonar la materia", ""));
+                        "No pudiste abandonar la materia " + getName(), ""));
+            }
+        }
+    }
+    
+    public void subscribeStudent(SubjectVo subject) {
+        buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), subject.getCode()) ? 
+                "Abandonar" : "Suscribirme a la materia";
+        if ("Suscribirme a la materia".equals(buttonValue)) {
+            if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), subject.getCode())) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Te has suscrito a la materia " + subject.getName(), ""));
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No te pudiste suscribir a la materia " + subject.getName(), ""));
+            }
+        } else {
+            if (FacadeFactory.getInstance().getSubjectFacade().unSubscribeStudent(new Integer(user.getId()), subject.getCode())) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Has abandonado la materia " + subject.getName(), ""));
+
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No pudiste abandonar la materia " + subject.getName(), ""));
             }
         }
     }
@@ -120,6 +144,12 @@ public class SubjectBean implements Serializable {
         return buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
                 isTheTutorOnSubject(tutor, getCode())
                 ? TUTOR : NOTATUTOR;
+    }
+    
+    public String changeButtonValue(int subjectCode) {
+        return buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), subjectCode) ? 
+                "Abandonar" : "Suscribirme a la materia";
     }
 
     public void preRenderView() {

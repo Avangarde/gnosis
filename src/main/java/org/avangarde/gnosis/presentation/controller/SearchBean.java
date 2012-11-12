@@ -13,6 +13,8 @@ import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.vo.ProgramVo;
 import org.avangarde.gnosis.vo.SubjectVo;
+import org.avangarde.gnosis.vo.TutorSubjectVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -24,8 +26,11 @@ public class SearchBean implements Serializable{
 
     private String query;
     private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
+    private List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
+    @ManagedProperty(value = "#{subjectBean}")
+    private SubjectBean subjectBean;
 
     public SearchBean() {
     }
@@ -49,6 +54,17 @@ public class SearchBean implements Serializable{
         this.subjects = subjects;
     }
 
+    public List<TutorSubjectVo> getTutors() {
+        if (tutors.isEmpty()) {
+            loadTutors();
+        }
+        return tutors;
+    }
+
+    public void setTutors(List<TutorSubjectVo> tutors) {
+        this.tutors = tutors;
+    }
+    
     private void loadSubjects() {
         subjects = new ArrayList<SubjectVo>();
         if (query == null || query.equals("")) {
@@ -65,6 +81,23 @@ public class SearchBean implements Serializable{
             }
         }
     }
+    
+    private void loadTutors() {
+        tutors = new ArrayList<TutorSubjectVo>();
+        if (query == null || query.equals("")) {
+            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(1000004);
+            if (subject.getTutorSubjectList() != null || subject.getTutorSubjectList().isEmpty()) {
+                for (TutorSubjectVo tutor : subject.getTutorSubjectList()) {
+                    tutors.add(tutor);
+                }
+            }
+        } else {
+            List<TutorSubjectVo> searchedTutors = FacadeFactory.getInstance().getTutorSubjectFacade().getTutorsByName(query);
+            for (TutorSubjectVo tutor : searchedTutors) {
+               tutors.add(tutor);
+            }
+        }
+    }
 
     public UserBean getUser() {
         return user;
@@ -73,4 +106,14 @@ public class SearchBean implements Serializable{
     public void setUser(UserBean user) {
         this.user = user;
     }
+
+    public SubjectBean getSubjectBean() {
+        return subjectBean;
+    }
+
+    public void setSubjectBean(SubjectBean subjectBean) {
+        this.subjectBean = subjectBean;
+    }
+    
+    
 }

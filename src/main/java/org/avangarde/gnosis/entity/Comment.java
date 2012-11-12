@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +24,10 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "content")
+    @Column(name = "content", length = 1000)
     private String content;
     @Column(name = "dateComment")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Column(name = "liked")
     private int liked;
@@ -143,9 +144,13 @@ public class Comment implements Serializable, IEntity<CommentVo> {
     @Override
     public CommentVo toVo() {
         CommentVo vo = new CommentVo();
-        vo.setActivityId(getActivity().getId());
+        if (getActivity() != null) {
+            vo.setActivityId(getActivity().getId());
+        }
         vo.setContent(getContent());
-        vo.setDate(getDate());
+        
+        SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+        vo.setDate(format.format(getDate()));
         vo.setDisliked(getDislike());
         vo.setId(getId());
         List<LikeDislikeVo> listVo = new ArrayList<LikeDislikeVo>();
@@ -154,10 +159,19 @@ public class Comment implements Serializable, IEntity<CommentVo> {
         }
         vo.setLikeDislikeList(listVo);
         vo.setLiked(getLike());
-        vo.setPublicationId(getPublication().getId());
-        vo.setStudentId(getStudent().getId());
-        vo.setTopicId(getTopic().getId());
-        vo.setTutorSubjectId(getTutorSubject().getId());
+        if (getPublication() != null) {
+            vo.setPublicationId(getPublication().getId());
+        }
+        if (getStudent() != null) {
+            vo.setStudentId(getStudent().getId());
+            vo.setStudentName(getStudent().getUserName());
+        }
+        if (getTopic() != null) {
+            vo.setTopicId(getTopic().getId());
+        }
+        if (getTutorSubject() != null) {
+            vo.setTutorSubjectId(getTutorSubject().getId());
+        }
         return vo;
     }
 }

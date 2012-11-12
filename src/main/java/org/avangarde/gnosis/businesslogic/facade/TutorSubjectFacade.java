@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.avangarde.gnosis.businesslogic.service.SubjectService;
 import org.avangarde.gnosis.businesslogic.service.TutorSubjectService;
+import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
 

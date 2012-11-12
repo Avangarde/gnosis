@@ -107,6 +107,7 @@ public class Topic implements Serializable, IEntity<TopicVo> {
         vo.setDateStarted(getDateStarted());
         vo.setId(getId());
         vo.setStudentId(getStudent().getId());
+        vo.setStudentName(getStudent().getUserName());
         vo.setSubjectCode(getSubject().getCode());
         vo.setTitle(getTitle());
         List<CommentVo> listCommentVo = new ArrayList<CommentVo>();

@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;

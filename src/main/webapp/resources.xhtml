@@ -58,6 +58,8 @@
                         <h1><a data-toggle="modal" href="#shareModal" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
                     </h:form>
                 </div>
+            </div>
+            <div class="row">
                 <div class="span11">
                     <h:form id="tableForm">   
                         <p:treeTable value="#{resourceBean.root}" var="document"  
@@ -108,79 +110,78 @@
                     </h:form>
                 </div>
             </div>
-            <div class="row">
-                <div class="span12">
-                    <h:form id="shareForm" class="form-horizontal form-no-margin">
-                        <div id="shareModal" class="modal hide fade">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h2>Nuevo recurso:</h2>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-info">Recuerda cambiar la privacidad de tu documento a "Publica"
-                                    para que todos puedan tener acceso</p>
-                                <div class="control-group">
-                                    <label class="control-label" for="title">Recurso:</label>
-                                    <div class="input-append">
-                                        <div class="controls">
-                                            <p:inputText id="resource" required="true" value="#{resourceBean.url}" 
-                                                         requiredMessage="Por favor completa este campo" />
-                                            <input type="button" name="Select" value="Selecciona" OnClick="createPicker();" class="btn btn-info"></input>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="title">Título:</label>
-                                    <div class="controls">
-                                        <p:inputText id="title" required="true" value="#{resourceBean.title}" 
-                                                     requiredMessage="Por favor completa este campo" />
-                                        <p:message id="titleMessage" for="title" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="topic">Tema:</label>
-                                    <div class="controls">
-                                        <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
-                                                         requiredMessage="Por favor completa este campo" editable="true">
-                                            <f:selectItem itemLabel=""/>
-                                            <f:selectItems value="#{resourceBean.topics}" />
-                                        </p:selectOneMenu>
-                                        <p:watermark for="topic" value="Crea un tema o selecciona uno" />
-                                        <p:message id="topicMessage" for="topic" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="type">Tipo:</label>
-                                    <div class="controls">
-                                        <p:outputPanel id="customPanel">
-                                            <p:selectOneRadio id="type" required="true" value="#{resourceBean.type}" layout="custom">  
-                                                <f:selectItem itemLabel="Aporte Personal" itemValue="Aporte Personal" />  
-                                                <f:selectItem itemLabel="Grupo" itemValue="Grupo" />
-                                            </p:selectOneRadio>
-                                            <h:panelGrid columns="3">  
-                                                <p:radioButton id="personalContribution" for="type" itemIndex="0"/>  
-                                                <h:outputLabel for="personalContribution" value="Aporte Personal" />  
-                                                <h:outputLabel for="personalContribution" value="" />  
-
-                                                <p:radioButton id="group" for="type" itemIndex="1"/>  
-                                                <h:outputLabel for="group" value="Grupo" />  
-                                                <!--<p:spinner id="numGroup" min="1" max="#{subjectBean.numGroups}" size="3"/> -->
-                                            </h:panelGrid>  
-                                        </p:outputPanel>  
-                                        <p:message id="typeMessage" for="type" />
-                                    </div>
-                                </div>  
-                            </div>
-                            <div class="modal-footer">
-                                <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success" >
-                                    <f:param name ="code" value ="#{subjectBean.code}"/>
-                                </h:commandButton>
-                            </div>        
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h:form id="shareForm" class="form-horizontal form-no-margin">
+                    <div id="shareModal" class="modal hide fade">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h2>Nuevo recurso:</h2>
                         </div>
-                    </h:form>
-                </div>        
-            </div>
+                        <div class="modal-body">
+                            <p class="text-info">Recuerda cambiar la privacidad de tu documento a "Publica"
+                                para que todos puedan tener acceso</p>
+                            <div class="control-group">
+                                <label class="control-label" for="title">Recurso:</label>
+                                <div class="input-append">
+                                    <div class="controls">
+                                        <p:inputText id="resource" required="true" value="#{resourceBean.url}" 
+                                                     requiredMessage="Por favor completa este campo" />
+                                        <input type="button" name="Select" value="Selecciona" OnClick="createPicker();" class="btn btn-info"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="title">Título:</label>
+                                <div class="controls">
+                                    <p:inputText id="title" required="true" value="#{resourceBean.title}" 
+                                                 requiredMessage="Por favor completa este campo" />
+                                    <p:message id="titleMessage" for="title" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="topic">Tema:</label>
+                                <div class="controls">
+                                    <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
+                                                     requiredMessage="Por favor completa este campo" editable="true">
+                                        <f:selectItem itemLabel=""/>
+                                        <f:selectItems value="#{resourceBean.topics}" />
+                                    </p:selectOneMenu>
+                                    <p:watermark for="topic" value="Crea un tema o selecciona uno" />
+                                    <p:message id="topicMessage" for="topic" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="type">Tipo:</label>
+                                <div class="controls">
+                                    <p:outputPanel id="customPanel">
+                                        <p:selectOneRadio id="type" required="true" value="#{resourceBean.type}" layout="custom">  
+                                            <f:selectItem itemLabel="Aporte Personal" itemValue="Aporte Personal" />  
+                                            <f:selectItem itemLabel="Grupo" itemValue="Grupo" />
+                                        </p:selectOneRadio>
+                                        <h:panelGrid columns="3">  
+                                            <p:radioButton id="personalContribution" for="type" itemIndex="0"/>  
+                                            <h:outputLabel for="personalContribution" value="Aporte Personal" />  
+                                            <h:outputLabel for="personalContribution" value="" />  
 
+                                            <p:radioButton id="group" for="type" itemIndex="1"/>  
+                                            <h:outputLabel for="group" value="Grupo" />  
+                                            <!--<p:spinner id="numGroup" min="1" max="#{subjectBean.numGroups}" size="3"/> -->
+                                        </h:panelGrid>  
+                                    </p:outputPanel>  
+                                    <p:message id="typeMessage" for="type" />
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="modal-footer">
+                            <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success" >
+                                <f:param name ="code" value ="#{subjectBean.code}"/>
+                            </h:commandButton>
+                        </div>        
+                    </div>
+                </h:form>
+            </div>        
         </div>
     </ui:define>
 

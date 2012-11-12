@@ -18,6 +18,7 @@ public class TutorVo implements IValueObject {
     private int studentId;
     private List<ActivityVo> activityList;
     private List<TutorSubjectVo> tutorSubjectList;
+    private String urlPhoto;
 
     public int getId() {
         return id;
@@ -98,6 +99,13 @@ public class TutorVo implements IValueObject {
     public void setTutorSubjectList(List<TutorSubjectVo> tutorSubjectList) {
         this.tutorSubjectList = tutorSubjectList;
     }
-    
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
     
 }
