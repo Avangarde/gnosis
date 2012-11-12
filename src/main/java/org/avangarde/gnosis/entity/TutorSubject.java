@@ -48,6 +48,8 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     @Column(name = "number_students")
     private int numberStudents;
     
+    @Column(name = "userName")
+    private String userName;  
 
     public TutorSubject() {
     }
@@ -130,6 +132,14 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public void setNumberStudents(int numberStudents) {
         this.numberStudents = numberStudents;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
     
         
     @Override
@@ -152,6 +162,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setNumberVotes(getNumberVotes());
         vo.setPublishedResources(getPublishedResources());
         vo.setQuestionReceived(getQuestionReceived());
+        vo.setUserName(getUserName());
         return vo;
     }
 }

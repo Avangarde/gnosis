@@ -18,6 +18,7 @@ public class TutorSubjectVo implements IValueObject {
     private int publishedResources;
     private int questionReceived;
     private int numberStudents;
+    private String userName;
     
     public int getId() {
         return id;
@@ -97,6 +98,14 @@ public class TutorSubjectVo implements IValueObject {
 
     public void setNumberStudents(int numberStudents) {
         this.numberStudents = numberStudents;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
        
 }
