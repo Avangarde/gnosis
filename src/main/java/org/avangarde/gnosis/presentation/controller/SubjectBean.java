@@ -32,6 +32,11 @@ public class SubjectBean implements Serializable {
     private UserBean user;
     String buttonSubscribeValue;
     String buttonTutorValue;
+    //Constantes de clase
+    public String TUTOR = "Ir a mi pagina de tutor";
+    public String NOTATUTOR = "Convertirme en tutor";
+    public String SUBSCRIBED = "Abandonar";
+    public String NOTSUBSCRIBED = "Suscribirme a la materia";
 
     public SubjectBean() {
     }
@@ -81,7 +86,7 @@ public class SubjectBean implements Serializable {
     }
 
     public void subscribeStudent() {
-        if ("Suscribirme a la materia".equals(buttonSubscribeValue)) {
+        if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Te has suscrito a la materia", ""));
@@ -103,23 +108,22 @@ public class SubjectBean implements Serializable {
 
     public String changeButtonSubscribeValue() {
         return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribed(new Integer(user.getId()), getCode()) ? 
-                "Abandonar" : "Suscribirme a la materia";
-    }
-    
-    public String changeButtonTutorValue() {
-        
-        TutorVo tutor = new TutorVo();
-        tutor.setUserName(user.getUserName());
-        
-        return buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
-                isTheTutorOnSubject(tutor, getCode()) ? 
-                "Ir a mi pagina de tutor" : "Convertirme en tutor";
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())
+                ? SUBSCRIBED : NOTSUBSCRIBED;
     }
 
-    
+    public String changeButtonTutorValue() {
+
+        TutorVo tutor = new TutorVo();
+        tutor.setUserName(user.getUserName());
+
+        return buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
+                isTheTutorOnSubject(tutor, getCode())
+                ? TUTOR : NOTATUTOR;
+    }
+
     public void preRenderView() {
-        
+
         if (getCode() != null) {
             SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());
             setName(subject.getName());
@@ -127,10 +131,9 @@ public class SubjectBean implements Serializable {
             setNumGroups(subject.getNumGroups());
         }
     }
-    
-    
+
     public String becomeTutorOnSubject() {
-        
+
         //TODO revisar cuando no se esta suscrito a la materia
 
 
@@ -170,7 +173,7 @@ public class SubjectBean implements Serializable {
             tutorSubjectVo.setTutorId(tutorVo.getId());
 
             TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
-            
+
             tutorSubjectFacade.create(tutorSubjectVo);
 
 //            tutorList.add(tutorSubjectVo);
