@@ -124,7 +124,13 @@
                                                      action="#{subjectBean.becomeTutorOnSubject()}"
                                                      value="#{subjectBean.changeButtonTutorValue()}" 
                                                      onclick="replaceButtonText(botonTutor, 'hola')"
-                                                     class="btn btn-navbar"/>
+                                                     class="btn btn-navbar">
+                                        
+                                        <f:param name ="subjectCode" value ="1000004"/>
+                                        <f:param name ="name" value ="Funciona... MUAHAHAHAHAHAAH"/>
+                                                                             
+                                        
+                                    </h:commandButton>
                                     
                                 </h:form>
                             </f:view>

@@ -200,6 +200,8 @@ public class SubjectBean implements Serializable {
 
                 //Hice un poco de trampa aquí
                 tutorSubjectVo.setTutorId(tutorVo.getId());
+                tutorSubjectVo.setUrlPhoto(tutorVo.getUrlPhoto());
+                tutorSubjectVo.setUserName(tutorVo.getUserName());
 
                 TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
 
@@ -241,6 +243,7 @@ public class SubjectBean implements Serializable {
         tutorVo.setQuestionReceived(def);
         tutorVo.setReputation(def);
         tutorVo.setUserName(user.getUserName());
+        tutorVo.setUrlPhoto(user.getUrlPhoto());
 
 
         tutorFacade.create(tutorVo);

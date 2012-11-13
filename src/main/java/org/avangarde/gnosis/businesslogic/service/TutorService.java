@@ -42,6 +42,7 @@ public class TutorService implements IService<TutorVo> {
         entity.setQuestionReceived(vo.getQuestionReceived());
         entity.setReputation(vo.getReputation());
         entity.setUserName(vo.getUserName());
+        entity.setUrlPhoto(vo.getUrlPhoto());
 
 
 

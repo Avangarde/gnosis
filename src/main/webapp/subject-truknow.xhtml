@@ -7,9 +7,19 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+   
+    <f:metadata>
+        <f:viewParam name="subjectCode" value="#{subjectBean.code}" />
+        <f:viewParam name="name" value="#{subjectBean.name}" />
+        
+    </f:metadata>
+    
     <ui:define name="title">
-        - Subject TruKnow
+        - #{subjectBean.name}
     </ui:define>
+    
+    
+    
     <ui:define name="content">
         <div class="container">
             <div class="row">
