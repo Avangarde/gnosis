@@ -17,7 +17,7 @@ import org.avangarde.gnosis.entity.Tutor;
 public class TutorDAO implements IDAO<Tutor> {
 
     private static TutorDAO instance;
-    
+
     private TutorDAO() {
     }
 
@@ -55,5 +55,29 @@ public class TutorDAO implements IDAO<Tutor> {
         cq.select(cq.from(Tutor.class));
         Query q = em.createQuery(cq);
         return q.getResultList();
+    }
+
+    public Tutor findByUsername(Tutor entity, EntityManager em) {
+        Tutor tutor = new Tutor();
+        Query q = em.createQuery("SELECT p FROM Tutor p WHERE p.userName LIKE :userName ").
+                setParameter("userName", entity.getUserName());
+        try {
+            tutor = (Tutor) q.getSingleResult();
+        } catch (Exception e) {
+            tutor = null;
+        }
+        return tutor;
+    }
+    
+    public Tutor findByStudentID(Integer studentID, EntityManager em) {
+        Tutor tutor = new Tutor();
+        Query q = em.createQuery("SELECT p FROM Tutor p WHERE p.student.id LIKE :ID ").
+                setParameter("ID", studentID);
+        try {
+            tutor = (Tutor) q.getSingleResult();
+        } catch (Exception e) {
+            tutor = null;
+        }
+        return tutor;
     }
 }

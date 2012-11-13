@@ -1,13 +1,20 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
+import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
+import org.avangarde.gnosis.businesslogic.facade.TutorFacade;
+import org.avangarde.gnosis.businesslogic.facade.TutorSubjectFacade;
 import org.avangarde.gnosis.vo.SubjectVo;
+import org.avangarde.gnosis.vo.TutorSubjectVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -23,7 +30,13 @@ public class SubjectBean implements Serializable {
     private int numGroups;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
-    String buttonValue;
+    String buttonSubscribeValue;
+    String buttonTutorValue;
+    //Constantes de clase
+    public String TUTOR = "Ir a mi pagina de tutor";
+    public String NOTATUTOR = "Convertirme en tutor";
+    public String SUBSCRIBED = "Abandonar";
+    public String NOTSUBSCRIBED = "Suscribirme a la materia";
 
     public SubjectBean() {
     }
@@ -73,7 +86,7 @@ public class SubjectBean implements Serializable {
     }
 
     public void subscribeStudent() {
-        if ("Suscribirme a la materia".equals(buttonValue)) {
+        if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Te has suscrito a la materia " + getName(), ""));
@@ -94,10 +107,10 @@ public class SubjectBean implements Serializable {
     }
     
     public void subscribeStudent(SubjectVo subject) {
-        buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+        buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribed(new Integer(user.getId()), subject.getCode()) ? 
                 "Abandonar" : "Suscribirme a la materia";
-        if ("Suscribirme a la materia".equals(buttonValue)) {
+        if ("Suscribirme a la materia".equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), subject.getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Te has suscrito a la materia " + subject.getName(), ""));
@@ -117,24 +130,131 @@ public class SubjectBean implements Serializable {
         }
     }
 
-    public String changeButtonValue() {
-        return buttonValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribed(new Integer(user.getId()), getCode()) ? 
-                "Abandonar" : "Suscribirme a la materia";
+    public String changeButtonSubscribeValue() {
+        return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())
+                ? SUBSCRIBED : NOTSUBSCRIBED;
+    }
+
+    public String changeButtonTutorValue() {
+
+        TutorVo tutor = new TutorVo();
+        tutor.setUserName(user.getUserName());
+
+        return buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
+                isTheTutorOnSubject(tutor, getCode())
+                ? TUTOR : NOTATUTOR;
     }
     
-    public String changeButtonValue(int subjectCode) {
-        return buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+    public String changeButtonSubscribeValue(int subjectCode) {
+        return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribed(new Integer(user.getId()), subjectCode) ? 
                 "Abandonar" : "Suscribirme a la materia";
     }
 
     public void preRenderView() {
+
         if (getCode() != null) {
             SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());
             setName(subject.getName());
             setDescription(subject.getDescription());
             setNumGroups(subject.getNumGroups());
         }
+    }
+
+    public String becomeTutorOnSubject() {
+
+
+        if (NOTATUTOR.equals(buttonTutorValue)) {
+
+            SubjectFacade subjectFacade = FacadeFactory.getInstance().getSubjectFacade();
+            if (subjectFacade.isTheStudentSubscribed(user.getId(), code)) {
+
+                StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
+
+                TutorVo tutorVo = new TutorVo();
+
+
+                tutorVo.setStudentId(user.getId());
+                tutorVo.setUserName(user.getUserName());
+
+
+                if (!studentFacade.isTutor(tutorVo)) {
+
+                    becomeTutor(tutorVo);
+                    
+                    
+                }
+
+                //continuando
+                
+                tutorVo = findTutorByUserName(user.getUserName());
+
+                int subjectCode = code;
+
+
+                TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
+
+                tutorSubjectVo.setSubjectCode(subjectCode);
+                tutorSubjectVo.setReputation(0);
+
+                //Hice un poco de trampa aquí
+                tutorSubjectVo.setTutorId(tutorVo.getId());
+
+                TutorSubjectFacade tutorSubjectFacade = FacadeFactory.getInstance().getTutorSubjectFacade();
+
+                tutorSubjectFacade.create(tutorSubjectVo);
+
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "¡Genial! Ahora eres tutor de la materia", ""));
+                return "success";
+
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Algo salio mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
+                return "failure";
+            }
+
+
+
+        } else {
+
+            //Navigation case
+            return "success";
+
+        }
+    }
+
+    public void becomeTutor(TutorVo tutorVo) {
+        TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
+
+        //retorna un tutor vacio, que se debe crear antes de continuar
+        //rellenar
+        tutorVo.setId(user.getId());
+        tutorVo.setStudentId(user.getId());
+
+        //defecto
+        int def = 0;
+        tutorVo.setNumberStudents(def);
+        tutorVo.setNumberVotes(def);
+        tutorVo.setPublishedResources(def);
+        tutorVo.setQuestionReceived(def);
+        tutorVo.setReputation(def);
+        tutorVo.setUserName(user.getUserName());
+
+
+        tutorFacade.create(tutorVo);
+
+    }
+
+    private TutorVo findTutorByUserName(String userName) {
+        
+        TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
+        
+        TutorVo tutorVo = new TutorVo();
+        tutorVo.setUserName(userName);
+        
+        return tutorFacade.findByUsername(tutorVo);
+        
     }
 }

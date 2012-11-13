@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
+import org.avangarde.gnosis.dao.TutorSubjectDAO;
 import org.avangarde.gnosis.entity.Subject;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.entity.TutorSubject;
-import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -20,9 +22,6 @@ import org.avangarde.gnosis.vo.TutorSubjectVo;
 public class TutorSubjectService implements IService<TutorSubjectVo> {
 
     private static TutorSubjectService instance;
-    
-    private TutorSubjectService() {
-    }
 
     public static synchronized TutorSubjectService getInstance() {
         if (instance == null) {
@@ -33,7 +32,19 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
 
     @Override
     public void create(TutorSubjectVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TutorSubject entity = new TutorSubject();
+        entity.setId(vo.getId());
+        entity.setReputation(0);
+
+        Subject subject = DAOFactory.getInstance().getSubjectDAO().find(vo.getSubjectCode(), em);
+        subject.getTutorSubjectList().add(entity);
+        entity.setSubject(subject);
+
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(vo.getTutorId(), em);
+        tutor.getTutorSubjectList().add(entity);
+        entity.setTutor(tutor);
+
+        DAOFactory.getInstance().getTutorSubjectDAO().persist(entity, em);
     }
 
     @Override
@@ -55,13 +66,30 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
     public List<TutorSubjectVo> getList(EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
+    public boolean isTheTutorOnSubject(TutorVo tutor, Integer subjectCode, EntityManager em) {
+        TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+        TutorSubject tutorSubject = tutorSubjectDAO.findByUsernameAndCode(subjectCode, tutor.getUserName(), em);
+
+        if (tutorSubject != null) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
     public List<TutorSubjectVo> getTutorsByName(String query, EntityManager em) {
         List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
         List<TutorSubject> entities = DAOFactory.getInstance().getTutorSubjectDAO().getTutorsByname(query, em);
-        for (TutorSubject tutor : entities){
+        for (TutorSubject tutor : entities) {
             tutors.add(tutor.toVo());
         }
         return tutors;
+
+
+
+
     }
 }

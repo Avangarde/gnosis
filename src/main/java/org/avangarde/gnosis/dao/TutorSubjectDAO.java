@@ -19,7 +19,7 @@ import org.avangarde.gnosis.entity.TutorSubject;
 public class TutorSubjectDAO implements IDAO<TutorSubject> {
 
     private static TutorSubjectDAO instance;
-    
+
     private TutorSubjectDAO() {
     }
 
@@ -59,9 +59,23 @@ public class TutorSubjectDAO implements IDAO<TutorSubject> {
         return q.getResultList();
     }
 
+    public TutorSubject findByUsernameAndCode(Integer subjectCode, String userName, EntityManager em) {
+
+        TutorSubject tutorSubject = new TutorSubject();
+        Query q = em.createQuery("SELECT p FROM TutorSubject p WHERE p.tutor.userName LIKE :userName AND p.subject.code LIKE :code ").
+                setParameter("userName", userName).setParameter("code", subjectCode.toString());
+        try {
+            tutorSubject = (TutorSubject) q.getSingleResult();
+        } catch (Exception e) {
+            tutorSubject = null;
+        }
+        return tutorSubject;
+
+    }
+
     public List<TutorSubject> getTutorsByname(String query, EntityManager em) {
         List<TutorSubject> tutors = new ArrayList<TutorSubject>();
-        
+
         Query q = em.createQuery("SELECT t FROM TutorSubject t WHERE t.userName LIKE :userName").
                 setParameter("userName", "%" + query + "%");
 
