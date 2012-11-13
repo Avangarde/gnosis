@@ -1,6 +1,8 @@
 package org.avangarde.gnosis.businesslogic.facade;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import org.avangarde.gnosis.businesslogic.service.PublicationService;
 import org.avangarde.gnosis.vo.PublicationVo;
 
@@ -35,6 +37,29 @@ public class PublicationFacade extends Facade <PublicationVo> {
                 em.clear();
                 em.close();
             }
+        }
+    }
+
+    public boolean isVotedByUser(int studentId, int pubId) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean ret = true;
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+            tx.commit();
+            ret = ((PublicationService)service).isVotedByUser(studentId, pubId, em);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null && tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+            return ret;
         }
     }
 }

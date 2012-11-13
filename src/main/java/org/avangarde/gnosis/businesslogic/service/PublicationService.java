@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Publication;
+import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.PublicationVo;
@@ -39,7 +40,16 @@ public class PublicationService implements IService<PublicationVo> {
         entity.setTitle(vo.getTitle());
         entity.setTopic(vo.getTopic());
         entity.setType(vo.getType());
-        entity.setUrl(vo.getUrl());
+                
+        String newURL = vo.getUrl();
+        if (newURL.startsWith("https://docs")) {
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/preview");
+        } else if (newURL.startsWith("http://www.youtube")){
+            int edit = newURL.lastIndexOf("/");
+            newURL = (newURL.substring(0, edit) + "/embed/" + newURL.substring(edit + 9));
+        }
+        entity.setUrl(newURL);
 
         Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
         student.getPublicationList().add(entity);
@@ -90,5 +100,16 @@ public class PublicationService implements IService<PublicationVo> {
             list.add((publication).toVo());
         }
         return list;
+    }
+    
+    public boolean isVotedByUser(int studentId, int pubId, EntityManager em){
+        Publication publication = DAOFactory.getInstance().getPublicationDAO().find(pubId, em);
+        
+        for (Rating rating : publication.getRatingList()){
+            if (rating.getStudent().getId() == studentId){
+                return true;
+            }
+        }
+        return false;
     }
 }

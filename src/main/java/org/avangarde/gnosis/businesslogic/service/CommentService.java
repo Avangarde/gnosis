@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Comment;
+import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Topic;
 import org.avangarde.gnosis.vo.CommentVo;
@@ -52,6 +53,11 @@ public class CommentService implements IService<CommentVo> {
                 entity.setTopic(topic);
                 topic.getCommentList().add(entity);
             }
+            if (vo.getPublicationId() != 0){
+                Publication publication = DAOFactory.getInstance().getPublicationDAO().find(vo.getPublicationId(), em);
+                entity.setPublication(publication);
+                publication.getCommentList().add(entity);
+            }
             DAOFactory.getInstance().getCommentDAO().persist(entity, em);
         } catch (ParseException ex) {
             Logger.getLogger(CommentService.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,5 +91,13 @@ public class CommentService implements IService<CommentVo> {
             commentVo.add(entity.toVo());
         }    
         return commentVo;
+    }
+
+    public List<CommentVo> getCommentsbyPublication(int pubId, EntityManager em) {
+        List<CommentVo> list = new ArrayList<CommentVo>();
+        for (Comment comment : DAOFactory.getInstance().getCommentDAO().getCommentsbyPublication(pubId, em)) {
+            list.add((comment).toVo());
+        }
+        return list;
     }
 }

@@ -57,6 +57,10 @@ public class ServiceFactory {
         return TutorSubjectService.getInstance();
     }
     
+    public RatingService getRatingService() {
+        return RatingService.getInstance();
+    }
+    
     private static ServiceFactory instance;
 
     public static synchronized ServiceFactory getInstance() {
@@ -64,5 +68,5 @@ public class ServiceFactory {
             instance = new ServiceFactory();
         }
         return instance;
-    }
+    }  
 }

@@ -68,6 +68,8 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private List<Activity> activityList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private List<Publication> publicationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private List<Rating> ratingList;
 
     public Student() {
     }
@@ -215,6 +217,14 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.publicationList = publicationList;
     }
 
+    public List<Rating> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<Rating> ratingList) {
+        this.ratingList = ratingList;
+    }
+
     @Override
     public StudentVo toVo() {
         StudentVo vo = new StudentVo();
@@ -284,6 +294,11 @@ public class Student implements Serializable, IEntity<StudentVo> {
         for (Publication entity : getPublicationList()) {
             listPublicationVo.add(entity.toVo());
         }
+        
+        ArrayList<RatingVo> listRatingVo = new ArrayList<RatingVo>();
+        for (Rating entity : getRatingList()) {
+            listRatingVo.add(entity.toVo());
+        }
 
         vo.setStudygroupList(listStudygroupVo);
         vo.setTutorSubjectList(listTutorSubjectVo);
@@ -295,6 +310,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         vo.setCommentList(listCommentVo);
         vo.setActivityList(listActivityVo);
         vo.setPublicationList(listPublicationVo);
+        vo.setRatingList(listRatingVo);
 
         return vo;
 

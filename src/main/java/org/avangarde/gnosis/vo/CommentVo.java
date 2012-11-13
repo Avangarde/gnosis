@@ -19,6 +19,7 @@ public class CommentVo implements IValueObject{
     private int publicationId;
     private int studentId;
     private String studentName;
+    private String studentUrlPhoto;
     private List<LikeDislikeVo> likeDislikeList;
 
     public int getId() {
@@ -116,6 +117,13 @@ public class CommentVo implements IValueObject{
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
-    
-    
+
+    public String getStudentUrlPhoto() {
+        return studentUrlPhoto;
+    }
+
+    public void setStudentUrlPhoto(String studentUrlPhoto) {
+        this.studentUrlPhoto = studentUrlPhoto;
+    }
+       
 }

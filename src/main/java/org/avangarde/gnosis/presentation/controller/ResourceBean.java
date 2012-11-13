@@ -54,16 +54,8 @@ public class ResourceBean implements Serializable {
         vo.setDate(new GregorianCalendar().getTime());
         vo.setStudentId(getUser().getId());
         vo.setSubjectCode(getSubject().getCode());
-        
-        String newURL = getUrl();
-        if (newURL.startsWith("http://docs")) {
-            int edit = newURL.lastIndexOf("/");
-            newURL = (newURL.substring(0, edit) + "/preview");
-        } else if (newURL.startsWith("http://www.youtube")){
-            int edit = newURL.lastIndexOf("/");
-            newURL = (newURL.substring(0, edit) + "/embed/" + newURL.substring(edit + 9));
-        }
-        vo.setUrl(newURL);
+
+        vo.setUrl(getUrl());
         
         facade.create(vo);
         

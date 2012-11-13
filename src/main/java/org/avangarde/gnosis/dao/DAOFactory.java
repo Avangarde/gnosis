@@ -56,6 +56,11 @@ public class DAOFactory {
     public TutorSubjectDAO getTutorSubjectDAO() {
         return TutorSubjectDAO.getInstance();
     }
+    
+    public RatingDAO getRatingDAO() {
+        return RatingDAO.getInstance();
+    }
+    
     private static DAOFactory instance;
 
     public static synchronized DAOFactory getInstance() {

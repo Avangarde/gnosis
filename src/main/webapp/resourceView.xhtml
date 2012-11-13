@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="code" value="#{subjectBean.code}"/>
         <f:viewParam name="pubId" value="#{viewResourceBean.id}"/>
@@ -19,73 +19,59 @@
     </ui:define>
 
     <ui:define name="content">
-
         <div class="container">
-            <div class="row">
-                <div class="span12 offset0">
-                    <div class="hero-unit">
-                        <h1>#{viewResourceBean.title}</h1>
-                        <iframe src="#{viewResourceBean.url}" width="100%" height="600px"></iframe>
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">  
-                                <p:graphicImage value="/design/ajaxloadingbar.gif" />  
-                            </p:dialog>  
-                            <h:form id="form">  
-                                <p:commandButton id="downloadLink" value="Descargar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" icon="ui-icon-arrowthichk-s">  
-                                    <p:fileDownload value="#{fileDownloadController.file}" />  
-                                </p:commandButton>  
-                            </h:form>  
-                        </h:panelGrid>
+            <div class="hero-unit">
+                <div class="row">
+                    <div class="span11">
+                        <h:form>  
+                            <h1>#{viewResourceBean.title}</h1>
+                            <iframe src="#{viewResourceBean.url}" width="100%" height="600px"></iframe>
+                        </h:form>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="span12 offset0">
-                    <div class="hero-unit">
-                        <f:view>
-                            <span class="label label-important">CALIFICAR</span>
-                            <h:form enctype="multipart/form-data">  
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <h:outputText value="Califica éste recurso:" />  
-                                    <p:rating value="#{ratingController.rating1}" />
-                                </h:panelGrid>
-                            </h:form>
-                            <span class="label label-info">COMENTARIOS ANTERIORES</span>
-                            <div class="alert alert-info">
-                                <span class="badge">1</span>
-                                USUARIO1 dice:
-                                <div class="alert alert-success">
-                                    Comentario...
-                                </div>
-                                <span class="badge">2</span>
-                                USUARIO2 dice:
-                                <div class="alert alert-success">
-                                    Comentario...
-                                </div>
-                                <span class="badge">3</span>
-                                USUARIO3 dice:
-                                <div class="alert alert-success">
-                                    Comentario...
-                                </div>
-                                <div class="pagination">
-                                    <ul>
-                                        <li class="disabled"><a href="#">Prev</a></li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li class="disabled"><a href="#">2</a></li>
-                                        <li class="disabled"><a href="#">3</a></li>
-                                        <li class="disabled"><a href="#">4</a></li>
-                                        <li class="disabled"><a href="#">5</a></li>
-                                        <li class="disabled"><a href="#">Sig</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <span class="label label-success">COMENTAR</span>
-                            <div class="alert alert-success">
-                                <h4>Escribe un comentario...</h4>  
-                                <p:inputTextarea rows="2" cols="30"/>
-                                <h:commandButton action="#" value="Comentar" class="btn btn-success" />
-                            </div>
-                        </f:view>
+
+            <div class="hero-unit">
+                <div class="row">
+                    <div class="span11">
+                        <h:form>
+                            <h:panelGrid columns="3" cellpadding="5" id="grid">
+                                <h2>Calificación del recurso: </h2>  
+                                <p:rating value="#{viewResourceBean.rating}" disabled="true"/>
+                                <span class="label">#{viewResourceBean.numVotes} Votos</span>
+                                <ui:fragment rendered="#{!viewResourceBean.isVoted()}">
+                                        <h2>Califica: </h2>
+                                        <p:rating value="#{viewResourceBean.vote}"/>
+                                        <p:spacer width="10" height="10"/>
+                                        <p:commandButton id="vote" value="Votar"   
+                                                         update="grid" actionListener="#{viewResourceBean.rate}"/>
+                                </ui:fragment>
+                            </h:panelGrid>
+                        </h:form>
+                        <h:form>
+                            <p:dataList value="#{viewResourceBean.commentList}" var="comment" id="panel"  
+                                        paginator="true" rows="5" effectSpeed="fast"  
+                                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="5,10" type="none">
+                                <f:facet name="header">  
+                                    Comentarios Anteriores  
+                                </f:facet>
+                                <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
+                                    <h:panelGrid columns="2" cellpadding="10"> 
+                                        <p:graphicImage value="#{comment.studentUrlPhoto}"/>
+                                        <h:outputText value="#{comment.content}" escape="false"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:dataList>
+                            <br></br>
+                            <h2>Comentar:</h2>
+                            <p:editor id="editor" value="#{commentBean.content}" widgetVar="editor"
+                                      controls="bold italic underline strikethrough"
+                                      required="true" requiredMessage="Debes escribir una respuesta"/>
+                            <br></br>
+                            <p:commandButton id="comment" value="Comentar"  oncomplete="editor.clear();" 
+                                             update="panel" actionListener="#{commentBean.createComment}"/>
+                        </h:form>
                     </div>
                 </div>
             </div>

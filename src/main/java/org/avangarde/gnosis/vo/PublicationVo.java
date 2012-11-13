@@ -20,6 +20,8 @@ public class PublicationVo implements IValueObject{
     private int studentId;
     private String studentName;
     private Integer SubjectCode;
+    private List<RatingVo> ratingList;
+    private int numVotes;
 
     public int getId() {
         return id;
@@ -108,6 +110,21 @@ public class PublicationVo implements IValueObject{
     public void setSubjectCode(Integer SubjectCode) {
         this.SubjectCode = SubjectCode;
     }
-    
-    
+
+    public List<RatingVo> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<RatingVo> ratingList) {
+        this.ratingList = ratingList;
+    }
+
+    public int getNumVotes() {
+        return numVotes;
+    }
+
+    public void setNumVotes(int numVotes) {
+        this.numVotes = numVotes;
+    }
+        
 }
