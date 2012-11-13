@@ -72,4 +72,18 @@ public class TutorSubjectDAO implements IDAO<TutorSubject> {
         return tutorSubject;
 
     }
+
+    public List<TutorSubject> getTutorsByname(String query, EntityManager em) {
+        List<TutorSubject> tutors = new ArrayList<TutorSubject>();
+
+        Query q = em.createQuery("SELECT t FROM TutorSubject t WHERE t.userName LIKE :userName").
+                setParameter("userName", "%" + query + "%");
+
+        try {
+            tutors = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tutors;
+    }
 }

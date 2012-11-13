@@ -107,10 +107,10 @@ public class SubjectBean implements Serializable {
     }
     
     public void subscribeStudent(SubjectVo subject) {
-        buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+        buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribed(new Integer(user.getId()), subject.getCode()) ? 
                 "Abandonar" : "Suscribirme a la materia";
-        if ("Suscribirme a la materia".equals(buttonValue)) {
+        if ("Suscribirme a la materia".equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), subject.getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Te has suscrito a la materia " + subject.getName(), ""));
@@ -146,8 +146,8 @@ public class SubjectBean implements Serializable {
                 ? TUTOR : NOTATUTOR;
     }
     
-    public String changeButtonValue(int subjectCode) {
-        return buttonValue = FacadeFactory.getInstance().getSubjectFacade().
+    public String changeButtonSubscribeValue(int subjectCode) {
+        return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribed(new Integer(user.getId()), subjectCode) ? 
                 "Abandonar" : "Suscribirme a la materia";
     }

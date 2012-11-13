@@ -79,4 +79,17 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
 
 
     }
+
+    public List<TutorSubjectVo> getTutorsByName(String query, EntityManager em) {
+        List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
+        List<TutorSubject> entities = DAOFactory.getInstance().getTutorSubjectDAO().getTutorsByname(query, em);
+        for (TutorSubject tutor : entities) {
+            tutors.add(tutor.toVo());
+        }
+        return tutors;
+
+
+
+
+    }
 }
