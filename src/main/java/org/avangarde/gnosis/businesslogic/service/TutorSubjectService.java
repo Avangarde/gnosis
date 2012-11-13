@@ -35,6 +35,8 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
         TutorSubject entity = new TutorSubject();
         entity.setId(vo.getId());
         entity.setReputation(0);
+        entity.setUrlPhoto(vo.getUrlPhoto());
+        entity.setUserName(vo.getUserName());
 
         Subject subject = DAOFactory.getInstance().getSubjectDAO().find(vo.getSubjectCode(), em);
         subject.getTutorSubjectList().add(entity);
