@@ -59,7 +59,7 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
-            <from-action>#{SubjectBean.becomeTutor()}
+            <from-action>#{subjectBean.becomeTutorOnSubject()}
             </from-action>
             <from-outcome>success</from-outcome>
            <to-view-id>/subject-truknow.xhtml</to-view-id>
