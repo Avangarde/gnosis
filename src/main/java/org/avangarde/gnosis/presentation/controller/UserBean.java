@@ -3,6 +3,8 @@ package org.avangarde.gnosis.presentation.controller;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.vo.ProgramVo;
 
 /**
  *
@@ -16,6 +18,8 @@ public class UserBean implements Serializable {
     private String firstName;
     private String lastName;
     private String userName;
+    private String aboutMe;
+    private String UrlPhoto;
     private int programId;
     private boolean loggedIn;
 
@@ -65,6 +69,31 @@ public class UserBean implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
+    public String getUrlPhoto() {
+        return UrlPhoto;
+    }
+
+    public void setUrlPhoto(String UrlPhoto) {
+        this.UrlPhoto = UrlPhoto;
+    }
+
+    public String getProgramName() {
+        ProgramVo program = FacadeFactory.getInstance().getProgramFacade().find(programId);
+        return program.getName();
     }
 
     public String logOut() {

@@ -20,6 +20,7 @@ public class StudentVo {
     private String email;
     private String password;
     private String urlPhoto;
+    private String aboutMe;
     //Atributo externo
     private Integer programId;
     //Vos Adicionales
@@ -90,6 +91,14 @@ public class StudentVo {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
     public List<LikeDislikeVo> getLikeDislikeList() {

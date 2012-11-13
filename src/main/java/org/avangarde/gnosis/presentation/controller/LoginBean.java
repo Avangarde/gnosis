@@ -68,6 +68,8 @@ public class LoginBean implements Serializable{
             user.setLastName(login.getLastName());
             user.setUserName(login.getUserName());
             user.setProgramId(login.getProgramId());
+            user.setAboutMe(login.getAboutMe());
+            user.setUrlPhoto(login.getUrlPhoto());
             user.setLoggedIn(true);
             return "success";
         } else {
