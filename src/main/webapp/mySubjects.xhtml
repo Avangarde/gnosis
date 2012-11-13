@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../WEB-INF/templates/default.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - Mis Materias
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">  
+
+            <p:growl id="msgs" showDetail="true" />  
+
+            <p:dataTable id="cars" var="car" value="#{tableBean.carsSmall}">  
+
+                <p:column headerText="Código" style="width:24%">  
+                    <h:outputText value="#{car.model}" />  
+                </p:column>  
+
+                <p:column headerText="Nombre" style="width:24%">  
+                    <h:outputText value="#{car.year}" />  
+                </p:column>  
+
+                <p:column style="width:4%">  
+                    <p:commandButton id="selectButton" update=":form:display" oncomplete="carDialog.show()" icon="ui-icon-search" title="View">  
+                        <!-- <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" /> --> 
+                    </p:commandButton>  
+                </p:column>  
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

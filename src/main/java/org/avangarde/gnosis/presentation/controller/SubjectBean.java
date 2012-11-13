@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +13,7 @@ import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
 import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
 import org.avangarde.gnosis.businesslogic.facade.TutorFacade;
 import org.avangarde.gnosis.businesslogic.facade.TutorSubjectFacade;
+import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
@@ -37,6 +39,8 @@ public class SubjectBean implements Serializable {
     public String NOTATUTOR = "Convertirme en tutor";
     public String SUBSCRIBED = "Abandonar";
     public String NOTSUBSCRIBED = "Suscribirme a la materia";
+    private List<StudentVo> students = new ArrayList<StudentVo>();
+    private String query;
 
     public SubjectBean() {
     }
@@ -83,6 +87,22 @@ public class SubjectBean implements Serializable {
 
     public void setUser(UserBean user) {
         this.user = user;
+    }
+
+    public List<StudentVo> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<StudentVo> students) {
+        this.students = students;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public void subscribeStudent() {
@@ -211,7 +231,7 @@ public class SubjectBean implements Serializable {
 
             } else {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Algo salio mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
+                        "Algo salió mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
                 return "failure";
             }
 
@@ -256,5 +276,22 @@ public class SubjectBean implements Serializable {
         
         return tutorFacade.findByUsername(tutorVo);
         
+    }
+    
+    private void loadStudentsBySubject(){
+        students = new ArrayList<StudentVo>();
+        if (query == null || query.equals("")) {
+            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(code);
+            if (subject.getStudentList() != null || subject.getStudentList().isEmpty()) {
+                for (StudentVo student : subject.getStudentList()) {
+                    students.add(student);
+                }
+            }
+        } else {
+            List<StudentVo> searchedStudents = FacadeFactory.getInstance().getStudentFacade().getStudents(query);
+            for (StudentVo student : searchedStudents) {
+                students.add(student);
+            }
+        }
     }
 }

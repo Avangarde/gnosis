@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
@@ -87,5 +88,14 @@ public class StudentService implements IService<StudentVo> {
         }
 
 
+    }
+    
+    public List<StudentVo> getStudents(String query, EntityManager em) {
+        List<StudentVo> students = new ArrayList<StudentVo>();
+        List<Student> entities = DAOFactory.getInstance().getStudentDAO().getStudents(query, em);
+        for (Student student : entities) {
+            students.add(student.toVo());
+        }
+        return students;
     }
 }
