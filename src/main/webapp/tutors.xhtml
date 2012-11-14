@@ -88,8 +88,9 @@
                                 </p:column> 
 
                                 <p:column>  
-                                    <h:link value="¡Quiero aprender de él!"  class="btn btn-mini btn-success">
-                                    </h:link>
+                                    <h:commandButton id="boton" class="btn btn-info"
+                                                     action="#{subjectBean.subscribeToTutor(tutor)}"
+                                                     value="#{subjectBean.changeButtonSubscribeToTutorValue(tutor)}" />
                                 </p:column>  
                             </p:dataTable>  
 
