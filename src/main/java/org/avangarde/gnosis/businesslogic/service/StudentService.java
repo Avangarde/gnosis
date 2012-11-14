@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
@@ -46,7 +47,12 @@ public class StudentService implements IService<StudentVo> {
 
     @Override
     public StudentVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student student = DAOFactory.getInstance().getStudentDAO().find(id, em);
+        if (student != null) {
+            return student.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -87,5 +93,14 @@ public class StudentService implements IService<StudentVo> {
         }
 
 
+    }
+    
+    public List<StudentVo> getStudents(String query, EntityManager em) {
+        List<StudentVo> students = new ArrayList<StudentVo>();
+        List<Student> entities = DAOFactory.getInstance().getStudentDAO().getStudents(query, em);
+        for (Student student : entities) {
+            students.add(student.toVo());
+        }
+        return students;
     }
 }

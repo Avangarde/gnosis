@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.vo.ProgramVo;
+import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
@@ -113,7 +114,6 @@ public class SearchBean implements Serializable{
 
     public void setSubjectBean(SubjectBean subjectBean) {
         this.subjectBean = subjectBean;
-    }
-    
-    
+    }   
+     
 }

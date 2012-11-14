@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.businesslogic.facade;
 
+import java.util.List;
 import org.avangarde.gnosis.businesslogic.service.StudentService;
 import org.avangarde.gnosis.businesslogic.service.TutorService;
 import org.avangarde.gnosis.vo.StudentVo;
@@ -51,5 +52,16 @@ public class StudentFacade extends Facade<StudentVo> {
 
 
 
+    }
+    
+    public List<StudentVo> getStudents(String query) {
+        try {
+            return ((StudentService) service).getStudents(query, em);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
     }
 }

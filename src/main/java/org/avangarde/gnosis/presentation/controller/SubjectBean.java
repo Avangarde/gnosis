@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +13,7 @@ import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
 import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
 import org.avangarde.gnosis.businesslogic.facade.TutorFacade;
 import org.avangarde.gnosis.businesslogic.facade.TutorSubjectFacade;
+import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
@@ -37,6 +39,9 @@ public class SubjectBean implements Serializable {
     public String NOTATUTOR = "Convertirme en tutor";
     public String SUBSCRIBED = "Abandonar";
     public String NOTSUBSCRIBED = "Suscribirme a la materia";
+    private List<StudentVo> students = new ArrayList<StudentVo>();
+    private String query;
+    private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
 
     public SubjectBean() {
     }
@@ -85,6 +90,36 @@ public class SubjectBean implements Serializable {
         this.user = user;
     }
 
+    public List<StudentVo> getStudents() {
+        if (students.isEmpty()) {
+            loadStudentsBySubject();
+        }
+        return students;
+    }
+
+    public void setStudents(List<StudentVo> students) {
+        this.students = students;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public void setSubjects(List<SubjectVo> subjects) {
+        this.subjects = subjects;
+    }
+    
+    public List<SubjectVo> getSubjects() {
+        if (subjects.isEmpty()) {
+            loadMySubjects();
+        }
+        return subjects;
+    }
+        
     public void subscribeStudent() {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
@@ -213,7 +248,7 @@ public class SubjectBean implements Serializable {
 
             } else {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Algo salio mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
+                        "Algo salió mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
                 return "failure";
             }
 
@@ -261,33 +296,21 @@ public class SubjectBean implements Serializable {
 
     }
 
-    public void subscribeToTutor(TutorSubjectVo tutor) {
-        buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribedToTutor(new Integer(user.getId()), tutor.getUserName(), code)
-                ? "Abandonar" : "Suscribirme a este tutor";
-        if ("Suscribirme a este tutor".equals(buttonSubscribeValue)) {
-            if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudentToTutor(new Integer(user.getId()), tutor.getUserName(), code)) {
-                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Te has suscrito al tutor " + tutor.getUserName(), ""));
-            } else {
-                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "No te pudiste suscribir al " + tutor.getUserName(), ""));
-            }
-        } else {
-            if (FacadeFactory.getInstance().getSubjectFacade().unSubscribeStudentToTutor(new Integer(user.getId()), tutor.getUserName(), code)) {
-                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Has abandonado el tutor " + tutor.getUserName(), ""));
-
-            } else {
-                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "No pudiste abandonar el tutor " + tutor.getUserName(), ""));
+    private void loadStudentsBySubject() {
+        students = new ArrayList<StudentVo>();
+        SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(code);
+        if (subject.getStudentList() != null || subject.getStudentList().isEmpty()) {
+            for (StudentVo student : subject.getStudentList()) {
+                students.add(student);
             }
         }
     }
 
-    public String changeButtonSubscribeToTutorValue(TutorSubjectVo tutor) {
-        return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribedToTutor(new Integer(user.getId()), tutor.getUserName(), code)
-                ? "Abandonar" : "Suscribirme a este tutor";
+    private void loadMySubjects() {
+        subjects = new ArrayList<SubjectVo>();
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());  
+        for (Integer code : student.getSubjectList()){
+            subjects.add(FacadeFactory.getInstance().getSubjectFacade().find(code));
+        }
     }
 }

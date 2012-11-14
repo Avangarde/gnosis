@@ -35,6 +35,8 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private String password;
     @Column(name = "url_Photo")
     private String urlPhoto;
+    @Column(name = "aboutMe")
+    private String aboutMe;
     @JoinTable(name = "student_studygroup", joinColumns = {
         @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "id")})
@@ -145,6 +147,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
     public void setTutorSubjectList(List<TutorSubject> tutorSubjectList) {
         this.tutorSubjectList = tutorSubjectList;
     }
+
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -167,6 +170,14 @@ public class Student implements Serializable, IEntity<StudentVo> {
 
     public void setProgram(Program program) {
         this.program = program;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
     public List<Event> getEventList() {
@@ -240,6 +251,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         }
         vo.setUrlPhoto(getUrlPhoto());
         vo.setUserName(getUserName());
+        vo.setAboutMe(getAboutMe());
 
         //Listas
 
@@ -259,7 +271,12 @@ public class Student implements Serializable, IEntity<StudentVo> {
 //        for (Subject entity : getSubjectList()) {
 //            listSubjectVo.add(entity.toVo());
 //        }
-
+        
+        ArrayList<Integer> listSubjectCode = new ArrayList<Integer>();
+        for (Subject entity : getSubjectList()) {
+            listSubjectCode.add(entity.getCode());
+        }
+        
         ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
             listTopicVo.add(entity.toVo());
@@ -294,7 +311,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         for (Publication entity : getPublicationList()) {
             listPublicationVo.add(entity.toVo());
         }
-        
+
         ArrayList<RatingVo> listRatingVo = new ArrayList<RatingVo>();
         for (Rating entity : getRatingList()) {
             listRatingVo.add(entity.toVo());
@@ -302,7 +319,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
 
         vo.setStudygroupList(listStudygroupVo);
         vo.setTutorSubjectList(listTutorSubjectVo);
-//        vo.setSubjectList(listSubjectVo);
+        vo.setSubjectList(listSubjectCode);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
         vo.setTutorList(listTutorVo);

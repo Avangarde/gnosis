@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - Perfil de usuario
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" style="background-color: mediumseagreen" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span1" >
+                                <h:graphicImage id="image"
+                                                alt="jsf-sun"
+                                                url="http://cft-im.bo.infn.it/2011/images/tack-list-icon.jpeg">
+                                </h:graphicImage>   
+                            </div>
+                            <div class="span3">
+                                <p:inputTextarea autoResize="true" disabled="true" readonly="true" value="#{userBean.aboutMe}" style="color: black">
+
+                                </p:inputTextarea>
+                                <div class="row">
+                                    <div class="span4">
+
+                                        <br><div class="span1"><h4><h:outputText value="¿Soy tutor?: " style="color: white" /></h4></div>
+                                            <div class="span1"><p:selectBooleanButton value="Soy tutor?" onLabel="Yes" offLabel="No" /></div></br>
+
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span6" >
+            <div class="container-fluid">
+                <div class="hero-unit" style="background-color: lightseagreen" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span3">
+                                <h2 style="color: yellow">#{userBean.userName}</h2>
+
+                                <h3>#{userBean.fullName}</h3>
+
+                                <h3 style="color: maroon">#{userBean.programName}</h3>
+                            </div>
+                            <div class="span2" >
+                                <h:graphicImage id="profileImage"
+                                                alt="jsf-sun"
+                                                url="#{userBean.urlPhoto}">
+                                </h:graphicImage>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span4">
+
+                                <h:form>  
+
+                                    <p:growl id="messages" showDetail="true" />  
+
+                                    <p:schedule value="#{scheduleBean.eventModel}" widgetVar="myschedule">  
+
+                                        <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+                                        <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+                                        <p:ajax event="eventMove" listener="#{scheduleBean.onEventMove}" update="messages" />  
+                                        <p:ajax event="eventResize" listener="#{scheduleBean.onEventResize}" update="messages" />  
+
+                                    </p:schedule>  
+
+                                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
+                                        <h:panelGrid id="eventDetails" columns="2">  
+                                            <h:outputLabel for="title" value="Título:" />  
+                                            <p:inputText id="title" value="#{scheduleBean.event.title}" required="true"/>  
+
+                                            <h:outputLabel for="from" value="Desde:" />  
+                                            <p:inputMask id="from" value="#{scheduleBean.event.startDate}" mask="99/99/9999">  
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                            </p:inputMask>  
+
+                                            <h:outputLabel for="to" value="Hasta:" />  
+                                            <p:inputMask id="to" value="#{scheduleBean.event.endDate}" mask="99/99/9999">  
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                            </p:inputMask>  
+
+                                            <h:outputLabel for="allDay" value="Todo el día:" />  
+                                            <h:selectBooleanCheckbox id="allDay" value="#{scheduleBean.event.allDay}" />  
+
+                                            <p:commandButton type="reset" value="Limpiar" />  
+                                            <p:commandButton value="Guardar" actionListener="#{scheduleBean.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>  
+                                        </h:panelGrid>  
+                                    </p:dialog>  
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="span6">
+            <div class="container-fluid">
+                <div class="hero-unit" >
+                    <div class="container">
+                        <div class="row" >
+                            <div class="span4" >
+                                <h2 style="color:green">Mis Publicaciones</h2>
+                                <ul class="nav nav-tabs">
+                                    <p:treeTable value="#{resourceBean.root}" var="document"  
+                                                 selection="#{resourceBean.selectedNode}" selectionMode="single">  
+                                        <p:column style="width:140px">  
+                                            <f:facet name="header">  
+                                                Título  
+                                            </f:facet>   
+                                            <h:outputText value="#{document.title}" />  
+                                        </p:column>  
+                                        <p:column style="width:70px">  
+                                            <f:facet name="header">  
+                                                Ver 
+                                            </f:facet>
+                                            <ui:fragment rendered="#{document.url != null}">
+                                                <h:link value="Ver" class="btn btn-mini btn-success"  outcome="resourceView.xhtml">
+                                                    <f:param name ="code" value ="#{subjectBean.code}"/>
+                                                    <f:param name ="pubId" value ="#{document.id}"/>
+                                                </h:link>
+                                            </ui:fragment>
+                                        </p:column>
+                                    </p:treeTable>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

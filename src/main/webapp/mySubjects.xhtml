@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="query" value="#{searchBean.query}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        - Mis materias
+    </ui:define>
+    <ui:define name="content">
+        
+        <div class="row">   
+            <div class="span9 offset3">
+                <h1 style="color: #555">Mis Materias</h1>
+                <div class="hero-unit" style="background-color: #a9dba9">
+                    <f:view>
+                        <h:form prependId="false">   
+
+                            <p:dataTable id="dataTable" var="subject" value="#{subjectBean.subjects}">  
+
+                                <p:column headerText="Código" style="width:10%">  
+                                    <h:outputText value="#{subject.code}" />  
+                                </p:column>  
+
+                                <p:column headerText="Nombre" style="width:70%">  
+                                    <h:outputText value="#{subject.name}" />  
+                                </p:column>   
+
+                                <p:column headerText="Ver" style="width:15%">  
+                                    <h:link  value="Ir al Perfil" outcome="subject.xhtml"  class="btn btn-success" icon="ui-icon-search">
+                                        <f:param name ="code" value ="#{subject.code}"/>
+                                    </h:link>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </h:form>
+                    </f:view>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition> 
+

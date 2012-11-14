@@ -20,12 +20,13 @@ public class StudentVo {
     private String email;
     private String password;
     private String urlPhoto;
+    private String aboutMe;
     //Atributo externo
     private Integer programId;
     //Vos Adicionales
     private List<StudygroupVo> studygroupList;
     private List<TutorSubjectVo> tutorSubjectList;
-    private List<SubjectVo> subjectList;
+    private List<Integer> subjectList;
     private List<TopicVo> topicList;
     
     private List<EventVo> eventList;
@@ -91,6 +92,14 @@ public class StudentVo {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
 
     public List<LikeDislikeVo> getLikeDislikeList() {
         return likeDislikeList;
@@ -132,11 +141,11 @@ public class StudentVo {
         this.studygroupList = studygroupList;
     }
 
-    public List<SubjectVo> getSubjectList() {
+    public List<Integer> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(List<SubjectVo> subjectList) {
+    public void setSubjectList(List<Integer> subjectList) {
         this.subjectList = subjectList;
     }
 

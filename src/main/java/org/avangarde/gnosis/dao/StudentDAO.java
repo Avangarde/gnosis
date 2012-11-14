@@ -1,5 +1,6 @@
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -70,5 +71,19 @@ public class StudentDAO implements IDAO<Student> {
             student = null;
         }
         return student;
+    }
+    
+    public List<Student> getStudents(String query, EntityManager em) {
+        List<Student> students = new ArrayList<Student>();
+
+        Query q = em.createQuery("SELECT t FROM Student t WHERE t.userName LIKE :userName").
+                setParameter("userName", "%" + query + "%");
+
+        try {
+            students = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return students;
     }
 }
