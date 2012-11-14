@@ -47,7 +47,12 @@ public class StudentService implements IService<StudentVo> {
 
     @Override
     public StudentVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student student = DAOFactory.getInstance().getStudentDAO().find(id, em);
+        if (student != null) {
+            return student.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -1,37 +1,53 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../WEB-INF/templates/default.xhtml"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <f:metadata>
+        <f:viewParam name="query" value="#{searchBean.query}"/>
+    </f:metadata>
+
     <ui:define name="title">
-        - Mis Materias
+        - Mis materias
     </ui:define>
-
     <ui:define name="content">
-        <h:form id="form">  
+        
+            <div class="row">
+                <div class="span12">
+                    <div class="hero-unit">
+                        <h:form prependId="false">  
 
-            <p:growl id="msgs" showDetail="true" />  
+                            <p:dataTable id="dataTable" var="subject" value="#{subjectBean.subjects}"  
+                                         paginator="true" rows="10"  
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                         rowsPerPageTemplate="5,10,15">   
 
-            <p:dataTable id="cars" var="car" value="#{tableBean.carsSmall}">  
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Codigo" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.code}" />  
+                                </p:column>  
 
-                <p:column headerText="Código" style="width:24%">  
-                    <h:outputText value="#{car.model}" />  
-                </p:column>  
+                                <p:column>  
+                                    <f:facet name="header">  
+                                        <h:outputText value="Nombre" />  
+                                    </f:facet>  
+                                    <h:outputText value="#{subject.name}" />  
+                                </p:column>  
 
-                <p:column headerText="Nombre" style="width:24%">  
-                    <h:outputText value="#{car.year}" />  
-                </p:column>  
+                                  
+                            </p:dataTable>  
 
-                <p:column style="width:4%">  
-                    <p:commandButton id="selectButton" update=":form:display" oncomplete="carDialog.show()" icon="ui-icon-search" title="View">  
-                        <!-- <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" /> --> 
-                    </p:commandButton>  
-                </p:column>  
+                        </h:form>  
 
-            </p:dataTable>
-        </h:form>
+                    </div>
+                </div>
+            </div>  
     </ui:define>
+</ui:composition> 
 
-</ui:composition>

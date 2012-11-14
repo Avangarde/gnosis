@@ -41,6 +41,7 @@ public class SubjectBean implements Serializable {
     public String NOTSUBSCRIBED = "Suscribirme a la materia";
     private List<StudentVo> students = new ArrayList<StudentVo>();
     private String query;
+    private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
 
     public SubjectBean() {
     }
@@ -105,6 +106,17 @@ public class SubjectBean implements Serializable {
         this.query = query;
     }
 
+    public void setSubjects(List<SubjectVo> subjects) {
+        this.subjects = subjects;
+    }
+    
+    public List<SubjectVo> getSubjects() {
+        if (subjects.isEmpty()) {
+            loadMySubjects();
+        }
+        return subjects;
+    }
+        
     public void subscribeStudent() {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
@@ -125,11 +137,11 @@ public class SubjectBean implements Serializable {
             }
         }
     }
-    
+
     public void subscribeStudent(SubjectVo subject) {
         buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribed(new Integer(user.getId()), subject.getCode()) ? 
-                "Abandonar" : "Suscribirme a la materia";
+                isTheStudentSubscribed(new Integer(user.getId()), subject.getCode())
+                ? "Abandonar" : "Suscribirme a la materia";
         if ("Suscribirme a la materia".equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), subject.getCode())) {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -165,11 +177,11 @@ public class SubjectBean implements Serializable {
                 isTheTutorOnSubject(tutor, getCode())
                 ? TUTOR : NOTATUTOR;
     }
-    
+
     public String changeButtonSubscribeValue(int subjectCode) {
         return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
-                isTheStudentSubscribed(new Integer(user.getId()), subjectCode) ? 
-                "Abandonar" : "Suscribirme a la materia";
+                isTheStudentSubscribed(new Integer(user.getId()), subjectCode)
+                ? "Abandonar" : "Suscribirme a la materia";
     }
 
     public void preRenderView() {
@@ -202,12 +214,12 @@ public class SubjectBean implements Serializable {
                 if (!studentFacade.isTutor(tutorVo)) {
 
                     becomeTutor(tutorVo);
-                    
-                    
+
+
                 }
 
                 //continuando
-                
+
                 tutorVo = findTutorByUserName(user.getUserName());
 
                 int subjectCode = code;
@@ -271,17 +283,17 @@ public class SubjectBean implements Serializable {
     }
 
     private TutorVo findTutorByUserName(String userName) {
-        
+
         TutorFacade tutorFacade = FacadeFactory.getInstance().getTutorFacade();
-        
+
         TutorVo tutorVo = new TutorVo();
         tutorVo.setUserName(userName);
-        
+
         return tutorFacade.findByUsername(tutorVo);
-        
+
     }
-    
-    private void loadStudentsBySubject(){
+
+    private void loadStudentsBySubject() {
         students = new ArrayList<StudentVo>();
         if (query == null || query.equals("")) {
             SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(code);
@@ -295,6 +307,14 @@ public class SubjectBean implements Serializable {
             for (StudentVo student : searchedStudents) {
                 students.add(student);
             }
+        }
+    }
+
+    private void loadMySubjects() {
+        subjects = new ArrayList<SubjectVo>();
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());  
+        for (Integer code : student.getSubjectList()){
+            subjects.add(FacadeFactory.getInstance().getSubjectFacade().find(code));
         }
     }
 }
