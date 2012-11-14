@@ -21,7 +21,7 @@
             <div class="span8">
                 <div class="hero-unit">
                     <h1><small>Noticias!!</small></h1>
-              <!--      <h:commandButton id="boton" value="Someter" onclick="replaceButtonText('boton', 'hola')"></h:commandButton> -->
+                    <!--      <h:commandButton id="boton" value="Someter" onclick="replaceButtonText('boton', 'hola')"></h:commandButton> -->
                 </div>
             </div>
             <div class="span4">
@@ -30,7 +30,7 @@
                     <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500" > 
                         <p:dataTable value="#{subjectListsBean.tutors}" var="tutor">
                             <p:column style="width:25%">
-                                 <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />
+                                <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />
                             </p:column>  
 
                             <p:column style="width:75%;">  
@@ -38,11 +38,21 @@
                             </p:column>  
                         </p:dataTable>
                     </p:fieldset> 
+
+                    <h:link value="Ver todos" outcome="tutors.xhtml" class="btn btn-mini btn-success">
+                        <f:param name ="code" value ="1000004"/>
+                    </h:link>
+
                     <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
-                        <p:ajax event="toggle" />  
-                        <h:panelGrid columns="2" cellpadding="10">    
-                            "APRENDICES"
-                        </h:panelGrid>  
+                        <p:dataTable value="#{subjectListsBean.students}" var="student">
+                            <p:column style="width:25%">
+                                <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                            </p:column>  
+
+                            <p:column style="width:75%;">  
+                                #{student.userName}  
+                            </p:column>  
+                        </p:dataTable> 
                     </p:fieldset>
                 </h:form>              
             </div>
