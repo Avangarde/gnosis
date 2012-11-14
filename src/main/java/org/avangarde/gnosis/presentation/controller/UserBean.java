@@ -92,14 +92,6 @@ public class UserBean implements Serializable {
         this.aboutMe = aboutMe;
     }
 
-    public String getUrlPhoto() {
-        return UrlPhoto;
-    }
-
-    public void setUrlPhoto(String UrlPhoto) {
-        this.UrlPhoto = UrlPhoto;
-    }
-
     public String getProgramName() {
         ProgramVo program = FacadeFactory.getInstance().getProgramFacade().find(programId);
         return program.getName();
