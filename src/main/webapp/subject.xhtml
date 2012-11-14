@@ -21,16 +21,19 @@
             <div class="span8">
                 <div class="hero-unit">
                     <h1><small>Noticias!!</small></h1>
-              <!--      <h:commandButton id="boton" value="Someter" onclick="replaceButtonText('boton', 'hola')"></h:commandButton> -->
+                    <!--      <h:commandButton id="boton" value="Someter" onclick="replaceButtonText('boton', 'hola')"></h:commandButton> -->
                 </div>
             </div>
             <div class="span4">
-                <h:form >  
+                <h:form > 
                     <p:growl id="growl" showDetail="true" />  
                     <p:fieldset legend="Lista de Tutores" toggleable="true" toggleSpeed="500" > 
+                        <h:link value="Ver todos" outcome="tutors.xhtml" class="btn btn-mini btn-success">
+                            <f:param name ="code" value ="#{subjectBean.code}"/>
+                        </h:link>
                         <p:dataTable value="#{subjectListsBean.tutors}" var="tutor">
                             <p:column style="width:25%">
-                                 <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />
+                                <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />
                             </p:column>  
 
                             <p:column style="width:75%;">  
@@ -38,19 +41,20 @@
                             </p:column>  
                         </p:dataTable>
                     </p:fieldset> 
+
                     <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
-                        <p:ajax event="toggle" />  
-                        <h:panelGrid columns="2" cellpadding="10">    
-                            <p:dataTable id="dataTable" var="student" value="#{subjectBean.students}">
-                                <p:column style="width:25%">
-                                    <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
-                                </p:column>  
-                                <p:column style="width:75%;">  
-                                    #{student.userName}  
-                                </p:column>
-                            </p:dataTable>
-                        </h:panelGrid>  
-                    </p:fieldset>
+
+
+                        <p:dataTable id="dataTable" var="student" value="#{subjectBean.students}">
+                            <p:column style="width:25%">
+                                <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                            </p:column>  
+                            <p:column style="width:75%;">  
+                                #{student.userName}  
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:fieldset> 
                 </h:form>              
             </div>
         </div> 

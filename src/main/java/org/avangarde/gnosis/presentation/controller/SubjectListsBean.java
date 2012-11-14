@@ -4,12 +4,17 @@
  */
 package org.avangarde.gnosis.presentation.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.vo.StudentVo;
+import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 import org.avangarde.gnosis.vo.TutorVo;
 import org.primefaces.model.DualListModel;
@@ -19,38 +24,77 @@ import org.primefaces.model.DualListModel;
  * @author andres
  */
 @ManagedBean
-@RequestScoped
-public class SubjectListsBean {
-    
-    private List<TutorVo> tutors;
-    private List<StudentVo> students;
+@ViewScoped
+public class SubjectListsBean implements Serializable {
+
+    private List<TutorVo> tutors = new ArrayList<TutorVo>();
+    private List<StudentVo> students = new ArrayList<StudentVo>();
+    @ManagedProperty(value = "#{subjectBean}")
+    private SubjectBean subjectBean;
+
+    public List<StudentVo> getStudents() {
+        loadStudents();
+
+        return students;
+    }
+
+    public void setStudents(List<StudentVo> students) {
+        this.students = students;
+    }
+
+    public SubjectBean getSubjectBean() {
+        return subjectBean;
+    }
+
+    public void setSubjectBean(SubjectBean subjectBean) {
+        this.subjectBean = subjectBean;
+    }
 
     public SubjectListsBean() {
-        
-        List<TutorVo> availables = new ArrayList<TutorVo>();
-        
-        TutorVo one = new TutorVo();
-        one.setReputation(5);
-        one.setUserName("jperez");
-        one.setUrlPhoto("http://4.bp.blogspot.com/_U_BEf_yeYBA/TSFzWFghHTI/AAAAAAAAABQ/MwSwNxAZJzk/s1600/1266368823_74532441_1-Fotos-de-PROFESOR-DE-MATEMATICAS-CALCULO-FISICA.jpg");
-        
-        
-        TutorVo two = new TutorVo();
-        two.setReputation(5);
-        two.setUserName("tmartinezf");
-        two.setUrlPhoto("http://4.bp.blogspot.com/_U_BEf_yeYBA/TSFzWFghHTI/AAAAAAAAABQ/MwSwNxAZJzk/s1600/1266368823_74532441_1-Fotos-de-PROFESOR-DE-MATEMATICAS-CALCULO-FISICA.jpg");
-        
-        availables.add(one);
-        availables.add(two);
-        
-        tutors = new ArrayList<TutorVo>(availables); 
     }
-    
-    public List<TutorVo> getTutors() {  
-        return tutors;  
-    }  
-    public void setTutors(List<TutorVo> tutors) {  
-        this.tutors = tutors;  
+
+    public List<TutorVo> getTutors() {
+
+        loadTutors();
+
+        return tutors;
+    }
+
+    public void setTutors(List<TutorVo> tutors) {
+        this.tutors = tutors;
+    }
+
+    public void loadTutors() {
+        List<TutorVo> availables = new ArrayList<TutorVo>();
+
+        //Codigo para obtener todos los tutores
+
+        SubjectVo subjectVo = FacadeFactory.getInstance().getSubjectFacade().find(subjectBean.getCode());
+
+        ArrayList<TutorSubjectVo> tutorSubjects = (ArrayList<TutorSubjectVo>) subjectVo.getTutorSubjectList();
+
+        for (TutorSubjectVo tutorSubject : tutorSubjects) {
+            TutorVo tutorVo = new TutorVo();
+            tutorVo.setUserName(tutorSubject.getUserName());
+            tutorVo = FacadeFactory.getInstance().getTutorFacade().findByUsername(tutorVo);
+
+            availables.add(tutorVo);
+        }
+
+
+        tutors = new ArrayList<TutorVo>(availables);
+    }
+
+    public void loadStudents() {
+        List<StudentVo> availables = new ArrayList<StudentVo>();
+
+        //Codigo para obtener todos los tutores
+
+        SubjectVo subjectVo = FacadeFactory.getInstance().getSubjectFacade().find(subjectBean.getCode());
+
+        availables = (ArrayList<StudentVo>) subjectVo.getStudentList();
+
+
+        students = new ArrayList<StudentVo>(availables);
     }
 }
-

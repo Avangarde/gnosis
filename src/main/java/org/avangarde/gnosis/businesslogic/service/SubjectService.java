@@ -10,8 +10,10 @@ import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.dao.StudentDAO;
 import org.avangarde.gnosis.dao.SubjectDAO;
+import org.avangarde.gnosis.dao.TutorSubjectDAO;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
+import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.SubjectVo;
 
 /**
@@ -94,7 +96,27 @@ public class SubjectService implements IService<SubjectVo> {
         Student student = studentDAO.find(userId, em);
 
         List<Student> students = subject.getStudentList();
-        
+
+        for (Student student1 : students) {
+            if (student.getId() == student1.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isTheStudentSubscribedToTutor(Integer studentId, String tutorUserName, Integer subjectCode, EntityManager em) {
+
+        StudentDAO studentDAO = DAOFactory.getInstance().getStudentDAO();
+        Student student = studentDAO.find(studentId, em);
+
+        TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+        TutorSubject tutorSubject = tutorSubjectDAO.findByUsernameAndCode(subjectCode, tutorUserName, em);
+
+
+
+        List<Student> students = tutorSubject.getStudentList();
+
         for (Student student1 : students) {
             if (student.getId() == student1.getId()) {
                 return true;
@@ -115,6 +137,42 @@ public class SubjectService implements IService<SubjectVo> {
             student.getSubjectList().remove(subject);
 
             subjectDAO.update(subject, em);
+            studentDAO.update(student, em);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean suscribeStudentToTutor(Integer userId, String tutorUserName, Integer subjectCode, EntityManager em) {
+        try {
+            StudentDAO studentDAO = DAOFactory.getInstance().getStudentDAO();
+            Student student = studentDAO.find(userId, em);
+
+            TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+            TutorSubject tutorSubject = tutorSubjectDAO.findByUsernameAndCode(subjectCode, tutorUserName, em);
+
+            tutorSubject.getStudentList().add(student);
+            student.getTutorSubjectList().add(tutorSubject);
+
+            studentDAO.update(student, em);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void unSuscribeStudentToTutor(Integer userId, String tutorUserName, Integer subjectCode, EntityManager em) {
+        try {
+            StudentDAO studentDAO = DAOFactory.getInstance().getStudentDAO();
+            Student student = studentDAO.find(userId, em);
+
+            TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+            TutorSubject tutorSubject = tutorSubjectDAO.findByUsernameAndCode(subjectCode, tutorUserName, em);
+
+            tutorSubject.getStudentList().remove(student);
+            student.getTutorSubjectList().remove(tutorSubject);
+
+            tutorSubjectDAO.update(tutorSubject, em);
             studentDAO.update(student, em);
         } catch (Exception e) {
             e.printStackTrace();

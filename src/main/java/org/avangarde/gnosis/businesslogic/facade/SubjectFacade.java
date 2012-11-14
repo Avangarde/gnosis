@@ -99,4 +99,76 @@ public class SubjectFacade extends Facade<SubjectVo> {
             }
         }
     }
+
+    public boolean isTheStudentSubscribedToTutor(Integer studentId, String tutorUserName, Integer subjectCode) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean ret = true;
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+            tx.commit();
+            ret = service.isTheStudentSubscribedToTutor(studentId, tutorUserName, subjectCode, em);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null && tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+            return ret;
+        }
+    }
+
+    public boolean subscribeStudentToTutor(Integer userId, String tutorUserName, Integer subjectCode) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean ret = false;
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+            service.suscribeStudentToTutor(userId, tutorUserName, subjectCode, em);
+            tx.commit();
+            ret = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null && tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+            return ret;
+        }
+    }
+    
+    public boolean unSubscribeStudentToTutor(Integer userId, String tutorUserName, Integer subjectCode) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean ret = false;
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+            service.unSuscribeStudentToTutor(userId, tutorUserName, subjectCode, em);
+            tx.commit();
+            ret = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null && tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+            return ret;
+        }
+    }
+    
 }

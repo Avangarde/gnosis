@@ -86,7 +86,7 @@ public class SearchBean implements Serializable{
     private void loadTutors() {
         tutors = new ArrayList<TutorSubjectVo>();
         if (query == null || query.equals("")) {
-            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(1000004);
+            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(subjectBean.getCode());
             if (subject.getTutorSubjectList() != null || subject.getTutorSubjectList().isEmpty()) {
                 for (TutorSubjectVo tutor : subject.getTutorSubjectList()) {
                     tutors.add(tutor);
