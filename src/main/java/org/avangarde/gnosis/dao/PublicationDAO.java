@@ -85,6 +85,10 @@ public class PublicationDAO implements IDAO<Publication> {
     public int getNewId(EntityManager em){
         Integer newId;
         newId = ((Integer)em.createQuery("SELECT MAX(p.id) FROM Publication p").getSingleResult());
-        return newId+1;
+        if (newId != null) {
+            return newId + 1;
+        } else {
+            return 1;
+        }
     }
 }
