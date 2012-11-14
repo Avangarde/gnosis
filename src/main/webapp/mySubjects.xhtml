@@ -15,32 +15,33 @@
         - Mis materias
     </ui:define>
     <ui:define name="content">
-
-        <div class="row">
+        
+        <div class="row">   
             <div class="span9 offset3">
-                <div class="hero-unit">
+                <h1 style="color: #555">Mis Materias</h1>
+                <div class="hero-unit" style="background-color: #a9dba9">
                     <f:view>
-                            <h:form prependId="false">   
+                        <h:form prependId="false">   
 
-                                <p:dataTable id="dataTable" var="subject" value="#{subjectBean.subjects}">  
+                            <p:dataTable id="dataTable" var="subject" value="#{subjectBean.subjects}">  
 
-                                    <p:column headerText="Código" style="width:30%">  
-                                        <h:outputText value="#{subject.code}" />  
-                                    </p:column>  
+                                <p:column headerText="Código" style="width:10%">  
+                                    <h:outputText value="#{subject.code}" />  
+                                </p:column>  
 
-                                    <p:column headerText="Nombre" style="width:65%">  
-                                        <h:outputText value="#{subject.name}" />  
-                                    </p:column>   
+                                <p:column headerText="Nombre" style="width:70%">  
+                                    <h:outputText value="#{subject.name}" />  
+                                </p:column>   
 
-                                    <p:column style="width:5%">  
-                                        <p:commandButton id="selectButton"  icon="ui-icon-search" title="Ver">  
-                                           <!-- <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />  -->
-                                        </p:commandButton>  
-                                    </p:column>  
+                                <p:column headerText="Ver" style="width:15%">  
+                                    <h:link  value="Ir al Perfil" outcome="subject.xhtml"  class="btn btn-success" icon="ui-icon-search">
+                                        <f:param name ="code" value ="#{subject.code}"/>
+                                    </h:link>
+                                </p:column>
 
-                                </p:dataTable>
+                            </p:dataTable>
 
-                            </h:form>
+                        </h:form>
                     </f:view>
                 </div>
             </div>
