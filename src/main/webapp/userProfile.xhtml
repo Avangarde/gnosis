@@ -15,7 +15,24 @@
 
 
     <ui:define name="content">
-
+        <script type="text/javascript">
+            window.onload = function() {
+                btnSubmit = document.getElementById('btnSubmit');
+                btnSubmit.disabled = #{userBean.btnDisabled};
+                if (btnSubmit.childNodes[0])
+                {
+                    btnSubmit.childNodes[0].nodeValue=#{userBean.btnValue};
+                }
+                else if (btnSubmit.value)
+                {
+                    btnSubmit.value=#{userBean.btnValue};
+                }
+                else //if (button.innerHTML)
+                {
+                    btnSubmit.innerHTML=#{userBean.btnValue};
+                }
+            }
+        </script>
         <div class="span6">
             <div class="container-fluid">
                 <div class="hero-unit" style="background-color: mediumseagreen" >
@@ -28,19 +45,16 @@
                                 </h:graphicImage>   
                             </div>
                             <div class="span3">
-                                <p:inputTextarea autoResize="true" disabled="true" readonly="true" value="#{userBean.aboutMe}" style="color: black">
+                                <p:inputTextarea autoResize="true" disabled="true" readonly="true" value="#{userBean.aboutMe}" style="color: black"/>
+                                <br><br><div class="row">
+                                            <div class="span4">
+                                                <h:form id="frmTest" prependId="false">
 
-                                </p:inputTextarea>
-                                <div class="row">
-                                    <div class="span4">
-
-                                        <br><div class="span1"><h4><h:outputText value="¿Soy tutor?: " style="color: white" /></h4></div>
-                                            <div class="span1"><p:selectBooleanButton value="Soy tutor?" onLabel="Yes" offLabel="No" /></div></br>
-
-                                    </div>
-
-                                </div>
-                                
+                                                    <div class="span1"><h4><h:outputText value="¿Soy tutor?: " style="color: white"/></h4></div>
+                                                    <h:commandButton id="btnSubmit" value="#{userBean.btnValue}" onclick="#{userBean.tutorPage}"/>
+                                                </h:form>
+                                            </div>
+                                        </div></br></br>
                             </div>
                         </div>
                     </div>
@@ -79,9 +93,9 @@
                             <div class="span4">
 
                                 <h:form>  
-
+                                    <h2 style="color:green">Mi Calendario</h2>
                                     <p:growl id="messages" showDetail="true" />  
-
+                                    <br/>
                                     <p:schedule value="#{scheduleBean.eventModel}" widgetVar="myschedule">  
 
                                         <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  

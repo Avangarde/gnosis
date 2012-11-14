@@ -4,7 +4,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
+import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
 import org.avangarde.gnosis.vo.ProgramVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -19,7 +21,7 @@ public class UserBean implements Serializable {
     private String lastName;
     private String userName;
     private String aboutMe;
-    private String UrlPhoto;
+    private String btnValue;
     private int programId;
     private boolean loggedIn;
     private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
@@ -97,6 +99,25 @@ public class UserBean implements Serializable {
         return program.getName();
     }
 
+    public boolean isBtnDisabled() {
+        TutorVo tutorVo = new TutorVo();
+        tutorVo.setStudentId(id);
+        tutorVo.setUserName(userName);
+        return (!FacadeFactory.getInstance().getStudentFacade().isTutor(tutorVo)) ? true : false;
+    }
+
+    public String getBtnValue() {
+        return isBtnDisabled()?"No":"Si, ir a mi perfil de tutor";
+    }
+
+    public void setBtnValue(String btnValue) {
+        this.btnValue = btnValue;
+    }
+    
+    public String getTutorPage(){
+        return "success";
+    }
+    
     public String logOut() {
         firstName = null;
         lastName = null;
