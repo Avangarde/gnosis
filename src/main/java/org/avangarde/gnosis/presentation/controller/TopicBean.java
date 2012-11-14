@@ -14,8 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.*;
-import org.avangarde.gnosis.vo.CommentVo;
-import org.avangarde.gnosis.vo.TopicVo;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
@@ -40,7 +39,9 @@ public class TopicBean implements Serializable{
     }
     
     public void preRenderView() {
-        
+        TopicVo find = FacadeFactory.getInstance().getTopicFacade().find(getId());
+        setTitle(find.getTitle());
+        setDateStarted(find.getDateStarted());
     }
     
     public void createTopic(){
@@ -67,6 +68,9 @@ public class TopicBean implements Serializable{
         commentVo.setTopicId(topicVo.getId());
         
         commentFacade.create(commentVo);
+        
+        createActivity(commentVo, topicVo, "Topic");
+        createActivity(commentVo, topicVo, "Comment");
         
     }
 
@@ -148,6 +152,19 @@ public class TopicBean implements Serializable{
     public void loadComments() {
         commentList = new ArrayList<CommentVo>();
         commentList = FacadeFactory.getInstance().getCommentFacade().getCommentsbyTopic(getId());
+    }
+    
+    public void createActivity(CommentVo commentVo, TopicVo topicVo, String type) {
+        ActivityFacade activityFacade = FacadeFactory.getInstance().getActivityFacade();
+        
+        ActivityVo activityVo = new ActivityVo();
+        activityVo.setDateActivity(commentVo.getDate());
+        activityVo.setStudentId(getUser().getId());
+        activityVo.setSubjectCode(getSubject().getCode());
+        activityVo.setTopicId(topicVo.getId());
+        activityVo.setType(type);
+        
+        activityFacade.create(activityVo);
     }
         
 }

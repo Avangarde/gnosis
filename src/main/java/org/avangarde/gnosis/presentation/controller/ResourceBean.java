@@ -5,6 +5,7 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -12,8 +13,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import org.avangarde.gnosis.businesslogic.facade.ActivityFacade;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.PublicationFacade;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.PublicationVo;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -45,34 +48,35 @@ public class ResourceBean implements Serializable {
 
     public void saveResource() {
 
-        PublicationFacade facade = FacadeFactory.getInstance().getPublicationFacade();
-
-        PublicationVo vo = new PublicationVo();
-        vo.setTitle(getTitle());
-        vo.setTopic(getTopic());
-        vo.setType(getType());
-        vo.setDate(new GregorianCalendar().getTime());
-        vo.setStudentId(getUser().getId());
-        vo.setSubjectCode(getSubject().getCode());
-
-        vo.setUrl(getUrl());
-
-        facade.create(vo);
-
+        PublicationFacade publicationFacade = FacadeFactory.getInstance().getPublicationFacade();
+             
+        PublicationVo publicationVo = new PublicationVo();
+        publicationVo.setId(FacadeFactory.getInstance().getPublicationFacade().getNewId());
+        publicationVo.setTitle(getTitle());
+        publicationVo.setTopic(getTopic());
+        publicationVo.setType(getType());
+        publicationVo.setDate(new GregorianCalendar().getTime());
+        publicationVo.setStudentId(getUser().getId());
+        publicationVo.setSubjectCode(getSubject().getCode());
+        publicationVo.setUrl(getUrl());
+        
+        publicationFacade.create(publicationVo);
+        
         TreeNode nodeCurrentTopic = null;
         for (TreeNode node : root.getChildren()) {
-            if (((PublicationVo) (node).getData()).getTitle().equals(vo.getTopic())) {
+            if (((PublicationVo) (node).getData()).getTitle().equals(publicationVo.getTopic())) {
                 nodeCurrentTopic = node;
             }
         }
         if (nodeCurrentTopic == null) {
             PublicationVo newVo = new PublicationVo();
-            newVo.setTitle(vo.getTopic());
+            newVo.setTitle(publicationVo.getTopic());
             nodeCurrentTopic = new DefaultTreeNode(newVo, root);
         }
 
-        new DefaultTreeNode(vo, nodeCurrentTopic);
-
+        new DefaultTreeNode(publicationVo, nodeCurrentTopic);
+        
+        createActivity(publicationVo);
 //        return "success";
 
     }
@@ -192,5 +196,19 @@ public class ResourceBean implements Serializable {
 
     public void setSharedBy(String sharedBy) {
         this.sharedBy = sharedBy;
+    }
+    
+    public void createActivity(PublicationVo publicationVo) {
+        ActivityFacade activityFacade = FacadeFactory.getInstance().getActivityFacade();
+        
+        ActivityVo activityVo = new ActivityVo();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+        activityVo.setDateActivity(format.format(new GregorianCalendar().getTime()));
+        activityVo.setStudentId(getUser().getId());
+        activityVo.setSubjectCode(getSubject().getCode());
+        activityVo.setPublicationId(publicationVo.getId());
+        activityVo.setType("Publication");
+        
+        activityFacade.create(activityVo);
     }
 }

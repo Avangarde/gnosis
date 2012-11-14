@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.PublicationVo;
 import org.avangarde.gnosis.vo.RatingVo;
@@ -53,6 +54,8 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
     private Subject subject;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
     private List<Rating> ratingList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "publication")
+    private List<Activity> activityList;
 
     public Publication() {
     }
@@ -151,6 +154,14 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         this.ratingList = ratingList;
     }
 
+    public List<Activity> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<Activity> activityList) {
+        this.activityList = activityList;
+    }
+
     @Override
     public PublicationVo toVo() {
         PublicationVo vo = new PublicationVo();
@@ -161,6 +172,10 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         ArrayList<RatingVo> listRatingVo = new ArrayList<RatingVo>();
         for (Rating entity : getRatingList()) {
             listRatingVo.add(entity.toVo());
+        }
+        ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for (Activity entity : getActivityList()) {
+            listActivityVo.add(entity.toVo());
         }
         vo.setCommentList(listVo);
         vo.setDate(getDate());
@@ -175,6 +190,7 @@ public class Publication implements Serializable, IEntity<PublicationVo> {
         vo.setUrl(getUrl());
         vo.setRatingList(listRatingVo);
         vo.setNumVotes(listRatingVo.size());
+        vo.setActivityList(listActivityVo);
         return vo;
 
     }

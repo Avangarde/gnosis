@@ -6,9 +6,11 @@ import java.util.GregorianCalendar;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.avangarde.gnosis.businesslogic.facade.ActivityFacade;
 import org.avangarde.gnosis.businesslogic.facade.CommentFacade;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.LikeDislikeFacade;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.LikeDislikeVo;
 
@@ -47,6 +49,18 @@ public class CommentBean implements Serializable {
         commentVo.setPublicationId(getViewResourceBean().getId());
 
         commentFacade.create(commentVo);
+
+        ActivityFacade activityFacade = FacadeFactory.getInstance().getActivityFacade();
+        
+        ActivityVo activityVo = new ActivityVo();
+        activityVo.setDateActivity(commentVo.getDate());
+        activityVo.setStudentId(getUser().getId());
+        activityVo.setSubjectCode(getSubject().getCode());
+        activityVo.setPublicationId(getViewResourceBean().getId());
+        activityVo.setTopicId(getTopic().getId());
+        activityVo.setType("Comment");
+        
+        activityFacade.create(activityVo);
 
         getTopic().loadComments();
         getViewResourceBean().loadComments();

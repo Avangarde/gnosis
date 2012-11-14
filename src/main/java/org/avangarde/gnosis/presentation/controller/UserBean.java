@@ -1,10 +1,13 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.ProgramVo;
 import org.avangarde.gnosis.vo.TutorVo;
 
@@ -25,6 +28,7 @@ public class UserBean implements Serializable {
     private int programId;
     private boolean loggedIn;
     private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
+    private List<ActivityVo> activities = new ArrayList<ActivityVo>();
 
     public String getUrlPhoto() {
         return urlPhoto;
@@ -116,6 +120,19 @@ public class UserBean implements Serializable {
     
     public String getTutorPage(){
         return "success";
+    }
+    
+    public List<ActivityVo> getActivities() {
+        activities = new ArrayList<ActivityVo>();
+        List<ActivityVo> vos = FacadeFactory.getInstance().getActivityFacade().getActivitiesBySubjectsOfStudent(getId());
+        if (vos != null){
+            activities = vos;
+        }
+        return activities;
+    }
+
+    public void setActivities(List<ActivityVo> activities) {
+        this.activities = activities;
     }
     
     public String logOut() {

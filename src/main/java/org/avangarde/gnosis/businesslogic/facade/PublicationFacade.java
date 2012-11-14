@@ -14,7 +14,18 @@ public class PublicationFacade extends Facade <PublicationVo> {
 
     public PublicationFacade(String PUName, PublicationService service) {
         super(PUName, service);
-    } 
+    }
+    
+    public int getNewId() {
+        try {
+            return ((PublicationService)service).getNewId(em);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
 
     public List<String> getTopicsBySubject(Integer subjectCode) {
         try {

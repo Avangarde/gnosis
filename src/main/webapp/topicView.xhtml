@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="span11">
                     <h:form>
-                        <h1>Foro</h1>
+                        <h1>Foro - #{topicBean.title}</h1>
                         <p:dataList value="#{topicBean.commentList}" var="comment" id="panel"  
                                     paginator="true" rows="5" effectSpeed="fast"  
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
@@ -34,7 +34,7 @@
                                    <!--     <ui:repeat value="#{topicBean.commentList}" var="comment"> -->
                             <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
                                 <h:panelGrid columns="2" cellpadding="10"> 
-                                    <p:graphicImage value="#{comment.studentUrlPhoto}"/>
+                                    <p:graphicImage value="#{comment.studentUrlPhoto}" width="66" height="66"/>
                                     <h:outputText value="#{comment.content}" escape="false"/>
                                 </h:panelGrid>
                                 <!--      <h:panelGrid columns="4" cellpadding="10"> 

@@ -22,6 +22,7 @@ public class PublicationVo implements IValueObject{
     private Integer SubjectCode;
     private List<RatingVo> ratingList;
     private int numVotes;
+    private List<ActivityVo> activityList;
 
     public int getId() {
         return id;
@@ -125,6 +126,14 @@ public class PublicationVo implements IValueObject{
 
     public void setNumVotes(int numVotes) {
         this.numVotes = numVotes;
+    }
+    
+    public List<ActivityVo> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<ActivityVo> activityList) {
+        this.activityList = activityList;
     }
         
 }

@@ -1,6 +1,7 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     @Column(name = "details")
     private String details;
     @Column(name = "dateActivity")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateActivity;
     @Column(name = "url")
     private String url;
@@ -49,6 +50,9 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     @ManyToOne
     @JoinColumn(name = "studentId")
     private Student student;
+    @ManyToOne
+    @JoinColumn(name = "idPublication")
+    private Publication publication;
 
     public Activity() {
     }
@@ -132,19 +136,40 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     public void setStudent(Student student) {
         this.student = student;
     }
+    
+    public Publication getPublication() {
+        return publication;
+    }
+
+    public void setPublication(Publication publication) {
+        this.publication = publication;
+    }
 
     @Override
     public ActivityVo toVo() {
         ActivityVo vo = new ActivityVo();
-        vo.setDateActivity(getDateActivity());
+        SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+        vo.setDateActivity(format.format(getDateActivity()));
         vo.setDetails(getDetails());
         vo.setId(getId());
         vo.setStudentId(getStudent().getId());
+        vo.setStudentUsername(getStudent().getUserName());
+        vo.setStudentUrlPhoto(getStudent().getUrlPhoto());
         vo.setSubjectCode(getSubject().getCode());
-        vo.setTopicId(getTopic().getId());
-        vo.setTutorId(getTutor().getId());
+        vo.setSubjectName(getSubject().getName());
+        if (getTopic() != null) {
+            vo.setTopicId(getTopic().getId());
+            vo.setTopicTitle(getTopic().getTitle());
+        }
+        if (getTutor() != null) {
+            vo.setTutorId(getTutor().getId());
+        }
         vo.setType(getType());
         vo.setUrl(getUrl());
+        if (getPublication() != null) {
+            vo.setPublicationId(getPublication().getId());
+            vo.setPublicationTitle(getPublication().getTitle());
+        }
         List<CommentVo> listVo = new ArrayList<CommentVo>();
         for (Comment entity : getCommentList()){
             listVo.add(entity.toVo());
