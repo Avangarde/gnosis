@@ -260,6 +260,11 @@ public class Student implements Serializable, IEntity<StudentVo> {
 //            listSubjectVo.add(entity.toVo());
 //        }
 
+        ArrayList<Integer> listSubjectCode = new ArrayList<Integer>();
+        for (Subject entity : getSubjectList()) {
+            listSubjectCode.add(entity.getCode());
+        }
+        
         ArrayList<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
             listTopicVo.add(entity.toVo());
@@ -302,7 +307,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
 
         vo.setStudygroupList(listStudygroupVo);
         vo.setTutorSubjectList(listTutorSubjectVo);
-//        vo.setSubjectList(listSubjectVo);
+        vo.setSubjectList(listSubjectCode);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
         vo.setTutorList(listTutorVo);
