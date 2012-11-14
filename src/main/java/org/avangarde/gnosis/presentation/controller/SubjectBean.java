@@ -91,6 +91,9 @@ public class SubjectBean implements Serializable {
     }
 
     public List<StudentVo> getStudents() {
+        if (students.isEmpty()) {
+            loadStudentsBySubject();
+        }
         return students;
     }
 
@@ -295,16 +298,9 @@ public class SubjectBean implements Serializable {
 
     private void loadStudentsBySubject() {
         students = new ArrayList<StudentVo>();
-        if (query == null || query.equals("")) {
-            SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(code);
-            if (subject.getStudentList() != null || subject.getStudentList().isEmpty()) {
-                for (StudentVo student : subject.getStudentList()) {
-                    students.add(student);
-                }
-            }
-        } else {
-            List<StudentVo> searchedStudents = FacadeFactory.getInstance().getStudentFacade().getStudents(query);
-            for (StudentVo student : searchedStudents) {
+        SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(code);
+        if (subject.getStudentList() != null || subject.getStudentList().isEmpty()) {
+            for (StudentVo student : subject.getStudentList()) {
                 students.add(student);
             }
         }
