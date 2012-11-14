@@ -56,9 +56,9 @@ public class ResourceBean implements Serializable {
         vo.setSubjectCode(getSubject().getCode());
 
         vo.setUrl(getUrl());
-        
+
         facade.create(vo);
-        
+
         TreeNode nodeCurrentTopic = null;
         for (TreeNode node : root.getChildren()) {
             if (((PublicationVo) (node).getData()).getTitle().equals(vo.getTopic())) {

@@ -7,6 +7,12 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}" required="true"/>
+        <f:event type="preRenderView" listener="#{resourceBean.preRenderView()}" />
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
+    
     <ui:define name="title">
         - Perfil de usuario
     </ui:define>
