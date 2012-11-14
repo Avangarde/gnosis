@@ -1,13 +1,17 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.avangarde.gnosis.businesslogic.facade.ActivityFacade;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.RatingFacade;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.CommentVo;
 import org.avangarde.gnosis.vo.PublicationVo;
 import org.avangarde.gnosis.vo.RatingVo;
@@ -58,6 +62,18 @@ public class ViewResourceBean implements Serializable{
         vo.setPublicationId(getId());
         
         ratingFacade.create(vo);
+        
+        ActivityFacade activityFacade = FacadeFactory.getInstance().getActivityFacade();
+        
+        ActivityVo activityVo = new ActivityVo();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+        activityVo.setDateActivity(format.format(new GregorianCalendar().getTime()));
+        activityVo.setStudentId(getUser().getId());
+        activityVo.setSubjectCode(getSubject().getCode());
+        activityVo.setPublicationId(getId());
+        activityVo.setType("Rating");
+        
+        activityFacade.create(activityVo);
     }
     
     public boolean isVoted(){

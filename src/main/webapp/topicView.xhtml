@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="span11">
                     <h:form>
-                        <h1>Foro</h1>
+                        <h1>Foro - #{topicBean.title}</h1>
                         <p:dataList value="#{topicBean.commentList}" var="comment" id="panel"  
                                     paginator="true" rows="5" effectSpeed="fast"  
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  

@@ -49,7 +49,12 @@ public class TopicService implements IService<TopicVo> {
 
     @Override
     public TopicVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Topic topic = DAOFactory.getInstance().getTopicDAO().find(id, em);
+        if (topic != null) {
+            return topic.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.avangarde.gnosis.vo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,13 +11,19 @@ public class ActivityVo implements IValueObject {
     private int id;
     private String type;
     private String details;
-    private Date dateActivity;
+    private String dateActivity;
     private String url;
     private List<CommentVo> commentList;
     private int topicId;
+    private String topicTitle;
     private Integer subjectCode;
+    private String subjectName;
     private int tutorId;
     private int studentId;
+    private String studentUsername;
+    private String studentUrlPhoto;
+    private int publicationId;
+    private String publicationTitle;
 
     public int getId() {
         return id;
@@ -44,11 +49,11 @@ public class ActivityVo implements IValueObject {
         this.details = details;
     }
 
-    public Date getDateActivity() {
+    public String getDateActivity() {
         return dateActivity;
     }
 
-    public void setDateActivity(Date dateActivity) {
+    public void setDateActivity(String dateActivity) {
         this.dateActivity = dateActivity;
     }
 
@@ -98,6 +103,54 @@ public class ActivityVo implements IValueObject {
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+    }
+    
+    public int getPublicationId() {
+        return publicationId;
+    }
+
+    public void setPublicationId(int publicationId) {
+        this.publicationId = publicationId;
+    }
+
+    public String getStudentUsername() {
+        return studentUsername;
+    }
+
+    public void setStudentUsername(String studentUsername) {
+        this.studentUsername = studentUsername;
+    }
+
+    public String getStudentUrlPhoto() {
+        return studentUrlPhoto;
+    }
+
+    public void setStudentUrlPhoto(String studentUrlPhoto) {
+        this.studentUrlPhoto = studentUrlPhoto;
+    }
+
+    public String getTopicTitle() {
+        return topicTitle;
+    }
+
+    public void setTopicTitle(String topicTitle) {
+        this.topicTitle = topicTitle;
+    }
+
+    public String getPublicationTitle() {
+        return publicationTitle;
+    }
+
+    public void setPublicationTitle(String publicationTitle) {
+        this.publicationTitle = publicationTitle;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
    
 }

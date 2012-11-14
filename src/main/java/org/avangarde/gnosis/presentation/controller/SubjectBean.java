@@ -6,24 +6,17 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
-import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
-import org.avangarde.gnosis.businesslogic.facade.SubjectFacade;
-import org.avangarde.gnosis.businesslogic.facade.TutorFacade;
-import org.avangarde.gnosis.businesslogic.facade.TutorSubjectFacade;
-import org.avangarde.gnosis.vo.StudentVo;
-import org.avangarde.gnosis.vo.SubjectVo;
-import org.avangarde.gnosis.vo.TutorSubjectVo;
-import org.avangarde.gnosis.vo.TutorVo;
+import org.avangarde.gnosis.businesslogic.facade.*;
+import org.avangarde.gnosis.vo.*;
 
 /**
  *
  * @author Alexander
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SubjectBean implements Serializable {
 
     private Integer code;
@@ -42,6 +35,7 @@ public class SubjectBean implements Serializable {
     private List<StudentVo> students = new ArrayList<StudentVo>();
     private String query;
     private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
+    private List<ActivityVo> activities = new ArrayList<ActivityVo>();
 
     public SubjectBean() {
     }
@@ -119,7 +113,20 @@ public class SubjectBean implements Serializable {
         }
         return subjects;
     }
+    
+    public List<ActivityVo> getActivities() {
+        activities = new ArrayList<ActivityVo>();
+        List<ActivityVo> vos = FacadeFactory.getInstance().getActivityFacade().getActivitiesBySubject(getCode());
+        if (vos != null){
+            activities = vos;
+        }
+        return activities;
+    }
 
+    public void setActivities(List<ActivityVo> activities) {
+        this.activities = activities;
+    }
+     
     public void subscribeStudent() {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {

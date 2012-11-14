@@ -112,4 +112,8 @@ public class PublicationService implements IService<PublicationVo> {
         }
         return false;
     }
+    
+    public int getNewId(EntityManager em) {
+        return DAOFactory.getInstance().getPublicationDAO().getNewId(em);
+    }
 }
