@@ -12,11 +12,44 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="form" > 
-            <h:link value="Calculo Diferencial" outcome="subject.xhtml" class="btn btn-mini btn-success">
-                <f:param name ="code" value ="1000004"/>
-            </h:link>
-        </h:form>
+        <div class="row">
+            <div class="span10 offset1">
+                <h:form id="form" >
+                    <h1 style="color: #555">Ultimas Noticias</h1>
+                    <div class="hero-unit">
+                        <ui:repeat value="#{userBean.activities}" var="activity">
+                            <p:separator/>
+                            <h:panelGrid columns="3" cellpadding="10">
+                                <h:column>
+                                    <p:graphicImage value="#{activity.studentUrlPhoto}"/>
+                                </h:column>
+                                <h:column>
+                                    <h2 style="color:blue">#{activity.studentUsername}</h2>
+                                    <h3 style="color:black">En #{activity.subjectName} #{activity.details}</h3>
+                                    <h2 style="color:blue">
+                                        <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
+                                            #{activity.publicationTitle}
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.topicId.equals(0)}">
+                                            #{activity.topicTitle}
+                                        </ui:fragment>
+                                    </h2><br/><br/>
+                                    <h:outputText value=" #{activity.dateActivity}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:link value="Ver" outcome="#{activity.url}" class="btn btn-info">
+                                        <f:param name ="code" value ="#{activity.subjectCode}"/>
+                                        <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
+                                        <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
+                                    </h:link>
+                                </h:column>
+                            </h:panelGrid>
+                            <p:separator/>
+                        </ui:repeat>
+                    </div>
+                </h:form>
+            </div>
+        </div>  
     </ui:define>
 
 </ui:composition>

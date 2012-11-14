@@ -160,9 +160,9 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setCommentList(listVo);
         vo.setId(getId());
         vo.setReputation(getReputation());
-        List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
+        List<Integer> listStudentVo = new ArrayList<Integer>();
         for(Student entity : getStudentList()){
-            listStudentVo.add(entity.toVo());
+            listStudentVo.add(entity.getId());
         }
         vo.setStudentList(listStudentVo);
         vo.setTutorId(getTutor().getId());

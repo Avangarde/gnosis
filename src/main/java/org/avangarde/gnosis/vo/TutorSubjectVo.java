@@ -10,7 +10,7 @@ public class TutorSubjectVo implements IValueObject {
 
     private int id;
     private double reputation;
-    private List<StudentVo> studentList;
+    private List<Integer> studentList;
     private List<CommentVo> commentList;
     private Integer subjectCode;
     private int tutorId;
@@ -37,11 +37,11 @@ public class TutorSubjectVo implements IValueObject {
         this.reputation = reputation;
     }
 
-    public List<StudentVo> getStudentList() {
+    public List<Integer> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(List<StudentVo> studentList) {
+    public void setStudentList(List<Integer> studentList) {
         this.studentList = studentList;
     }
 
