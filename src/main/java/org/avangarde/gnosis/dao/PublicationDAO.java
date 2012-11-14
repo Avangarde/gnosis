@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import org.avangarde.gnosis.entity.Publication;
+import org.avangarde.gnosis.vo.StudentVo;
 
 /**
  *
@@ -90,5 +91,18 @@ public class PublicationDAO implements IDAO<Publication> {
         } else {
             return 1;
         }
+    }
+    
+    
+    public List<Publication> getPublicationsByStudent(int studentId, EntityManager em) {
+        List<Publication> list;
+        Query q = em.createQuery("SELECT p FROM Publication p WHERE p.student LIKE :student "
+                + "ORDER BY p.title").setParameter("student", new Integer(studentId).toString());
+        try {
+            list = q.getResultList();
+        } catch (Exception e) {
+            list = new ArrayList<Publication>();
+        }
+        return list;
     }
 }

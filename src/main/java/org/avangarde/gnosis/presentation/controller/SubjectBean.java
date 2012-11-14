@@ -187,7 +187,7 @@ public class SubjectBean implements Serializable {
                 ? "Abandonar" : "Suscribirme a la materia";
     }
 
-    public void preRenderView() {
+   public void preRenderView() {
 
         if (getCode() != null) {
             SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());

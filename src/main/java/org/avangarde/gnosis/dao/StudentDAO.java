@@ -7,7 +7,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.vo.StudentVo;
 
 /**
  *

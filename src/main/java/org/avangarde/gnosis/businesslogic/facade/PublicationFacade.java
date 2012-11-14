@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.avangarde.gnosis.businesslogic.service.PublicationService;
 import org.avangarde.gnosis.vo.PublicationVo;
+import org.avangarde.gnosis.vo.StudentVo;
 
 /**
  *
@@ -32,6 +33,17 @@ public class PublicationFacade extends Facade <PublicationVo> {
         try {
             em = emf.createEntityManager();
             return ((PublicationService)service).getPublicationsByTopic(topic, em);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
+    
+    public List<PublicationVo> getPublicationsByStudent(int studentId) {
+        try {
+            return ((PublicationService) service).getPublicationsByStudent(studentId, em);
         } finally {
             if (em != null) {
                 em.clear();
