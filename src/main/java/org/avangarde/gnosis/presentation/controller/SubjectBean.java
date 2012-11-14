@@ -112,14 +112,14 @@ public class SubjectBean implements Serializable {
     public void setSubjects(List<SubjectVo> subjects) {
         this.subjects = subjects;
     }
-    
+
     public List<SubjectVo> getSubjects() {
         if (subjects.isEmpty()) {
             loadMySubjects();
         }
         return subjects;
     }
-        
+
     public void subscribeStudent() {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
@@ -308,9 +308,39 @@ public class SubjectBean implements Serializable {
 
     private void loadMySubjects() {
         subjects = new ArrayList<SubjectVo>();
-        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());  
-        for (Integer code : student.getSubjectList()){
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());
+        for (Integer code : student.getSubjectList()) {
             subjects.add(FacadeFactory.getInstance().getSubjectFacade().find(code));
         }
+    }
+
+    public void subscribeToTutor(TutorSubjectVo tutor) {
+        buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribedToTutor(new Integer(user.getId()), tutor.getUserName(), code)
+                ? "Abandonar" : "Suscribirme a este tutor";
+        if ("Suscribirme a este tutor".equals(buttonSubscribeValue)) {
+            if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudentToTutor(new Integer(user.getId()), tutor.getUserName(), code)) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Te has suscrito al tutor " + tutor.getUserName(), ""));
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No te pudiste suscribir al " + tutor.getUserName(), ""));
+            }
+        } else {
+            if (FacadeFactory.getInstance().getSubjectFacade().unSubscribeStudentToTutor(new Integer(user.getId()), tutor.getUserName(), code)) {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Has abandonado el tutor " + tutor.getUserName(), ""));
+
+            } else {
+                addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "No pudiste abandonar el tutor " + tutor.getUserName(), ""));
+            }
+        }
+    }
+
+    public String changeButtonSubscribeToTutorValue(TutorSubjectVo tutor) {
+        return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribedToTutor(new Integer(user.getId()), tutor.getUserName(), code)
+                ? "Abandonar" : "Suscribirme a este tutor";
     }
 }
