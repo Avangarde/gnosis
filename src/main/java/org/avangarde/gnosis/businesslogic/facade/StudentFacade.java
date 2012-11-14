@@ -1,9 +1,8 @@
 package org.avangarde.gnosis.businesslogic.facade;
 
 import java.util.List;
-import org.avangarde.gnosis.businesslogic.service.PublicationService;
 import org.avangarde.gnosis.businesslogic.service.StudentService;
-import org.avangarde.gnosis.vo.PublicationVo;
+import org.avangarde.gnosis.businesslogic.service.TutorService;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorVo;
 
@@ -31,17 +30,28 @@ public class StudentFacade extends Facade<StudentVo> {
 
     public boolean isTutor(TutorVo vo) {
         //TODO verificación de si el sujeto ya es tutor
+
+
         try {
             em = emf.createEntityManager();
+
             //metodo para obtener el vo de un tutor
             //condicional
+
             return ((StudentService) service).isTutor(vo, em);
+
+
+
         } finally {
             if (em != null) {
                 em.clear();
                 em.close();
             }
         }
+
+
+
+
     }
     
     public List<StudentVo> getStudents(String query) {

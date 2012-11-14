@@ -13,7 +13,6 @@ import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.vo.PublicationVo;
-import org.avangarde.gnosis.vo.StudentVo;
 
 /**
  *
@@ -112,13 +111,5 @@ public class PublicationService implements IService<PublicationVo> {
             }
         }
         return false;
-    }
-
-    public List<PublicationVo> getPublicationsByStudent(int studentId, EntityManager em) {
-        List<PublicationVo> list = new ArrayList<PublicationVo>();
-        for (Publication publication : DAOFactory.getInstance().getPublicationDAO().getPublicationsByStudent(studentId, em)) {
-            list.add((publication).toVo());
-        }
-        return list;
     }
 }

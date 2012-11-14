@@ -9,6 +9,7 @@
 
     <f:metadata>
         <f:viewParam name="code" value="#{subjectBean.code}" required="true"/>
+        <f:event type="preRenderView" listener="#{resourceBean.preRenderView()}" />
         <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
     </f:metadata>
     
@@ -146,14 +147,15 @@
                             <div class="span4" >
                                 <h2 style="color:green">Mis Publicaciones</h2>
                                 <ul class="nav nav-tabs">
-                                    <ui:repeat value="#{userBean.publications}" var="document"><h:panelGrid columns="2" cellpadding="10">  
-                                        <h:column>  
+                                    <p:treeTable value="#{resourceBean.root}" var="document"  
+                                                 selection="#{resourceBean.selectedNode}" selectionMode="single">  
+                                        <p:column style="width:140px">  
                                             <f:facet name="header">  
                                                 Título  
                                             </f:facet>   
                                             <h:outputText value="#{document.title}" />  
-                                        </h:column>  
-                                        <h:column>  
+                                        </p:column>  
+                                        <p:column style="width:70px">  
                                             <f:facet name="header">  
                                                 Ver 
                                             </f:facet>
@@ -163,8 +165,8 @@
                                                     <f:param name ="pubId" value ="#{document.id}"/>
                                                 </h:link>
                                             </ui:fragment>
-                                        </h:column>
-                                    </h:panelGrid></ui:repeat>
+                                        </p:column>
+                                    </p:treeTable>
                                 </ul>
                             </div>
                         </div>
