@@ -41,7 +41,14 @@
                     <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500">  
                         <p:ajax event="toggle" />  
                         <h:panelGrid columns="2" cellpadding="10">    
-                            "APRENDICES"
+                            <p:dataTable id="dataTable" var="student" value="#{subjectBean.students}">
+                                <p:column style="width:25%">
+                                    <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                                </p:column>  
+                                <p:column style="width:75%;">  
+                                    #{student.userName}  
+                                </p:column>
+                            </p:dataTable>
                         </h:panelGrid>  
                     </p:fieldset>
                 </h:form>              

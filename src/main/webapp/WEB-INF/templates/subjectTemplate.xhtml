@@ -116,7 +116,7 @@
                                                      action="#{subjectBean.subscribeStudent()}"
                                                      value="#{subjectBean.changeButtonSubscribeValue()}" 
                                                      onclick="replaceButtonText(botonSubscribe, 'hola')"
-                                                     class="btn btn-navbar"/>
+                                                     class="btn btn-info"/>
                                     
                                     <p:spacer width="20" height="20" />
                                     
@@ -124,7 +124,13 @@
                                                      action="#{subjectBean.becomeTutorOnSubject()}"
                                                      value="#{subjectBean.changeButtonTutorValue()}" 
                                                      onclick="replaceButtonText(botonTutor, 'hola')"
-                                                     class="btn btn-navbar"/>
+                                                     class="btn btn-navbar">
+                                        
+                                        <f:param name ="subjectCode" value ="1000004"/>
+                                        <f:param name ="name" value ="Funciona... MUAHAHAHAHAHAAH"/>
+                                                                             
+                                        
+                                    </h:commandButton>
                                     
                                 </h:form>
                             </f:view>

@@ -22,6 +22,15 @@ public class UserBean implements Serializable {
     private String UrlPhoto;
     private int programId;
     private boolean loggedIn;
+    private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
 
     public int getId() {
         return id;

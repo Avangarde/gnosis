@@ -26,7 +26,7 @@ public class StudentVo {
     //Vos Adicionales
     private List<StudygroupVo> studygroupList;
     private List<TutorSubjectVo> tutorSubjectList;
-    private List<SubjectVo> subjectList;
+    private List<Integer> subjectList;
     private List<TopicVo> topicList;
     
     private List<EventVo> eventList;
@@ -141,11 +141,11 @@ public class StudentVo {
         this.studygroupList = studygroupList;
     }
 
-    public List<SubjectVo> getSubjectList() {
+    public List<Integer> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(List<SubjectVo> subjectList) {
+    public void setSubjectList(List<Integer> subjectList) {
         this.subjectList = subjectList;
     }
 

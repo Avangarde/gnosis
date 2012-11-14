@@ -61,7 +61,7 @@ public class SubjectDAO implements IDAO<Subject> {
     public List<Subject> getSubjectsByname(String query, EntityManager em) {
         List<Subject> subjects = new ArrayList<Subject>();
         
-        Query q = em.createQuery("SELECT s FROM Subject s WHERE s.name LIKE :name").
+        Query q = em.createQuery("SELECT s FROM Subject s WHERE s.name LIKE :name ORDER BY s.code").
                 setParameter("name", "%" + query + "%");
         
         try {
