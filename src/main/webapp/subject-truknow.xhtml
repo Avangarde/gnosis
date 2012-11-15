@@ -11,7 +11,7 @@
     <f:metadata>
         <f:viewParam name="subjectCode" value="#{subjectBean.code}" />
         <f:viewParam name="name" value="#{subjectBean.name}" />
-
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
     </f:metadata>
 
     <ui:define name="title">
@@ -35,43 +35,7 @@
                         </div>
 
                         <h4>¿Existe algo que quieras preguntar?</h4>
-                        <p:editor id="editor" value="#{commentBean.content}" widgetVar="editor"
-                                  required="true" requiredMessage="Debes escribir una pregunta"/>
-                        <br></br>
-                        <p:commandButton value="Preguntar"  oncomplete="location.reload(), editor.clear();" 
-                                         actionListener="#{commentBean.createComment}"/>
-                        <!-- Sección de caja de respuestas -->
-
-                        <p:dataList value="#{topicBean.commentList}" var="comment" id="panel"  
-                                    paginator="true" rows="5" effectSpeed="fast"  
-                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10" type="none">
-                            <f:facet name="header">  
-                                Respuestas  
-                            </f:facet>
-                                   <!--     <ui:repeat value="#{topicBean.commentList}" var="comment"> -->
-                            <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
-                                <h:panelGrid columns="2" cellpadding="10"> 
-                                    <p:graphicImage value="#{comment.studentUrlPhoto}"/>
-                                    <h:outputText value="#{comment.content}" escape="false"/>
-                                </h:panelGrid>
-                                <!--      <h:panelGrid columns="4" cellpadding="10"> 
-                                          <p:commandLink action="#{commentBean.like(comment.id)}" oncomplete="location.reload()">  
-                                              <p:graphicImage value="./resources/images/childish_Thumb-Up.png"/>
-                                          </p:commandLink> 
-                                          <h:outputText value="(#{comment.liked})"/>
-                                          <p:commandLink actionListener="#{commentBean.dislike(comment.id)}" oncomplete="location.reload()">  
-                                              <p:graphicImage value="./resources/images/childish_Thumb-Down.png"/>
-                                          </p:commandLink> 
-                                          <h:outputText value="(#{comment.disliked})"/>
-                                      </h:panelGrid> -->
-                            </p:panel>
-                            <!--  </ui:repeat>    -->
-                        </p:dataList>
-                        <br></br>
-
-
-
+                        
 
 
                     </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./WEB-INF/templates/default.xhtml"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -10,10 +10,11 @@
     <f:metadata>
         <f:viewParam name="code" value="#{subjectBean.code}"/>
         <f:viewParam name="query" value="#{searchBean.query}"/>
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
     </f:metadata>
 
     <ui:define name="title">
-        - Busqueda
+        - Tutores de #{subjectBean.name}
     </ui:define>
     <ui:define name="content">
         <div class="container">
