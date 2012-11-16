@@ -41,7 +41,7 @@
                         <h:form>
                             <h:panelGrid columns="4" cellpadding="5" id="grid">
                                 <h2>Calificación del recurso: </h2>  
-                                <p:rating value="#{viewResourceBean.ratingInt}" disabled="true"/>
+                                <p:rating value="#{viewResourceBean.ratingInt}" readonly="true"/>
                                 <h:outputText value="(#{viewResourceBean.rating})"/>
                                 <span class="label">#{viewResourceBean.numVotes} Votos</span>
                                 <ui:fragment rendered="#{!viewResourceBean.isVoted()}">
