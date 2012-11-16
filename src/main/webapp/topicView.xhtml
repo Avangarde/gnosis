@@ -34,7 +34,7 @@
                                    <!--     <ui:repeat value="#{topicBean.commentList}" var="comment"> -->
                             <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
                                 <h:panelGrid columns="2" cellpadding="10"> 
-                                    <p:graphicImage value="#{comment.studentUrlPhoto}"/>
+                                    <p:graphicImage value="#{comment.studentUrlPhoto}" width="66" height="66"/>
                                     <h:outputText value="#{comment.content}" escape="false"/>
                                 </h:panelGrid>
                                 <!--      <h:panelGrid columns="4" cellpadding="10"> 

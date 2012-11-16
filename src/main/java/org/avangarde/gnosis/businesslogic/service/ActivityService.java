@@ -112,4 +112,16 @@ public class ActivityService implements IService<ActivityVo> {
         }    
         return activityVo;
     }
+
+    public List<ActivityVo> getActivitiesBySubjectsOfStudent(EntityManager em, int studentId) {
+        List<ActivityVo> activityVo = new ArrayList<ActivityVo>();
+        Student student = DAOFactory.getInstance().getStudentDAO().find(studentId, em);
+        for (Subject subject : student.getSubjectList()){
+            for (Activity activity : subject.getActivityList()){
+                activityVo.add(activity.toVo());
+            }
+        }
+        
+        return activityVo;
+    }
 }

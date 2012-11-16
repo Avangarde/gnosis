@@ -25,5 +25,17 @@ public class ActivityFacade extends Facade <ActivityVo> {
             }
         }
     }
+
+    public List<ActivityVo> getActivitiesBySubjectsOfStudent(int studentId) {
+        try {
+            em = emf.createEntityManager();
+            return ((ActivityService)service).getActivitiesBySubjectsOfStudent(em, studentId);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
   
 }

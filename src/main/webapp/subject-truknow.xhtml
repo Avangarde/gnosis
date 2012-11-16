@@ -7,66 +7,65 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-   
+
     <f:metadata>
         <f:viewParam name="subjectCode" value="#{subjectBean.code}" />
         <f:viewParam name="name" value="#{subjectBean.name}" />
-        
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
     </f:metadata>
-    
+
     <ui:define name="title">
         - Información de Tutor
     </ui:define>
-    
-    
-    
+
+
+
     <ui:define name="content">
         <div class="container">
             <div class="row">
-                <div class="span12">
+                <div class="span8">
                     <div class="hero-unit">
-                                            
-                        <h2>Tutores de </h2>
-                        <h:form id="form">  
+                        <div class="span4">
+                            <p:graphicImage value="#{tutorBean.urlPhoto}" width="66" height="66" />
+                        </div>
+                        <div class="span8">
+                            <h2>#{tutorBean.userName}</h2>
+                            <h3>Cantidad de votos recibidos #{tutorBean.numberVotes}</h3>
 
-                            <p:growl id="messages" showDetail="true"/>  
+                        </div>
 
-                            <h:panelGrid columns="2" cellpadding="5">  
+                        <h4>¿Existe algo que quieras preguntar?</h4>
+                        
 
-                                <h:outputText value="Califica tu tutor:" />  
-                                <p:rating value="#{ratingBean.rating3}">  
-                                    <p:ajax event="rate" listener="#{ratingBean.onrate}" update="messages" />  
 
-                                </p:rating>  
-
-                            </h:panelGrid>  
-
-                            <p:commandButton value="Submit" id="submit" update="display" oncomplete="dlg.show()" style="margin:5px"/>  
-
-                            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">  
-                                <h:panelGrid id="display" columns="2" cellpadding="5">  
-                                    <h:outputText value="Rating 1:" />  
-                                    <h:outputText value="#{ratingBean.rating1}" />  
-
-                                    <h:outputText value="Rating 2:" />  
-                                    <h:outputText value="#{ratingBean.rating2}" />  
-
-                                    <h:outputText value="Rating 3:" />  
-                                    <h:outputText value="#{ratingBean.rating3}" />  
-                                </h:panelGrid>  
-                            </p:dialog>  
-                        </h:form>
                     </div>
                 </div>
-                <div class="span6">
-                    <div class="hero-unit">
-                        
-                    </div>
+                <div class="span4">
+                    <h:form > 
+                        <p:growl id="growl" showDetail="true" />  
+                        <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500" > 
+
+                            <p:dataTable value="#{tutorBean.students}" var="student">
+                                <p:column style="width:25%">
+                                    <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                                </p:column>  
+
+                                <p:column style="width:75%;">  
+                                    #{student.userName}  
+                                </p:column>  
+                            </p:dataTable>
+                        </p:fieldset> 
+
+                        <p:fieldset legend="Lista de Publicaciones" toggleable="true" toggleSpeed="500">  
+
+
+                        </p:fieldset> 
+                    </h:form>    
                 </div>
             </div>
         </div>    
-            
 
-  
+
+
     </ui:define>
 </ui:composition>

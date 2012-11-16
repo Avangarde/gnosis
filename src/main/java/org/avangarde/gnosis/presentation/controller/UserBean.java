@@ -1,11 +1,15 @@
 package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
-import org.avangarde.gnosis.businesslogic.facade.StudentFacade;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.ProgramVo;
+import org.avangarde.gnosis.vo.PublicationVo;
+import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorVo;
 
 /**
@@ -25,6 +29,8 @@ public class UserBean implements Serializable {
     private int programId;
     private boolean loggedIn;
     private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
+    private List<ActivityVo> activities = new ArrayList<ActivityVo>();
+    private List<PublicationVo> publications;
 
     public String getUrlPhoto() {
         return urlPhoto;
@@ -107,17 +113,39 @@ public class UserBean implements Serializable {
     }
 
     public String getBtnValue() {
-        return isBtnDisabled()?"No":"Si, ir a mi perfil de tutor";
+        return isBtnDisabled() ? "No" : "Si, ir a mi perfil de tutor";
     }
 
     public void setBtnValue(String btnValue) {
         this.btnValue = btnValue;
     }
-    
-    public String getTutorPage(){
+
+    public String getTutorPage() {
         return "success";
     }
-    
+
+    public List<ActivityVo> getActivities() {
+        activities = new ArrayList<ActivityVo>();
+        List<ActivityVo> vos = FacadeFactory.getInstance().getActivityFacade().getActivitiesBySubjectsOfStudent(getId());
+        if (vos != null) {
+            activities = vos;
+        }
+        return activities;
+    }
+
+    public void setActivities(List<ActivityVo> activities) {
+        this.activities = activities;
+    }
+
+    public List<PublicationVo> getPublications() {
+        StudentVo studentVo = FacadeFactory.getInstance().getStudentFacade().find(id);
+        return publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByStudent(studentVo.getId());
+    }
+
+    public void setPublications(List<PublicationVo> publications) {
+        this.publications = publications;
+    }
+
     public String logOut() {
         firstName = null;
         lastName = null;

@@ -81,14 +81,26 @@ public class PublicationDAO implements IDAO<Publication> {
         }
         return list;
     }
-    
-    public int getNewId(EntityManager em){
+
+    public int getNewId(EntityManager em) {
         Integer newId;
-        newId = ((Integer)em.createQuery("SELECT MAX(p.id) FROM Publication p").getSingleResult());
+        newId = ((Integer) em.createQuery("SELECT MAX(p.id) FROM Publication p").getSingleResult());
         if (newId != null) {
             return newId + 1;
         } else {
             return 1;
         }
+    }
+
+    public List<Publication> getPublicationsByStudent(int studentId, EntityManager em) {
+        List<Publication> list;
+        Query q = em.createQuery("SELECT p FROM Publication p WHERE p.student.id LIKE :student "
+                + "ORDER BY p.title").setParameter("student", new Integer(studentId).toString());
+        try {
+            list = q.getResultList();
+        } catch (Exception e) {
+            list = new ArrayList<Publication>();
+        }
+        return list;
     }
 }
