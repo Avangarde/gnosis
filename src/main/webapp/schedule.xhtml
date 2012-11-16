@@ -17,11 +17,13 @@
         - Calendario
     </ui:define>
     <ui:define name="content">
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/locales.js">
+        </script>
         <h:form>  
 
             <p:growl id="messages" showDetail="true" />  
 
-            <p:schedule value="#{scheduleBean.eventModel}"  widgetVar="myschedule" locale="sp">  
+            <p:schedule value="#{scheduleBean.eventModel}"  widgetVar="myschedule" locale="es">  
 
                 <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
                 <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
