@@ -4,14 +4,18 @@
  */
 package org.avangarde.gnosis.presentation.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import org.avangarde.gnosis.businesslogic.facade.ActivityFacade;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
@@ -49,7 +53,7 @@ public class ResourceBean implements Serializable {
     public void saveResource() {
 
         PublicationFacade publicationFacade = FacadeFactory.getInstance().getPublicationFacade();
-             
+
         PublicationVo publicationVo = new PublicationVo();
         publicationVo.setId(FacadeFactory.getInstance().getPublicationFacade().getNewId());
         publicationVo.setTitle(getTitle());
@@ -59,9 +63,9 @@ public class ResourceBean implements Serializable {
         publicationVo.setStudentId(getUser().getId());
         publicationVo.setSubjectCode(getSubject().getCode());
         publicationVo.setUrl(getUrl());
-        
+
         publicationFacade.create(publicationVo);
-        
+
         TreeNode nodeCurrentTopic = null;
         for (TreeNode node : root.getChildren()) {
             if (((PublicationVo) (node).getData()).getTitle().equals(publicationVo.getTopic())) {
@@ -75,7 +79,7 @@ public class ResourceBean implements Serializable {
         }
 
         new DefaultTreeNode(publicationVo, nodeCurrentTopic);
-        
+
         createActivity(publicationVo);
 //        return "success";
 
@@ -197,10 +201,10 @@ public class ResourceBean implements Serializable {
     public void setSharedBy(String sharedBy) {
         this.sharedBy = sharedBy;
     }
-    
+
     public void createActivity(PublicationVo publicationVo) {
         ActivityFacade activityFacade = FacadeFactory.getInstance().getActivityFacade();
-        
+
         ActivityVo activityVo = new ActivityVo();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
         activityVo.setDateActivity(format.format(new GregorianCalendar().getTime()));
@@ -208,7 +212,15 @@ public class ResourceBean implements Serializable {
         activityVo.setSubjectCode(getSubject().getCode());
         activityVo.setPublicationId(publicationVo.getId());
         activityVo.setType("Publication");
-        
+
         activityFacade.create(activityVo);
+    }
+
+    public void viewResource(int idResource) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("resourceView.xhtml?code=" + getSubject().getCode() + "&pubId=" + new Integer(idResource));
+        } catch (IOException ex) {
+            Logger.getLogger(SubjectBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
