@@ -39,9 +39,10 @@
                 <div class="row">
                     <div class="span11">
                         <h:form>
-                            <h:panelGrid columns="3" cellpadding="5" id="grid">
+                            <h:panelGrid columns="4" cellpadding="5" id="grid">
                                 <h2>Calificación del recurso: </h2>  
-                                <p:rating value="#{viewResourceBean.rating}" disabled="true"/>
+                                <p:rating value="#{viewResourceBean.ratingInt}" disabled="true"/>
+                                <h:outputText value="(#{viewResourceBean.rating})"/>
                                 <span class="label">#{viewResourceBean.numVotes} Votos</span>
                                 <ui:fragment rendered="#{!viewResourceBean.isVoted()}">
                                         <h2>Califica: </h2>
