@@ -25,7 +25,11 @@
                     <div class="span11">
                         <h:form>  
                             <h1>#{viewResourceBean.title}</h1>
-                            <iframe src="#{viewResourceBean.url}" width="100%" height="600px"></iframe>
+                            <iframe name="resource" src="#{viewResourceBean.url}" width="100%" height="600px" marginwidth="0" scrolling="yes" frameborder="0" ></iframe>
+                            <h:outputText value="Si no puedes ver el recurso haz click "/>
+                            <h:outputLink value="#{viewResourceBean.url}" title="#{viewResourceBean.title}">  
+                                <h:outputText value="Aquí"/>  
+                            </h:outputLink> 
                         </h:form>
                     </div>
                 </div>
