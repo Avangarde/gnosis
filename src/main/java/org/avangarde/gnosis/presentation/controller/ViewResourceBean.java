@@ -31,6 +31,7 @@ public class ViewResourceBean implements Serializable{
     private String url;
     private String sharedBy;
     private Double rating;
+    private Integer ratingInt;
     private int vote;
     private int numVotes;
     private List<CommentVo> commentList = new ArrayList<CommentVo>();
@@ -49,7 +50,13 @@ public class ViewResourceBean implements Serializable{
         setType(resource.getType());
         setUrl(resource.getUrl());
         setSharedBy(resource.getStudentName());
-        setRating(resource.getRating());
+        if (resource.getRating() != null) {
+            setRatingInt(resource.getRating().intValue());
+            setRating(resource.getRating());
+        } else {
+            setRatingInt(0);
+            setRating(0.0);
+        }
         setNumVotes(resource.getNumVotes());
     }
     
@@ -166,6 +173,14 @@ public class ViewResourceBean implements Serializable{
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+    
+    public Integer getRatingInt() {
+        return ratingInt;
+    }
+
+    public void setRatingInt(Integer ratingInt) {
+        this.ratingInt = ratingInt;
     }
 
     public int getNumVotes() {
