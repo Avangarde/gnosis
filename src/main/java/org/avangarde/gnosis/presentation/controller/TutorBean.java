@@ -8,7 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
@@ -18,7 +20,7 @@ import org.avangarde.gnosis.vo.TutorSubjectVo;
  * @author zergio
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class TutorBean implements Serializable {
 
     private int id;
@@ -30,6 +32,17 @@ public class TutorBean implements Serializable {
     private int numberStudents;
     private int studentId;
     private List<StudentVo> students = new ArrayList<StudentVo>();
+    //ManagedBeans
+    @ManagedProperty(value = "#{subjectBean}")
+    private SubjectBean subject;
+
+    public SubjectBean getSubject() {
+        return subject;
+    }
+
+    public void setSubject(SubjectBean subject) {
+        this.subject = subject;
+    }
 
     public List<StudentVo> getStudents() {
         return students;
