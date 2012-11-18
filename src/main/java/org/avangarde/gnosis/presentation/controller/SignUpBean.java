@@ -20,7 +20,7 @@ import org.avangarde.gnosis.vo.StudentVo;
  */
 @ManagedBean
 @RequestScoped
-public class SignUpBean implements Serializable{
+public class SignUpBean implements Serializable {
 
     private String userName;
     private String password;
@@ -100,8 +100,15 @@ public class SignUpBean implements Serializable{
     }
 
     public String signUp() {
-
+        
         StudentFacade facade = FacadeFactory.getInstance().getStudentFacade();
+        
+        if (facade.findByUserName(getUserName()) != null) {
+            FacesContext.getCurrentInstance().addMessage(
+                    "signUpForm:email", new FacesMessage(
+                    "Ya se encuentra un usuario registrado con este email"));
+            return "failure";
+        }
 
         StudentVo vo = new StudentVo();
         vo.setFirstName(getFirstName());
@@ -110,32 +117,13 @@ public class SignUpBean implements Serializable{
         vo.setEmail(getUserName() + "@unal.edu.co");
         vo.setPassword(getPassword());
         vo.setProgramId(getProgramId());
-
+            
         facade.create(vo);
-         
-        StudentVo studentVo = new StudentVo();
-        StudentFacade studentFacade = FacadeFactory.getInstance().getStudentFacade();
 
-        studentVo.setUserName(getUserName());
-        studentVo.setPassword(getPassword());
+        return "success";
 
-        StudentVo login = studentFacade.login(studentVo);
-        if (login != null) {
-            user.setId(login.getId());
-            user.setFirstName(login.getFirstName());
-            user.setLastName(login.getLastName());
-            user.setUserName(login.getUserName());
-            user.setProgramId(login.getProgramId());
-            user.setLoggedIn(true);
-            return "success";
-        } else {
-            FacesContext.getCurrentInstance().addMessage(
-                    "loginForm:userName", new FacesMessage(
-                    "Nombre de usuario o contraseña inválidos"));
-            FacesContext.getCurrentInstance().addMessage(
-                    "loginForm:password", new FacesMessage(
-                    "Nombre de usuario o contraseña inválidos"));
-            return "failure";
-        }
+
+        
+
     }
 }

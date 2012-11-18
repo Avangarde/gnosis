@@ -79,8 +79,10 @@
                                         <p:password id="passwordSignUp" required="true" requiredMessage="Por favor completa este campo" 
                                                     value="#{signUpBean.password}"
                                                     feedback="true" promptLabel="Usa una contraseña segura" inline="true" 
-                                                    weakLabel="Debil" goodLabel="Buena" strongLabel="Segura" 
-                                                    match="passwordSignUpR" />
+                                                    weakLabel="Debil" goodLabel="Buena" strongLabel="Segura"
+                                                    validatorMessage="La contraseña debe tener minimo 8 caracteres">
+                                            <f:validateLength minimum="8" maximum="18" />
+                                        </p:password>
                                         <p:watermark for="passwordSignUp" value="Escribe una Contraseña" />
                                         <p:message id="passwordSignUpMessage" for="passwordSignUp" />
                                     </div>
@@ -89,7 +91,8 @@
                                     <div class="controls">
                                         <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
                                         <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"
-                                                    requiredMessage="Por favor completa este campo"/>
+                                                    requiredMessage="Por favor completa este campo"
+                                                    match="passwordSignUp" validatorMessage="Las contraseñas deben coincidir"/>
                                         <p:message id="passwordSignUpRMessage" for="passwordSignUpR" />
                                     </div>
                                 </div>

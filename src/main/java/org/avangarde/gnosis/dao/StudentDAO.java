@@ -86,4 +86,18 @@ public class StudentDAO implements IDAO<Student> {
         }
         return students;
     }
+
+    public Student findByUserName(String userName, EntityManager em) {
+        Student student = new Student();
+
+        Query q = em.createQuery("SELECT t FROM Student t WHERE t.userName LIKE :userName").
+                setParameter("userName", userName);
+
+        try {
+            student = (Student) q.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
 }

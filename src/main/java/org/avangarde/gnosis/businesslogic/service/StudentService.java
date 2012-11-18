@@ -103,4 +103,13 @@ public class StudentService implements IService<StudentVo> {
         }
         return students;
     }
+
+    public StudentVo findByUsername(String userName, EntityManager em) {
+        Student student = DAOFactory.getInstance().getStudentDAO().findByUserName(userName, em);
+        if (student != null) {
+            return student.toVo();
+        } else {
+            return null;
+        }
+    }
 }

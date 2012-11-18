@@ -64,4 +64,15 @@ public class StudentFacade extends Facade<StudentVo> {
             }
         }
     }
+
+    public StudentVo findByUserName(String userName) {
+        try {
+            return ((StudentService) service).findByUsername(userName, em);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
 }
