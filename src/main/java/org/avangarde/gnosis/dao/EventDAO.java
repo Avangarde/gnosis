@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -56,4 +57,17 @@ public class EventDAO implements IDAO<Event> {
         Query q = em.createQuery(cq);
         return q.getResultList();
     }
-}
+
+    public List<Event> getEventsFromSubject(EntityManager em, Integer subjectCode) {
+        List<Event> events;
+        Query q = em.createQuery("SELECT a FROM Event a WHERE a.subject.code LIKE :subjectCode ").setParameter("subjectCode", subjectCode.toString());
+        try {
+            events = q.getResultList();
+        } catch (Exception e) {
+            events = new ArrayList<Event>();
+        }
+        return events;
+    }
+
+    }
+
