@@ -179,4 +179,37 @@ public class TutorBean implements Serializable {
             
         }
     }
+    
+    public String getLevelInformation(){
+        
+        if (reputation<=1){
+            return "Cuero";
+        }
+        else if(reputation<=2){
+            return "Roca";
+        }
+        else if(reputation<=3){
+            return "Cobre";
+        }
+        else if(reputation<=4){
+            return "Hierro";
+        }
+        else if(reputation<=5){
+            return "Plata";
+        }
+        else if(reputation<=6){
+            return "Oro";
+        }
+        else if(reputation<=7){
+            return "Esmeralda";
+        }
+        else if(reputation<=8){
+            return "Diamante";
+        }else{
+            return "Obsidiana";
+        }
+        
+                
+    }
+    
 }

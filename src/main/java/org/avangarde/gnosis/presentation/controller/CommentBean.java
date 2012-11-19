@@ -33,6 +33,16 @@ public class CommentBean implements Serializable {
     private TopicBean topic;
     @ManagedProperty(value = "#{viewResourceBean}")
     private ViewResourceBean viewResourceBean;
+    @ManagedProperty(value = "#{tutorSubjectBean}")
+    private TutorSubjectBean tutorSubjectBean;
+
+    public TutorSubjectBean getTutorSubjectBean() {
+        return tutorSubjectBean;
+    }
+
+    public void setTutorSubjectBean(TutorSubjectBean tutorSubjectBean) {
+        this.tutorSubjectBean = tutorSubjectBean;
+    }
 
     public CommentBean() {
     }
@@ -47,6 +57,7 @@ public class CommentBean implements Serializable {
         commentVo.setStudentId(getUser().getId());
         commentVo.setTopicId(getTopic().getId());
         commentVo.setPublicationId(getViewResourceBean().getId());
+        commentVo.setTutorSubjectId(getTutorSubjectBean().getId());
 
         commentFacade.create(commentVo);
 
@@ -58,12 +69,14 @@ public class CommentBean implements Serializable {
         activityVo.setSubjectCode(getSubject().getCode());
         activityVo.setPublicationId(getViewResourceBean().getId());
         activityVo.setTopicId(getTopic().getId());
+        activityVo.setTutorId(getTutorSubjectBean().getId());
         activityVo.setType("Comment");
         
         activityFacade.create(activityVo);
 
         getTopic().loadComments();
         getViewResourceBean().loadComments();
+        getTutorSubjectBean().loadComments();
     }
 
     public void like(int commentId) {
