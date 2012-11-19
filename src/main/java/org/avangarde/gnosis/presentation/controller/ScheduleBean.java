@@ -4,10 +4,16 @@
  */
 package org.avangarde.gnosis.presentation.controller;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.avangarde.gnosis.vo.EventVo;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -23,18 +29,49 @@ import org.primefaces.model.ScheduleModel;
  */
 @ManagedBean
 @ViewScoped
-public class ScheduleBean {
+public class ScheduleBean implements Serializable {
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
+    @ManagedProperty(value = "#{userBean}")
+    private UserBean user;
+    @ManagedProperty(value = "#{subjectBean}")
+    private SubjectBean subject;    
+    private List<EventVo> events;
 
+    public List<EventVo> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventVo> events) {
+        this.events = events;
+    }
+    public UserBean getUser() {
+        return user;
+    }
+
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
+
+    public SubjectBean getSubject() {
+        return subject;
+    }
+
+    public void setSubject(SubjectBean subject) {
+        this.subject = subject;
+    }
+    
     public ScheduleBean() {
-
+        
+       
         eventModel = new DefaultScheduleModel();
-
     }
 
     public ScheduleModel getEventModel() {
+        if (subject.getEvents()!=null){
+            loadEvents(subject.getEvents());
+        }
         return eventModel;
     }
 
@@ -45,14 +82,34 @@ public class ScheduleBean {
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
-
+    private void loadEvents(List<EventVo> eventsList) {
+        for (EventVo evento : eventsList) {
+            eventModel.addEvent(new  DefaultScheduleEvent(evento.getName(), evento.getStartDate(), evento.getEndDate()));
+        }
+    }
+    
     public void addEvent() {
         if (event.getId() == null) {
             eventModel.addEvent(event);
-            //Toca agregar logica para guardar el evento en la BD
+            events=subject.getEvents();
+                events.add(new EventVo(event.getId(),event.getStartDate(),event.getEndDate()));
+                subject.setEvents(events);
         } else {
             eventModel.updateEvent(event);
-            //Toca agregar logica para actualizar el evento en la BD
+            events=subject.getEvents();
+            List<EventVo> eventList = null;
+            for(EventVo eve: events){
+                if(event.getId().equals(eve.getName())){
+                    eve.setStartDate(event.getStartDate());
+                    eve.setEndDate(event.getEndDate());
+                    eventList.add(eve);
+                } else{
+                    eventList.add(eve);
+                }
+                events=eventList;
+            }
+                      
+            
         }
 
         event = new DefaultScheduleEvent();
@@ -81,4 +138,5 @@ public class ScheduleBean {
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }    
+
 }

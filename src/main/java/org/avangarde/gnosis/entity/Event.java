@@ -25,9 +25,12 @@ public class Event implements Serializable, IEntity<EventVo> {
     private String name;
     @Column(name = "type")
     private String type;
-    @Column(name = "dateEvent")
+    @Column(name = "startDateEvent")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date startDate;
+    @Column(name = "endDateEvent")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
     @Column(name = "hourEvent")
     @Temporal(TemporalType.TIMESTAMP)
     private Date hour;
@@ -36,6 +39,22 @@ public class Event implements Serializable, IEntity<EventVo> {
     @ManyToOne
     @JoinColumn(name = "studentId")
     private Student student;
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
     @ManyToOne
     @JoinColumn(name = "Subject_code")
     private Subject subject;
@@ -65,14 +84,6 @@ public class Event implements Serializable, IEntity<EventVo> {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Date getHour() {
@@ -110,7 +121,8 @@ public class Event implements Serializable, IEntity<EventVo> {
     @Override
     public EventVo toVo() {
         EventVo vo = new EventVo();
-        vo.setDate(getDate());
+        vo.setStartDate(getStartDate());
+        vo.setEndDate(getEndDate());
         vo.setDescription(getDescription());
         vo.setHour(getHour());
         vo.setId(getId());
