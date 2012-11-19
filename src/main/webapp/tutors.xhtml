@@ -18,7 +18,7 @@
     </ui:define>
     <ui:define name="content">
         <div class="container">
-            
+
             <div class="row">
                 <div class="span12">
                     <form class="form-search" method="get" action="#{request.contextPath}/tutors.xhtml" >
@@ -32,7 +32,7 @@
                 <div class="span12">
                     <div class="hero-unit">
                         <h:form prependId="false">  
-
+                            <p:growl id="mensajes" showDetail="true"/>
                             <p:dataTable id="dataTable" var="tutor" value="#{searchBean.tutors}"  
                                          paginator="true" rows="10"  
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
@@ -45,14 +45,14 @@
                                         Resultado de la busqueda
                                     </ui:fragment>
                                 </f:facet> 
-                                
+
                                 <p:column>  
                                     <f:facet name="header">  
                                         <h:outputText value="Usuario" />  
                                     </f:facet>  
                                     <h:outputText value="#{tutor.userName}" />  
                                 </p:column>
-                                
+
                                 <p:column>  
                                     <f:facet name="header">  
                                         <h:outputText value="Número de aprendices" />  
@@ -66,7 +66,7 @@
                                     </f:facet>  
                                     <h:outputText value="#{tutor.numberVotes}" />  
                                 </p:column>  
-                                
+
                                 <p:column>  
                                     <f:facet name="header">  
                                         <h:outputText value="Recursos compartidos" />  
@@ -80,7 +80,7 @@
                                     </f:facet>  
                                     <h:outputText value="#{tutor.questionReceived}" />  
                                 </p:column> 
-                                
+
                                 <p:column>  
                                     <f:facet name="header">  
                                         <h:outputText value="Reputación" />  

@@ -11,9 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.StudentVo;
+import org.avangarde.gnosis.vo.SubjectVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -23,7 +26,7 @@ import org.avangarde.gnosis.vo.TutorSubjectVo;
 @ViewScoped
 public class TutorBean implements Serializable {
 
-    private int id;
+    private Integer id;
     private double reputation;
     private String userName;
     private int numberVotes;
@@ -31,32 +34,43 @@ public class TutorBean implements Serializable {
     private int questionReceived;
     private int numberStudents;
     private int studentId;
-    private List<StudentVo> students = new ArrayList<StudentVo>();
+    private List<Integer> students = new ArrayList<Integer>();
+    private List<Integer> subjects = new ArrayList<Integer>();
+    private List<ActivityVo> activityList;
+    private List<TutorSubjectVo> tutorSubjectList;
+    private String urlPhoto;
     //ManagedBeans
-    @ManagedProperty(value = "#{subjectBean}")
-    private SubjectBean subject;
+//    @ManagedProperty(value = "#{subjectBean}")
+//    private SubjectBean subject;
 
-    public SubjectBean getSubject() {
-        return subject;
+    public List<Integer> getSubjects() {
+        return subjects;
     }
 
-    public void setSubject(SubjectBean subject) {
-        this.subject = subject;
+    public void setSubjects(List<Integer> subjects) {
+        this.subjects = subjects;
     }
 
-    public List<StudentVo> getStudents() {
+//    public SubjectBean getSubject() {
+//        return subject;
+//    }
+//
+//    public void setSubject(SubjectBean subject) {
+//        this.subject = subject;
+//    }
+    public List<Integer> getStudents() {
         return students;
     }
 
-    public void setStudents(List<StudentVo> students) {
+    public void setStudents(List<Integer> students) {
         this.students = students;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -139,7 +153,30 @@ public class TutorBean implements Serializable {
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
-    private List<ActivityVo> activityList;
-    private List<TutorSubjectVo> tutorSubjectList;
-    private String urlPhoto;
+
+    public void preRenderView() {
+
+        if (getId() != null) {
+            TutorVo tutor = FacadeFactory.getInstance().getTutorFacade().find(getId());
+            
+            setUserName(tutor.getUserName());
+            setActivityList(tutor.getActivityList());
+            setNumberStudents(tutor.getNumberStudents());
+            setNumberVotes(tutor.getNumberVotes());
+            setPublishedResources(tutor.getPublishedResources());
+            setQuestionReceived(tutor.getQuestionReceived());
+            setReputation(tutor.getReputation());
+            setStudentId(tutor.getStudentId());
+            setTutorSubjectList(tutor.getTutorSubjectList());
+            setUrlPhoto(tutor.getUrlPhoto());
+            
+            for(TutorSubjectVo each : tutorSubjectList){
+                students.addAll(each.getStudentList());
+                subjects.add(each.getSubjectCode());
+                
+                
+            }
+            
+        }
+    }
 }

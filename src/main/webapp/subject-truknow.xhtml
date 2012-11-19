@@ -9,9 +9,14 @@
 
 
     <f:metadata>
-        <f:viewParam name="subjectCode" value="#{subjectBean.code}" />
-        <f:viewParam name="name" value="#{subjectBean.name}" />
+        <f:viewParam name="subjectCode" value="#{subjectBean.code}"/>
         <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+
+        <f:viewParam name="tutorID" value="#{tutorBean.id}"/>
+        <f:event type="preRenderView" listener="#{tutorBean.preRenderView()}" />
+
+
+
     </f:metadata>
 
     <ui:define name="title">
@@ -22,6 +27,7 @@
 
     <ui:define name="content">
         <div class="container">
+
             <div class="row">
                 <div class="span8">
                     <div class="hero-unit">
@@ -35,7 +41,7 @@
                         </div>
 
                         <h4>¿Existe algo que quieras preguntar?</h4>
-                        
+
 
 
                     </div>
@@ -47,15 +53,15 @@
 
                             <p:dataTable value="#{tutorBean.students}" var="student">
                                 <p:column style="width:25%">
-                                    <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                                    <p:graphicImage value="#{student.toString()}" width="30" height="40" />
                                 </p:column>  
 
                                 <p:column style="width:75%;">  
-                                    #{student.userName}  
+                                    #{student.toString()}  
                                 </p:column>  
                             </p:dataTable>
                         </p:fieldset> 
-
+                        <p:spacer width="20" height="20" />
                         <p:fieldset legend="Lista de Publicaciones" toggleable="true" toggleSpeed="500">  
 
 
