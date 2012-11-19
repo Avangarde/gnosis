@@ -123,12 +123,12 @@
                                     <h:commandButton id="botonTutor" 
                                                      action="#{subjectBean.becomeTutorOnSubject()}"
                                                      value="#{subjectBean.changeButtonTutorValue()}" 
-                                                     onclick="replaceButtonText(botonTutor, 'hola')"
-                                                     class="btn btn-navbar">
+                                                     class="btn btn-navbar"
+                                                     rendered="#{subjectBean.shouldHideButtonBecomeTutor()}">
 
                                     </h:commandButton>
 
-                                    <h:link value="Ir a mi página de tutor" class="btn btn-mini btn-success"  outcome="subject-truknow.xhtml">
+                                    <h:link value="Ir a mi página de tutor" class="btn btn-success"  outcome="subject-truknow.xhtml" rendered="#{subjectBean.shouldHideNavigationButton()}">
                                         <f:param name ="subjectCode" value ="#{subjectBean.code}"/>
                                         <f:param name ="tutorID" value ="#{userBean.id}"/>
                                     </h:link>
