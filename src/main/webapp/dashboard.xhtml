@@ -13,7 +13,7 @@
 
     <ui:define name="content">
         <div class="row">
-            <div class="span10 offset1">
+            <div class="span8 offset1">
                 <h:form id="form" >
                     <h1 style="color: #555">Ultimas Noticias</h1>
                     <div class="hero-unit">
@@ -24,9 +24,9 @@
                                     <p:graphicImage value="#{activity.studentUrlPhoto}" width="100" height="100"/>
                                 </h:column>
                                 <h:column>
-                                    <h2 style="color:blue">#{activity.studentUsername}</h2>
-                                    <h3 style="color:black">En #{activity.subjectName} #{activity.details}</h3>
-                                    <h2 style="color:blue">
+                                    <h3 style="color:blue">#{activity.studentUsername}</h3>
+                                    <h4 style="color:black">En #{activity.subjectName} #{activity.details}</h4>
+                                    <h3 style="color:blue">
                                         <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
                                             #{activity.publicationTitle}
                                         </ui:fragment>
@@ -36,7 +36,7 @@
                                         <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
                                             #{activity.tutorName}
                                         </ui:fragment>
-                                    </h2><br/><br/>
+                                    </h3>
                                     <h:outputText value=" #{activity.dateActivity}"/>
                                 </h:column>
                                 <h:column>
@@ -52,6 +52,23 @@
                         </ui:repeat>
                     </div>
                 </h:form>
+            </div>
+            <div class="span3">
+                <div class="alert">
+                    <h2>Enlaces de Interés</h2>
+                    <h:link value="Universidad Nacional De Colombia" outcome="externalLink.xhtml">
+                        <f:param name ="url" value ="http://www.unal.edu.co/"/>
+                    </h:link><br/>
+                    <h:link value="SIA" outcome="externalLink.xhtml">
+                        <f:param name ="url" value ="http://www.sia.unal.edu.co/"/>
+                    </h:link><br/>
+                    <h:link value="Bibliotecas" outcome="externalLink.xhtml">
+                        <f:param name ="url" value ="http://www.sinab.unal.edu.co/"/>
+                    </h:link><br/>
+                    <h:link value="BlackBoard" outcome="externalLink.xhtml">
+                        <f:param name ="url" value ="http://www.campus.virtual.unal.edu.co/"/>
+                    </h:link><br/>
+                </div>
             </div>
         </div>  
     </ui:define>
