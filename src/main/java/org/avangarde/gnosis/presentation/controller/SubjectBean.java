@@ -22,6 +22,7 @@ public class SubjectBean implements Serializable {
     private Integer code;
     private String name;
     private String description;
+    private String studentSubscribed;
     private int numGroups;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
@@ -190,6 +191,40 @@ public class SubjectBean implements Serializable {
         return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribed(new Integer(user.getId()), getCode())
                 ? SUBSCRIBED : NOTSUBSCRIBED;
+    }
+
+    public String getStudentSubscribed() {
+        if (FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())) {
+            studentSubscribed = "#shareModal";
+        } else {
+            studentSubscribed = "javascript: void(0)";
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Recuerda que no puedes compartir recursos si no estas suscrito a la materia", ""));
+        }
+        return studentSubscribed;
+    }
+
+    public String enablednewTopic() {
+        if (FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())) {
+            studentSubscribed = "#newTopicModal";
+        } else {
+            studentSubscribed = "javascript: void(0)";
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Recuerda que no puedes crear temas si no estas suscrito a la materia", ""));
+        }
+        return studentSubscribed;
+    }
+
+    public boolean studentUnsuscribed() {
+        return FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())
+                ? false : true;
+    }
+
+    public void setStudentSubscribed(String studentSubscribed) {
+        this.studentSubscribed = studentSubscribed;
     }
 
     public String changeButtonTutorValue() {

@@ -128,7 +128,10 @@ public class SignUpBean implements Serializable {
         vo.setEmail(getUserName() + "@unal.edu.co");
         vo.setPassword(getPassword());
         vo.setProgramId(getProgramId());
-        vo.setContextPath(getAppPath());
+        
+        int edit = getAppPath().lastIndexOf("/");
+        String contextPath = (getAppPath().substring(0, edit) + "/");
+        vo.setContextPath(contextPath);
             
         facade.create(vo);
 
