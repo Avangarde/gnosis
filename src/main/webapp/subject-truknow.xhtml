@@ -40,10 +40,21 @@
                     </h:panelGrid>
 
                     <p:spacer width="20" height="20" />
+                    <h:form id="grid">
 
-
-                    <h4>Cantidad de votos recibidos #{tutorBean.numberVotes}</h4>
-                    <h>Nivel #{tutorBean.reputation}: #{tutorBean.getLevelInformation()}</h>
+                        <h2>Calificación del tutor: </h2>  
+                        <p:rating value="#{tutorSubjectBean.reputationInt}" readonly="true"/>
+                        <h:outputText value="(#{tutorSubjectBean.reputation})"/>
+                        <h4>Cantidad de votos recibidos #{tutorSubjectBean.numVotes}</h4>
+                        <h>Nivel #{tutorBean.reputation}: #{tutorBean.getLevelInformation()}</h>
+                        <ui:fragment rendered="#{!tutorSubjectBean.isVoted()}">
+                            <h2>Califica: </h2>
+                            <p:rating value="#{tutorSubjectBean.vote}"/>
+                            <p:spacer width="10" height="10"/>
+                            <p:commandButton id="vote" value="Votar"   
+                                             update="grid" actionListener="#{tutorSubjectBean.rate}"/>
+                        </ui:fragment>
+                    </h:form>
 
                     <p:spacer width="20" height="20" />
 

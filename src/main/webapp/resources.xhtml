@@ -61,9 +61,10 @@
                         Aquí podrás encontrar todo el material relacionado con esta materia...
                     </marquee>
                 </div>
-                <div class="span0">
-                    <h:form id="form">
-                        <h1><a data-toggle="modal" href="#shareModal" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
+                <div class="span0" >
+                    <h:form id="form" >
+                        <p:growl id="message" showDetail="true"/>
+                        <h1><a data-toggle="modal" href="#{subjectBean.studentSubscribed}" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
                     </h:form>
                 </div>
             </div>

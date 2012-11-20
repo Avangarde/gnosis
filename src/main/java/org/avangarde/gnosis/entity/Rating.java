@@ -22,7 +22,7 @@ import org.avangarde.gnosis.vo.RatingVo;
 @Entity
 @Table(name = "rating")
 public class Rating implements Serializable, IEntity<RatingVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -35,6 +35,17 @@ public class Rating implements Serializable, IEntity<RatingVo> {
     @ManyToOne
     @JoinColumn(name = "publicationId")
     private Publication publication;
+    @ManyToOne
+    @JoinColumn(name = "tutorSubjectId")
+    private TutorSubject tutorSubject;
+
+    public TutorSubject getTutorSubject() {
+        return tutorSubject;
+    }
+
+    public void setTutorSubject(TutorSubject tutorSubject) {
+        this.tutorSubject = tutorSubject;
+    }
 
     public int getId() {
         return id;
@@ -73,9 +84,15 @@ public class Rating implements Serializable, IEntity<RatingVo> {
         RatingVo vo = new RatingVo();
         vo.setId(getId());
         vo.setRating(getRating());
-        vo.setPublicationId(getPublication().getId());
         vo.setStudentId(getStudent().getId());
+
+        if (getTutorSubject() != null) {
+            vo.setTutorSubjectId(getTutorSubject().getId());
+        }
+
+        if (getPublication() != null) {
+            vo.setPublicationId(getPublication().getId());
+        }
         return vo;
     }
-    
 }
