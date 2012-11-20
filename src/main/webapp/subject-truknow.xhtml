@@ -9,8 +9,8 @@
 
 
     <f:metadata>
-        <f:viewParam name="subjectCode" value="#{subjectBean.code}"/>
-        <f:viewParam name="subjectCode" value="#{tutorSubjectBean.subjectCode}"/>
+        <f:viewParam name="code" value="#{subjectBean.code}"/>
+        <f:viewParam name="code" value="#{tutorSubjectBean.subjectCode}"/>
         <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
 
         <f:viewParam name="tutorID" value="#{tutorBean.id}"/>

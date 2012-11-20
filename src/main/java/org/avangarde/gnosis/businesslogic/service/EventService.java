@@ -4,7 +4,6 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class EventService implements IService<EventVo> {
             entity.setSubject(subject);
 
             DAOFactory.getInstance().getEventDAO().persist(entity, em);
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(EventService.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -69,7 +69,7 @@ public class CommentBean implements Serializable {
         activityVo.setSubjectCode(getSubject().getCode());
         activityVo.setPublicationId(getViewResourceBean().getId());
         activityVo.setTopicId(getTopic().getId());
-        activityVo.setTutorId(getTutorSubjectBean().getId());
+        activityVo.setTutorId(getTutorSubjectBean().getTutorId());
         activityVo.setType("Comment");
         
         activityFacade.create(activityVo);

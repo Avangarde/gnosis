@@ -155,8 +155,8 @@ public class StudentService implements IService<StudentVo> {
                     + "        <p>Tu registro ha sido exitoso. Antes de iniciar sesión debes confirmar"
                     + "            tu dirección de correo electrónico, para ello dirígete por favor a:</p>\n"
                     + "        <p>\n"
-                    + "            <a href=" + vo.getContextPath() + "/confirm.xhtml?id=" + new Integer(vo.getId()).toString() + ">"
-                    + "                " + vo.getContextPath() + "/confirm.xhtml?id=" + new Integer(vo.getId()).toString() + "\n"
+                    + "            <a href=" + vo.getContextPath() + "confirm.xhtml?id=" + new Integer(vo.getId()).toString() + ">"
+                    + "                " + vo.getContextPath() + "confirm.xhtml?id=" + new Integer(vo.getId()).toString() + "\n"
                     + "            </a>\n"
                     + "        </p>",
                     "ISO-8859-1",
