@@ -10,6 +10,7 @@ import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.RatingVo;
 
 /**
@@ -17,9 +18,9 @@ import org.avangarde.gnosis.vo.RatingVo;
  * @author Alexander
  */
 public class RatingService implements IService<RatingVo> {
-    
+
     private static RatingService instance;
-    
+
     private RatingService() {
     }
 
@@ -29,7 +30,7 @@ public class RatingService implements IService<RatingVo> {
         }
         return instance;
     }
-    
+
     @Override
     public void create(RatingVo vo, EntityManager em) {
         Rating entity = new Rating();
@@ -37,11 +38,20 @@ public class RatingService implements IService<RatingVo> {
         Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
         student.getRatingList().add(entity);
         entity.setStudent(student);
-        Publication publication = DAOFactory.getInstance().getPublicationDAO().find(vo.getPublicationId(), em);
-        publication.getRatingList().add(entity);
-        publication.setRating(calculateRating(publication.getRatingList()));
-        entity.setPublication(publication);
-        
+
+        if (vo.getPublicationId() != null) {
+            Publication publication = DAOFactory.getInstance().getPublicationDAO().find(vo.getPublicationId(), em);
+            publication.getRatingList().add(entity);
+            publication.setRating(calculateRating(publication.getRatingList()));
+            entity.setPublication(publication);
+        }
+        if (vo.getTutorSubjectId() != null) {
+            TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(vo.getTutorSubjectId(), em);
+            tutorSubject.getRatingList().add(entity);
+            tutorSubject.setReputation(calculateRating(tutorSubject.getRatingList()));
+            entity.setTutorSubject(tutorSubject);
+        }
+
         DAOFactory.getInstance().getRatingDAO().persist(entity, em);
     }
 
@@ -67,11 +77,10 @@ public class RatingService implements IService<RatingVo> {
 
     private Double calculateRating(List<Rating> ratingList) {
         Double rating = new Double(0);
-        for (Rating entity : ratingList){
+        for (Rating entity : ratingList) {
             rating += entity.getRating();
         }
-        rating = rating/ratingList.size();
+        rating = rating / ratingList.size();
         return rating;
     }
-    
 }

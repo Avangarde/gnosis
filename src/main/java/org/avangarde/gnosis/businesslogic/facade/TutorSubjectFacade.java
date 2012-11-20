@@ -80,4 +80,27 @@ public class TutorSubjectFacade extends Facade<TutorSubjectVo> {
             }
         }
     }
+
+    public boolean isVotedByUser(int studentId, int tutorSubjectId) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        boolean ret = true;
+        try {
+            tx = em.getTransaction();
+            tx.begin();
+            tx.commit();
+            ret = ((TutorSubjectService)service).isVotedByUser(studentId, tutorSubjectId, em);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null && tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+            return ret;
+        }
+    }
 }
