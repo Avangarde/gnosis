@@ -295,7 +295,7 @@ public class SubjectBean implements Serializable {
                 TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
 
                 tutorSubjectVo.setSubjectCode(subjectCode);
-                tutorSubjectVo.setReputation(0);
+                tutorSubjectVo.setReputation(0.0);
 
                 //Hice un poco de trampa aquí
                 tutorSubjectVo.setTutorId(tutorVo.getId());

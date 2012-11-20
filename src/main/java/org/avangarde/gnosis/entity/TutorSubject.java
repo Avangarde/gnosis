@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.avangarde.gnosis.vo.CommentVo;
+import org.avangarde.gnosis.vo.RatingVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
 
@@ -48,9 +49,19 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     @Column(name = "number_students")
     private int numberStudents;
     @Column(name = "userName")
-    private String userName; 
+    private String userName;
     @Column(name = "url_Photo")
     private String urlPhoto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorSubject")
+    private List<Rating> ratingList;
+
+    public List<Rating> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<Rating> ratingList) {
+        this.ratingList = ratingList;
+    }
 
     public TutorSubject() {
     }
@@ -86,6 +97,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
     }
+
     public Subject getSubject() {
         return subject;
     }
@@ -149,20 +161,24 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
-        
+
     @Override
     public TutorSubjectVo toVo() {
         TutorSubjectVo vo = new TutorSubjectVo();
         List<CommentVo> listVo = new ArrayList<CommentVo>();
-        for(Comment entity : getCommentList()){
+        for (Comment entity : getCommentList()) {
             listVo.add(entity.toVo());
         }
         vo.setCommentList(listVo);
         vo.setId(getId());
         vo.setReputation(getReputation());
         List<Integer> listStudentVo = new ArrayList<Integer>();
-        for(Student entity : getStudentList()){
+        for (Student entity : getStudentList()) {
             listStudentVo.add(entity.getId());
+        }
+        List<RatingVo> listRatingVo = new ArrayList<RatingVo>();
+        for (Rating entity : getRatingList()) {
+            listRatingVo.add(entity.toVo());
         }
         vo.setStudentList(listStudentVo);
         vo.setTutorId(getTutor().getId());
@@ -172,6 +188,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setQuestionReceived(getQuestionReceived());
         vo.setUserName(getUserName());
         vo.setUrlPhoto(getUrlPhoto());
+        vo.setNumberVotes(listRatingVo.size());
         return vo;
     }
 }

@@ -13,7 +13,16 @@ public class RatingVo implements IValueObject{
     private int id;
     private int rating;
     private int studentId;
-    private int publicationId;
+    private Integer publicationId;
+    private Integer tutorSubjectId;
+
+    public Integer getTutorSubjectId() {
+        return tutorSubjectId;
+    }
+
+    public void setTutorSubjectId(Integer tutorSubjectId) {
+        this.tutorSubjectId = tutorSubjectId;
+    }
 
     public int getId() {
         return id;
@@ -39,11 +48,11 @@ public class RatingVo implements IValueObject{
         this.studentId = studentId;
     }
 
-    public int getPublicationId() {
+    public Integer getPublicationId() {
         return publicationId;
     }
 
-    public void setPublicationId(int publicationId) {
+    public void setPublicationId(Integer publicationId) {
         this.publicationId = publicationId;
     }
     
