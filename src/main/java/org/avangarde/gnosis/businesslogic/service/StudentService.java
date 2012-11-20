@@ -2,6 +2,15 @@ package org.avangarde.gnosis.businesslogic.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Program;
@@ -37,12 +46,16 @@ public class StudentService implements IService<StudentVo> {
         entity.setEmail(vo.getEmail());
         entity.setPassword(vo.getPassword());
         entity.setUrlPhoto("./resources/images/childish_User.png");
+        entity.setActive(false);
 
         Program program = DAOFactory.getInstance().getProgramDAO().find(vo.getProgramId(), em);
         program.getStudentList().add(entity);
         entity.setProgram(program);
 
         DAOFactory.getInstance().getStudentDAO().persist(entity, em);
+        StudentVo findByUserName = findByUserName(vo.getUserName(), em);
+        vo.setId(findByUserName.getId());
+        sendEmailConfirmation(vo);
     }
 
     @Override
@@ -57,7 +70,11 @@ public class StudentService implements IService<StudentVo> {
 
     @Override
     public void update(StudentVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Student entity = DAOFactory.getInstance().getStudentDAO().find(vo.getId(), em);
+        entity.setUrlPhoto(vo.getUrlPhoto());
+        entity.setAboutMe(vo.getAboutMe());
+        entity.setActive(vo.isActive());
+        DAOFactory.getInstance().getStudentDAO().update(entity, em);
     }
 
     @Override
@@ -94,7 +111,7 @@ public class StudentService implements IService<StudentVo> {
 
 
     }
-    
+
     public List<StudentVo> getStudents(String query, EntityManager em) {
         List<StudentVo> students = new ArrayList<StudentVo>();
         List<Student> entities = DAOFactory.getInstance().getStudentDAO().getStudents(query, em);
@@ -104,12 +121,56 @@ public class StudentService implements IService<StudentVo> {
         return students;
     }
 
-    public StudentVo findByUsername(String userName, EntityManager em) {
+    public StudentVo findByUserName(String userName, EntityManager em) {
         Student student = DAOFactory.getInstance().getStudentDAO().findByUserName(userName, em);
-        if (student != null) {
+        if (student.getUserName() != null) {
             return student.toVo();
         } else {
             return null;
+        }
+    }
+
+    private void sendEmailConfirmation(StudentVo vo) {
+        try {
+            // Conection Properties
+            Properties props = new Properties();
+            props.setProperty("mail.smtp.host", "smtp.gmail.com");
+            props.setProperty("mail.smtp.starttls.enable", "true");
+            props.setProperty("mail.smtp.port", "587");
+            props.setProperty("mail.smtp.user", vo.getEmail());
+            props.setProperty("mail.smtp.auth", "true");
+
+            // Prepare session
+            Session session = Session.getDefaultInstance(props);
+
+            // Build Message
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("gnosisun@gmail.com"));
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress(vo.getEmail()));
+            message.setSubject("GnosisUN - Confirmación de Registro");
+            message.setText(
+                    "<p>Hola "+ vo.getFirstName() + " " + vo.getLastName() +",</p>\n"
+                    + "        <p>Tu registro ha sido exitoso. Antes de iniciar sesión debes confirmar"
+                    + "            tu dirección de correo electrónico, para ello dirígete por favor a:</p>\n"
+                    + "        <p>\n"
+                    + "            <a href=" + vo.getContextPath() + "/confirm.xhtml?id=" + new Integer(vo.getId()).toString() + ">"
+                    + "                " + vo.getContextPath() + "/confirm.xhtml?id=" + new Integer(vo.getId()).toString() + "\n"
+                    + "            </a>\n"
+                    + "        </p>",
+                    "ISO-8859-1",
+                    "html");
+
+            // Send Message
+            Transport t = session.getTransport("smtp");
+            t.connect("gnosisun@gmail.com", "4123gnosis");
+            t.sendMessage(message, message.getAllRecipients());
+
+            // Close
+            t.close();
+        } catch (MessagingException ex) {
+            Logger.getLogger(StudentService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -5,13 +5,22 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:maocv="http://myfaces.apache.org/commons/validators">
 
     <ui:define name="title">
         - Index
     </ui:define>
 
     <ui:define name="content">
+        <script type="text/javascript">
+            function appPath(){
+                document.getElementById('signUpForm:hiddenButton').value = location.href;
+                remoteChangeCommand();
+            }
+        </script>
+
+
         <div class="container">
             <div class="row">
                 <div class="span4 offset1">
@@ -92,7 +101,9 @@
                                         <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
                                         <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"
                                                     requiredMessage="Por favor completa este campo"
-                                                    match="passwordSignUp" validatorMessage="Las contraseñas deben coincidir"/>
+                                                    validatorMessage="Las contraseñas deben coincidir">
+                                            <maocv:validateCompareTo forId="passwordSignUp" operator="eq" />
+                                        </p:password>
                                         <p:message id="passwordSignUpRMessage" for="passwordSignUpR" />
                                     </div>
                                 </div>
@@ -109,7 +120,10 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <h:commandButton action="#{signUpBean.signUp()}" value="Registrarse" class="btn btn-large btn-primary" />
+                                    <h:commandButton action="#{signUpBean.signUp()}" value="Registrarse" class="btn btn-large btn-primary" 
+                                                     onclick="appPath()"/>
+                                    <h:inputHidden id="hiddenButton" value="#{signUpBean.appPath}"/>
+                                    <p:remoteCommand name="remoteChangeCommand" process="hiddenButton"/>
                                 </div>
                             </h:form>
                         </f:view>

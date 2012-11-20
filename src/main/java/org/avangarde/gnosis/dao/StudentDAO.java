@@ -2,6 +2,8 @@ package org.avangarde.gnosis.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -88,7 +90,7 @@ public class StudentDAO implements IDAO<Student> {
     }
 
     public Student findByUserName(String userName, EntityManager em) {
-        Student student = new Student();
+        Student student;
 
         Query q = em.createQuery("SELECT t FROM Student t WHERE t.userName LIKE :userName").
                 setParameter("userName", userName);
@@ -96,7 +98,7 @@ public class StudentDAO implements IDAO<Student> {
         try {
             student = (Student) q.getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+            student = new Student();
         }
         return student;
     }

@@ -26,8 +26,10 @@ public class UserBean implements Serializable {
     private String userName;
     private String aboutMe;
     private String btnValue;
+    private String status;
     private int programId;
     private boolean loggedIn;
+    private boolean active;
     private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
     private List<ActivityVo> activities = new ArrayList<ActivityVo>();
     private List<PublicationVo> publications;
@@ -72,6 +74,14 @@ public class UserBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public int getProgramId() {
         return programId;
     }
@@ -98,6 +108,14 @@ public class UserBean implements Serializable {
 
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getProgramName() {
@@ -154,4 +172,22 @@ public class UserBean implements Serializable {
         loggedIn = false;
         return "logout";
     }
+    
+    public void validateAccount(){
+        StudentVo user = FacadeFactory.getInstance().getStudentFacade().find(getId());
+        if (user != null){
+            if (!user.isActive()){
+                setStatus("new");
+                setActive(false);
+                user.setActive(true);
+                FacadeFactory.getInstance().getStudentFacade().update(user);
+            } else {
+                setStatus("active");
+                setActive(true);
+            }
+        } else {
+         setStatus("unregistred");   
+        }
+    }
+    
 }

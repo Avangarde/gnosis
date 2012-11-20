@@ -34,7 +34,12 @@
                         <span class="icon-bar"></span>
                     </a>
 
-                    <a class="brand" href="#{request.contextPath}/dashboard.xhtml">Gnosis</a>
+                    <ui:fragment rendered="#{userBean.loggedIn}">
+                        <a class="brand" href="#{request.contextPath}/dashboard.xhtml">Gnosis</a>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not userBean.loggedIn}">
+                        <a class="brand" href="#{request.contextPath}/index.xhtml">Gnosis</a>
+                    </ui:fragment>
 
                     <div class="nav-collapse">
                         <ui:fragment rendered="#{userBean.loggedIn}">

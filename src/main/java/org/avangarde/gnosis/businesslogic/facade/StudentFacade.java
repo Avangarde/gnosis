@@ -67,7 +67,7 @@ public class StudentFacade extends Facade<StudentVo> {
 
     public StudentVo findByUserName(String userName) {
         try {
-            return ((StudentService) service).findByUsername(userName, em);
+            return ((StudentService) service).findByUserName(userName, em);
         } finally {
             if (em != null) {
                 em.clear();

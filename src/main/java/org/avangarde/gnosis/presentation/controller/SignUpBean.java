@@ -29,6 +29,7 @@ public class SignUpBean implements Serializable {
     private String lastName;
     private String email;
     private Integer programId;
+    private String appPath;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
 
@@ -99,6 +100,14 @@ public class SignUpBean implements Serializable {
         this.user = user;
     }
 
+    public String getAppPath() {
+        return appPath;
+    }
+
+    public void setAppPath(String appPath) {
+        this.appPath = appPath;
+    }
+
     public String signUp() {
         
         StudentFacade facade = FacadeFactory.getInstance().getStudentFacade();
@@ -109,6 +118,8 @@ public class SignUpBean implements Serializable {
                     "Ya se encuentra un usuario registrado con este email"));
             return "failure";
         }
+        
+        facade = FacadeFactory.getInstance().getStudentFacade();
 
         StudentVo vo = new StudentVo();
         vo.setFirstName(getFirstName());
@@ -117,13 +128,11 @@ public class SignUpBean implements Serializable {
         vo.setEmail(getUserName() + "@unal.edu.co");
         vo.setPassword(getPassword());
         vo.setProgramId(getProgramId());
+        vo.setContextPath(getAppPath());
             
         facade.create(vo);
 
         return "success";
-
-
-        
 
     }
 }
