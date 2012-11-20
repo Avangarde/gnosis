@@ -6,12 +6,39 @@ import java.util.Date;
  *
  * @author Zergio
  */
-public class EventVo implements IValueObject{
+public class EventVo implements IValueObject {
+
+
+    public EventVo(String name, Date startDate, Date endDate) {
+        this.name=name;
+        this.startDate=startDate;
+        this.endDate=endDate;
+    }
+
+    public EventVo() {
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
     
     private int id;
     private String name;
     private String type;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
     private Date hour;
     private String description;
     
@@ -40,14 +67,6 @@ public class EventVo implements IValueObject{
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Date getHour() {
