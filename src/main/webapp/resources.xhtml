@@ -168,9 +168,9 @@
                             </div>  
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success" >
+                            <p:commandButton action="#{resourceBean.saveResource()}" value="Compartir" styleClass="btn btn-success" oncomplete="location.reload()">
                                 <f:param name ="code" value ="#{subjectBean.code}"/>
-                            </h:commandButton>
+                            </p:commandButton>
                         </div>        
                     </div>
                 </h:form>

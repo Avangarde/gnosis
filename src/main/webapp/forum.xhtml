@@ -28,35 +28,37 @@
             </div>
             <div class="row">
                 <div class="span11">
-                    <p:dataTable id="dataTable" var="topic" value="#{topicBean.topics}"  
-                                 paginator="true" rows="10"  
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                 rowsPerPageTemplate="5,10,15">  
-                        <p:column>  
-                            <f:facet name="header">  
-                                <h:outputText value="Tema" />  
-                            </f:facet>
-                            <h:link value="#{topic.title}" outcome="topicView.xhtml">
-                                <f:param name ="code" value ="#{subjectBean.code}"/>
-                                <f:param name ="topicId" value ="#{topic.id}"/>
-                            </h:link>  
-                        </p:column>  
+                    <h:form id="formTable">
+                        <p:dataTable id="dataTable" var="topic" value="#{topicBean.topics}"  
+                                     paginator="true" rows="10"  
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="5,10,15">  
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Tema" />  
+                                </f:facet>
+                                <h:link value="#{topic.title}" outcome="topicView.xhtml">
+                                    <f:param name ="code" value ="#{subjectBean.code}"/>
+                                    <f:param name ="topicId" value ="#{topic.id}"/>
+                                </h:link>  
+                            </p:column>  
 
-                        <p:column>  
-                            <f:facet name="header">  
-                                <h:outputText value="Cantidad de Respuestas" />  
-                            </f:facet>  
-                            <h:outputText value="#{topic.commentList.size()}" />  
-                        </p:column>  
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Cantidad de Respuestas" />  
+                                </f:facet>  
+                                <h:outputText value="#{topic.commentList.size()}" />  
+                            </p:column>  
 
-                        <p:column>  
-                            <f:facet name="header">  
-                                <h:outputText value="Creado por" />  
-                            </f:facet>  
-                            <h:outputText value="#{topic.studentName}" />  
-                        </p:column>  
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Creado por" />  
+                                </f:facet>  
+                                <h:outputText value="#{topic.studentName}" />  
+                            </p:column>  
 
-                    </p:dataTable>  
+                        </p:dataTable>
+                    </h:form>
                 </div>
             </div>
         </div>
@@ -71,23 +73,23 @@
                         <div class="modal-body">
                             <p class="text-info">Verifica que el tema que vas a crear no haya sido creado aún</p>
                             <div class="control-group">
-                                <p class="text-info"><strong>Título:</strong></p>
-                                <div class="input-append">
+                                <label class="control-label" for="title"><strong>Titulo: </strong></label>
+                                <div class="controls">
                                     <p:inputText id="title" required="true" value="#{topicBean.title}" 
                                                  requiredMessage="Por favor completa este campo" />
                                 </div>
                             </div>
                             <div class="control-group">
-                                <p class="text-info"><strong>Mensaje</strong></p>
-                                <div class="input-append">
+                                <label class="control-label" for="title"><strong>Mensaje: </strong></label>
+                                <div class="controls">
                                     <p:inputTextarea rows="6" value="#{topicBean.firstComment}"/> 
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton action="#{topicBean.createTopic()}" value="Crear" class="btn btn-success" >
+                            <p:commandButton action="#{topicBean.createTopic()}" value="Crear" styleClass="btn btn-success" oncomplete="location.reload()">
                                 <f:param name ="code" value ="#{subjectBean.code}"/>
-                            </h:commandButton>
+                            </p:commandButton>
                         </div>
                     </div>
                 </h:form>
