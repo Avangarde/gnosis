@@ -91,7 +91,8 @@
                                 <p:column>  
                                     <h:commandButton id="boton" class="btn btn-info"
                                                      action="#{subjectBean.subscribeToTutor(tutor)}"
-                                                     value="#{subjectBean.changeButtonSubscribeToTutorValue(tutor)}" />
+                                                     value="#{subjectBean.changeButtonSubscribeToTutorValue(tutor)}"
+                                                     disabled="#{subjectBean.studentUnsuscribed()}"/>
                                 </p:column>  
                             </p:dataTable>  
 
