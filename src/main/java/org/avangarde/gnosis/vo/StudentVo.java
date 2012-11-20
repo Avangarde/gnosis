@@ -21,6 +21,8 @@ public class StudentVo {
     private String password;
     private String urlPhoto;
     private String aboutMe;
+    private boolean active;
+    private String contextPath;
     //Atributo externo
     private Integer programId;
     //Vos Adicionales
@@ -99,6 +101,22 @@ public class StudentVo {
 
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getContextPath() {
+        return contextPath;
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
     }
 
     public List<LikeDislikeVo> getLikeDislikeList() {
@@ -196,5 +214,5 @@ public class StudentVo {
     public void setRatingList(List<RatingVo> ratingList) {
         this.ratingList = ratingList;
     }
-   
+
 }

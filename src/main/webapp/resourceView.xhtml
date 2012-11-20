@@ -25,7 +25,11 @@
                     <div class="span11">
                         <h:form>  
                             <h1>#{viewResourceBean.title}</h1>
-                            <iframe src="#{viewResourceBean.url}" width="100%" height="600px"></iframe>
+                            <iframe name="resource" src="#{viewResourceBean.url}" width="100%" height="600px" marginwidth="0" scrolling="yes" frameborder="0" ></iframe>
+                            <h:outputText value="Si no puedes ver el recurso haz click "/>
+                            <h:outputLink value="#{viewResourceBean.url}" title="#{viewResourceBean.title}">  
+                                <h:outputText value="Aquí"/>  
+                            </h:outputLink> 
                         </h:form>
                     </div>
                 </div>
@@ -35,9 +39,10 @@
                 <div class="row">
                     <div class="span11">
                         <h:form>
-                            <h:panelGrid columns="3" cellpadding="5" id="grid">
+                            <h:panelGrid columns="4" cellpadding="5" id="grid">
                                 <h2>Calificación del recurso: </h2>  
-                                <p:rating value="#{viewResourceBean.rating}" disabled="true"/>
+                                <p:rating value="#{viewResourceBean.ratingInt}" readonly="true"/>
+                                <h:outputText value="(#{viewResourceBean.rating})"/>
                                 <span class="label">#{viewResourceBean.numVotes} Votos</span>
                                 <ui:fragment rendered="#{!viewResourceBean.isVoted()}">
                                         <h2>Califica: </h2>
@@ -58,7 +63,7 @@
                                 </f:facet>
                                 <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
                                     <h:panelGrid columns="2" cellpadding="10"> 
-                                        <p:graphicImage value="#{comment.studentUrlPhoto}"/>
+                                        <p:graphicImage value="#{comment.studentUrlPhoto}" width="66" height="66"/>
                                         <h:outputText value="#{comment.content}" escape="false"/>
                                     </h:panelGrid>
                                 </p:panel>

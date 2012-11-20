@@ -5,13 +5,22 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:maocv="http://myfaces.apache.org/commons/validators">
 
     <ui:define name="title">
         - Index
     </ui:define>
 
     <ui:define name="content">
+        <script type="text/javascript">
+            function appPath(){
+                document.getElementById('signUpForm:hiddenButton').value = location.href;
+                remoteChangeCommand();
+            }
+        </script>
+
+
         <div class="container">
             <div class="row">
                 <div class="span4 offset1">
@@ -41,7 +50,6 @@
                             </h:form>
                         </f:view>
                     </div>
-                    <p:media value="http://www.youtube.com/v/jHnvK0SYYWk" player="flash"/>
                 </div>
                 <div class="span5 offset1">
                     <div class="hero-unit">
@@ -80,8 +88,10 @@
                                         <p:password id="passwordSignUp" required="true" requiredMessage="Por favor completa este campo" 
                                                     value="#{signUpBean.password}"
                                                     feedback="true" promptLabel="Usa una contraseña segura" inline="true" 
-                                                    weakLabel="Debil" goodLabel="Buena" strongLabel="Segura" 
-                                                    match="passwordSignUpR" />
+                                                    weakLabel="Debil" goodLabel="Buena" strongLabel="Segura"
+                                                    validatorMessage="La contraseña debe tener minimo 8 caracteres">
+                                            <f:validateLength minimum="8" maximum="18" />
+                                        </p:password>
                                         <p:watermark for="passwordSignUp" value="Escribe una Contraseña" />
                                         <p:message id="passwordSignUpMessage" for="passwordSignUp" />
                                     </div>
@@ -90,7 +100,10 @@
                                     <div class="controls">
                                         <p:watermark for="passwordSignUpR" value="Escribela de nuevo" />
                                         <p:password id="passwordSignUpR" required="true" value="#{signUpBean.passwordR}"
-                                                    requiredMessage="Por favor completa este campo"/>
+                                                    requiredMessage="Por favor completa este campo"
+                                                    validatorMessage="Las contraseñas deben coincidir">
+                                            <maocv:validateCompareTo forId="passwordSignUp" operator="eq" />
+                                        </p:password>
                                         <p:message id="passwordSignUpRMessage" for="passwordSignUpR" />
                                     </div>
                                 </div>
@@ -107,7 +120,10 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <h:commandButton action="#{signUpBean.signUp()}" value="Registrarse" class="btn btn-large btn-primary" />
+                                    <h:commandButton action="#{signUpBean.signUp()}" value="Registrarse" class="btn btn-large btn-primary" 
+                                                     onclick="appPath()"/>
+                                    <h:inputHidden id="hiddenButton" value="#{signUpBean.appPath}"/>
+                                    <p:remoteCommand name="remoteChangeCommand" process="hiddenButton"/>
                                 </div>
                             </h:form>
                         </f:view>

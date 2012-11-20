@@ -73,4 +73,15 @@ public class PublicationFacade extends Facade <PublicationVo> {
             return ret;
         }
     }
+        
+    public List<PublicationVo> getPublicationsByStudent(int studentId) {
+        try {
+            return ((PublicationService) service).getPublicationsByStudent(studentId, em);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
 }

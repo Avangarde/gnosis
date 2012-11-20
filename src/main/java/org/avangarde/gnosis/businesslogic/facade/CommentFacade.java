@@ -38,4 +38,16 @@ public class CommentFacade extends Facade <CommentVo> {
             }
         }
     }
+
+    public List<CommentVo> getCommentsbyTutorSubject(int id) {
+         try {
+            em = emf.createEntityManager();
+            return ((CommentService)service).getCommentsByTutorSubject(em, id);
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+    }
 }

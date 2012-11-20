@@ -94,4 +94,15 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
 
 
     }
+
+    public TutorSubjectVo findTutorOnSubject(Integer tutorId, Integer subjectCode, EntityManager em) {
+        TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+        TutorSubject tutorSubject = tutorSubjectDAO.findByIdAndCode(tutorId, subjectCode, em);
+
+        if (tutorSubject != null) {
+            return tutorSubject.toVo();
+        } else {
+            return null;
+        }
+    }
 }

@@ -87,5 +87,17 @@ public class TutorSubjectDAO implements IDAO<TutorSubject> {
         return tutors;
     }
 
+    public TutorSubject findByIdAndCode(Integer tutorId, Integer subjectCode, EntityManager em) {
+        TutorSubject tutorSubject = new TutorSubject();
+        Query q = em.createQuery("SELECT p FROM TutorSubject p WHERE p.tutor.id LIKE :tutorId AND p.subject.code LIKE :subjectCode ").
+                setParameter("tutorId", tutorId.toString()).setParameter("subjectCode", subjectCode.toString());
+        try {
+            tutorSubject = (TutorSubject) q.getSingleResult();
+        } catch (Exception e) {
+            tutorSubject = null;
+        }
+        return tutorSubject;
+    }
+
     
 }

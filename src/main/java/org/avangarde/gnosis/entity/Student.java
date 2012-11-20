@@ -23,7 +23,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "userName")
+    @Column(name = "userName", unique=true)
     private String userName;
     @Column(name = "firstName")
     private String firstName;
@@ -37,6 +37,8 @@ public class Student implements Serializable, IEntity<StudentVo> {
     private String urlPhoto;
     @Column(name = "aboutMe")
     private String aboutMe;
+    @Column(name = "active")
+    private boolean active;
     @JoinTable(name = "student_studygroup", joinColumns = {
         @JoinColumn(name = "Student_studentId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "StudyGroup_idStudyGroup", referencedColumnName = "id")})
@@ -180,6 +182,14 @@ public class Student implements Serializable, IEntity<StudentVo> {
         this.aboutMe = aboutMe;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public List<Event> getEventList() {
         return eventList;
     }
@@ -252,6 +262,7 @@ public class Student implements Serializable, IEntity<StudentVo> {
         vo.setUrlPhoto(getUrlPhoto());
         vo.setUserName(getUserName());
         vo.setAboutMe(getAboutMe());
+        vo.setActive(isActive());
 
         //Listas
 

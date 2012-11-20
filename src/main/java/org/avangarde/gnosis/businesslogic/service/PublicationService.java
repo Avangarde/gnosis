@@ -21,7 +21,7 @@ import org.avangarde.gnosis.vo.PublicationVo;
 public class PublicationService implements IService<PublicationVo> {
 
     private static PublicationService instance;
-    
+
     private PublicationService() {
     }
 
@@ -40,12 +40,12 @@ public class PublicationService implements IService<PublicationVo> {
         entity.setTitle(vo.getTitle());
         entity.setTopic(vo.getTopic());
         entity.setType(vo.getType());
-                
+
         String newURL = vo.getUrl();
         if (newURL.startsWith("https://docs")) {
             int edit = newURL.lastIndexOf("/");
             newURL = (newURL.substring(0, edit) + "/preview");
-        } else if (newURL.startsWith("http://www.youtube")){
+        } else if (newURL.startsWith("http://www.youtube")) {
             int edit = newURL.lastIndexOf("/");
             newURL = (newURL.substring(0, edit) + "/embed/" + newURL.substring(edit + 9));
         }
@@ -54,7 +54,7 @@ public class PublicationService implements IService<PublicationVo> {
         Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
         student.getPublicationList().add(entity);
         entity.setStudent(student);
-        
+
         Subject subject = DAOFactory.getInstance().getSubjectDAO().find(vo.getSubjectCode(), em);
         subject.getPublicationList().add(entity);
         entity.setSubject(subject);
@@ -90,7 +90,7 @@ public class PublicationService implements IService<PublicationVo> {
     public List<String> getTopicsBySubject(EntityManager em, Integer subjectCode) {
 
         List<String> list = DAOFactory.getInstance().getPublicationDAO().getTopicsBySubject(em, subjectCode);
-            
+
         return list;
     }
 
@@ -101,19 +101,27 @@ public class PublicationService implements IService<PublicationVo> {
         }
         return list;
     }
-    
-    public boolean isVotedByUser(int studentId, int pubId, EntityManager em){
+
+    public boolean isVotedByUser(int studentId, int pubId, EntityManager em) {
         Publication publication = DAOFactory.getInstance().getPublicationDAO().find(pubId, em);
-        
-        for (Rating rating : publication.getRatingList()){
-            if (rating.getStudent().getId() == studentId){
+
+        for (Rating rating : publication.getRatingList()) {
+            if (rating.getStudent().getId() == studentId) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public int getNewId(EntityManager em) {
         return DAOFactory.getInstance().getPublicationDAO().getNewId(em);
+    }
+
+    public List<PublicationVo> getPublicationsByStudent(int studentId, EntityManager em) {
+        List<PublicationVo> list = new ArrayList<PublicationVo>();
+        for (Publication publication : DAOFactory.getInstance().getPublicationDAO().getPublicationsByStudent(studentId, em)) {
+            list.add((publication).toVo());
+        }
+        return list;
     }
 }
