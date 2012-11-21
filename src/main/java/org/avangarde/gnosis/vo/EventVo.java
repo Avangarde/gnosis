@@ -1,6 +1,8 @@
 package org.avangarde.gnosis.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -36,11 +38,20 @@ public class EventVo implements IValueObject {
     
     private int id;
     private String name;
+
+    public List<ActivityVo> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<ActivityVo> activityList) {
+        this.activityList = activityList;
+    }
     private String type;
     private Date startDate;
     private Date endDate;
     private Date hour;
-    private String description;
+    private String description;   
+    private List<ActivityVo> activityList;
     
     private int studentId;
     private Integer subjectCode;
@@ -100,6 +111,5 @@ public class EventVo implements IValueObject {
     public void setSubjectCode(Integer subjectCode) {
         this.subjectCode = subjectCode;
     }
-    
     
 }

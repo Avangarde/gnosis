@@ -24,6 +24,24 @@ public class ActivityVo implements IValueObject {
     private String studentUrlPhoto;
     private int publicationId;
     private String publicationTitle;
+    private String eventTitle;
+    private int eventId;
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
 
     public int getId() {
         return id;

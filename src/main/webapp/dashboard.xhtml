@@ -33,6 +33,9 @@
                                         <ui:fragment rendered="#{not activity.topicId.equals(0)}">
                                             #{activity.topicTitle}
                                         </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.eventId.equals(0)}">
+                                            #{activity.eventTitle}
+                                        </ui:fragment>
                                     </h2><br/><br/>
                                     <h:outputText value=" #{activity.dateActivity}"/>
                                 </h:column>
@@ -41,6 +44,7 @@
                                         <f:param name ="code" value ="#{activity.subjectCode}"/>
                                         <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
                                         <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
+                                        <f:param name ="eventId" value ="#{activity.eventId}" rendered="#{not activity.eventId.equals(0)}"/>
                                     </h:link>
                                 </h:column>
                             </h:panelGrid>

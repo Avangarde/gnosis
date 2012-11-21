@@ -69,11 +69,25 @@ public class ActivityService implements IService<ActivityVo> {
                     details = "ha respondido en el tema ";
                 }
                 url = "topicView.xhtml";
-            } 
+            }
+            if (vo.getEventId() != 0){
+                Event event = DAOFactory.getInstance().getEventDAO().find(vo.getEventId(), em);
+                event.getActivityList().add(entity);
+                entity.setEvent(event);
+                if (vo.getType().equals("NewEvent")){
+                    details = "ha creado en el calendario el evento ";
+                }
+                if (vo.getType().equals("UpdatedEvent")){
+                    details = "ha actualizado en el calendario el evento ";
+                }
+                url = "schedule.xhtml";
+            }
             if (vo.getType().equals("Publication")){
                 details = "ha publicado un nuevo recurso: ";
             } else if (vo.getType().equals("Topic")){
                 details = "ha creado un nuevo tema en el foro: ";
+            } else if (vo.getType().equals("Event")){
+                details = "ha creado un nuevo evento en el calendario: ";
             }
             entity.setDetails(details);
             entity.setUrl(url);
