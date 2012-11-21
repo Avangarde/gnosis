@@ -86,6 +86,8 @@ public class ActivityService implements IService<ActivityVo> {
                 details = "ha publicado un nuevo recurso: ";
             } else if (vo.getType().equals("Topic")){
                 details = "ha creado un nuevo tema en el foro: ";
+            } else if (vo.getType().equals("Event")){
+                details = "ha creado un nuevo evento en el calendario: ";
             }
             entity.setDetails(details);
             entity.setUrl(url);

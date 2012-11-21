@@ -42,7 +42,8 @@ public class EventService implements IService<EventVo> {
             entity.setName(vo.getName());
             entity.setHour(vo.getHour());
             entity.setId(vo.getId());
-            entity.setStartDate((vo.getStartDate()));
+            entity.setStartDate(vo.getStartDate());
+            entity.setEndDate(vo.getEndDate());
             entity.setType(vo.getType());
             Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
             student.getEventList().add(entity);
@@ -66,7 +67,27 @@ public class EventService implements IService<EventVo> {
 
     @Override
     public void update(EventVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Event entity = new Event();
+            SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy - HH:mm:ss");
+            entity.setName(vo.getName());
+            entity.setHour(vo.getHour());
+            entity.setId(vo.getId());
+            entity.setStartDate(vo.getStartDate());
+            entity.setEndDate(vo.getEndDate());
+            entity.setType(vo.getType());
+            Student student = DAOFactory.getInstance().getStudentDAO().find(vo.getStudentId(), em);
+            student.getEventList().add(entity);
+            entity.setStudent(student);
+            Subject subject = DAOFactory.getInstance().getSubjectDAO().find(vo.getSubjectCode(), em);
+            subject.getEventList().add(entity);
+            entity.setSubject(subject);
+            
+            DAOFactory.getInstance().getEventDAO().update(entity, em);
+        } catch (Exception ex) {
+            Logger.getLogger(EventService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
 
     @Override

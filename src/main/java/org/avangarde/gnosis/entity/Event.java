@@ -1,8 +1,11 @@
 package org.avangarde.gnosis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
+import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.EventVo;
 
 /**
@@ -39,6 +42,8 @@ public class Event implements Serializable, IEntity<EventVo> {
     @ManyToOne
     @JoinColumn(name = "studentId")
     private Student student;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private List<Activity> activityList;
 
     public Date getStartDate() {
         return startDate;
@@ -60,6 +65,14 @@ public class Event implements Serializable, IEntity<EventVo> {
     private Subject subject;
 
     public Event() {
+    }
+
+    public List<Activity> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<Activity> activityList) {
+        this.activityList = activityList;
     }
 
     public int getId() {
@@ -120,6 +133,10 @@ public class Event implements Serializable, IEntity<EventVo> {
     
     @Override
     public EventVo toVo() {
+        ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
+        for (Activity entity : getActivityList()) {
+            listActivityVo.add(entity.toVo());
+        }
         EventVo vo = new EventVo();
         vo.setStartDate(getStartDate());
         vo.setEndDate(getEndDate());
@@ -129,8 +146,10 @@ public class Event implements Serializable, IEntity<EventVo> {
         vo.setName(getName());
         vo.setStudentId(getStudent().getId());
         vo.setSubjectCode(getSubject().getCode());
-        vo.setType(getType());      
+        vo.setType(getType());
+        vo.setActivityList(listActivityVo);
         return vo;     
     }
+
    
 }

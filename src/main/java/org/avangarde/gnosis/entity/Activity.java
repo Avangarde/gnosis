@@ -53,6 +53,17 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
     @ManyToOne
     @JoinColumn(name = "idPublication")
     private Publication publication;
+    @ManyToOne
+    @JoinColumn(name = "idEvent")
+    private Event event;
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     public Activity() {
     }
@@ -171,6 +182,10 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
             vo.setPublicationId(getPublication().getId());
             vo.setPublicationTitle(getPublication().getTitle());
         }
+        if (getEvent() != null) {
+            vo.setEventId(getEvent().getId());
+            vo.setEventTitle(getEvent().getName());
+        }
         List<CommentVo> listVo = new ArrayList<CommentVo>();
         for (Comment entity : getCommentList()){
             listVo.add(entity.toVo());
@@ -178,4 +193,6 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
         vo.setCommentList(listVo);
         return vo;
     }
+
+
 }
