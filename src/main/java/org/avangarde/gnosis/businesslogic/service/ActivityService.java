@@ -82,6 +82,12 @@ public class ActivityService implements IService<ActivityVo> {
                 }
                 url = "subject-truknow.xhtml";
             }
+            if (vo.getEventId() != 0) {
+                Event event = DAOFactory.getInstance().getEventDAO().find(vo.getEventId(), em);
+                event.getActivityList().add(entity);
+                entity.setEvent(event);
+                url = "schedule.xhtml";
+            }
             if (vo.getType().equals("Publication")){
                 details = "ha publicado un nuevo recurso: ";
             } else if (vo.getType().equals("Topic")){
