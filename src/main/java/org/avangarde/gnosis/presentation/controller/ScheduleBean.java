@@ -6,6 +6,7 @@ package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -43,7 +44,6 @@ public class ScheduleBean implements Serializable {
     @ManagedProperty(value = "#{subjectBean}")
     private SubjectBean subject;
     private List<EventVo> events;
-    
 
     public List<EventVo> getEvents() {
         return events;
@@ -78,8 +78,8 @@ public class ScheduleBean implements Serializable {
     public ScheduleModel getEventModel() {
         if (subject.getEvents() != null) {
             loadEvents(subject.getEvents());
-            
-        } 
+
+        }
 
         return eventModel;
 
@@ -96,10 +96,10 @@ public class ScheduleBean implements Serializable {
     private void loadEvents(List<EventVo> eventsList) {
         eventModel.clear();
         for (EventVo evento : eventsList) {
-                    eventModel.addEvent(new DefaultScheduleEvent(evento.getName(), evento.getStartDate(), evento.getEndDate()));
-                    System.out.println("cargo los n eventos" + evento.getName());
-                }
+            eventModel.addEvent(new DefaultScheduleEvent(evento.getName(), evento.getStartDate(), evento.getEndDate()));
+            System.out.println("cargo los n eventos" + evento.getName());
         }
+    }
 
     public void addEvent() {
         System.out.println("Entra a addEvent");
@@ -108,11 +108,12 @@ public class ScheduleBean implements Serializable {
             System.out.println("El id es nulo");
             eventModel.addEvent(event);
             events = subject.getEvents();
+
             events.add(new EventVo(event.getId(), event.getStartDate(), event.getEndDate()));
-            System.out.println("events = "+ events);
-            
+            System.out.println("events = " + events);
+
             EventFacade eventFacade = FacadeFactory.getInstance().getEventFacade();
-        
+
             EventVo eventVo = new EventVo();
             eventVo.setName(event.getTitle());
             eventVo.setStartDate(event.getStartDate());
@@ -171,7 +172,7 @@ public class ScheduleBean implements Serializable {
                 }
 
             }
-                      
+
 
 
         }
