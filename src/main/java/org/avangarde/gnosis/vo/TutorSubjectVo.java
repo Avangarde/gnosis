@@ -9,9 +9,10 @@ import java.util.List;
 public class TutorSubjectVo implements IValueObject {
 
     private int id;
-    private double reputation;
+    private Double reputation;
     private List<Integer> studentList;
     private List<CommentVo> commentList;
+    private List<RatingVo> ratingList;
     private Integer subjectCode;
     private int tutorId;
     private int numberVotes;
@@ -20,7 +21,15 @@ public class TutorSubjectVo implements IValueObject {
     private int numberStudents;
     private String userName;
     private String urlPhoto;
-    
+
+    public List<RatingVo> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<RatingVo> ratingList) {
+        this.ratingList = ratingList;
+    }
+
     public int getId() {
         return id;
     }
@@ -29,11 +38,11 @@ public class TutorSubjectVo implements IValueObject {
         this.id = id;
     }
 
-    public double getReputation() {
+    public Double getReputation() {
         return reputation;
     }
 
-    public void setReputation(double reputation) {
+    public void setReputation(Double reputation) {
         this.reputation = reputation;
     }
 
@@ -116,5 +125,4 @@ public class TutorSubjectVo implements IValueObject {
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
-       
 }

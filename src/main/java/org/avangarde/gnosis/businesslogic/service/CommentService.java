@@ -16,6 +16,7 @@ import org.avangarde.gnosis.entity.Comment;
 import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Topic;
+import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.CommentVo;
 
 /**
@@ -58,6 +59,11 @@ public class CommentService implements IService<CommentVo> {
                 entity.setPublication(publication);
                 publication.getCommentList().add(entity);
             }
+            if (vo.getTutorSubjectId() != 0){
+                TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(vo.getTutorSubjectId(), em);
+                entity.setTutorSubject(tutorSubject);
+                tutorSubject.getCommentList().add(entity);
+            }
             DAOFactory.getInstance().getCommentDAO().persist(entity, em);
         } catch (ParseException ex) {
             Logger.getLogger(CommentService.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,5 +105,14 @@ public class CommentService implements IService<CommentVo> {
             list.add((comment).toVo());
         }
         return list;
+    }
+
+    public List<CommentVo> getCommentsByTutorSubject(EntityManager em, Integer id) {
+        List<CommentVo> commentVo = new ArrayList<CommentVo>();
+        List<Comment> comments = DAOFactory.getInstance().getCommentDAO().getCommentsByTutorSubject(em, id);
+        for (Comment entity : comments ){
+            commentVo.add(entity.toVo());
+        }    
+        return commentVo;
     }
 }

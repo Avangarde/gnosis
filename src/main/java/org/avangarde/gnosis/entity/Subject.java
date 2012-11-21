@@ -17,7 +17,6 @@ import org.avangarde.gnosis.vo.*;
     @NamedQuery(name = "Subject.findByCode", query = "SELECT s FROM Subject s WHERE s.code = :code"),
     @NamedQuery(name = "Subject.findByName", query = "SELECT s FROM Subject s WHERE s.name = :name"),
     @NamedQuery(name = "Subject.findByNumGroups", query = "SELECT s FROM Subject s WHERE s.numGroups = :numGroups")})
-
 public class Subject implements Serializable, IEntity<SubjectVo> {
     
     private static final long serialVersionUID = 1L;

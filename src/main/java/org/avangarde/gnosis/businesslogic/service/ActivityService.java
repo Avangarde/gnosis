@@ -70,17 +70,17 @@ public class ActivityService implements IService<ActivityVo> {
                 }
                 url = "topicView.xhtml";
             }
-            if (vo.getEventId() != 0){
-                Event event = DAOFactory.getInstance().getEventDAO().find(vo.getEventId(), em);
-                event.getActivityList().add(entity);
-                entity.setEvent(event);
-                if (vo.getType().equals("NewEvent")){
-                    details = "ha creado en el calendario el evento ";
+            if (vo.getTutorId() != 0) {
+                Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(vo.getTutorId(), em);
+                tutor.getActivityList().add(entity);
+                entity.setTutor(tutor);
+                if (vo.getType().equals("Comment")){
+                    details = "ha comentado sobre el tutor ";
                 }
-                if (vo.getType().equals("UpdatedEvent")){
-                    details = "ha actualizado en el calendario el evento ";
+                if (vo.getType().equals("Rating")){
+                    details = "ha calificado al tutor ";
                 }
-                url = "schedule.xhtml";
+                url = "subject-truknow.xhtml";
             }
             if (vo.getType().equals("Publication")){
                 details = "ha publicado un nuevo recurso: ";

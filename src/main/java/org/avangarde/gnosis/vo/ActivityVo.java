@@ -19,6 +19,7 @@ public class ActivityVo implements IValueObject {
     private Integer subjectCode;
     private String subjectName;
     private int tutorId;
+    private String tutorName;
     private int studentId;
     private String studentUsername;
     private String studentUrlPhoto;
@@ -113,6 +114,14 @@ public class ActivityVo implements IValueObject {
 
     public void setTutorId(int tutorId) {
         this.tutorId = tutorId;
+    }
+
+    public String getTutorName() {
+        return tutorName;
+    }
+
+    public void setTutorName(String tutorName) {
+        this.tutorName = tutorName;
     }
 
     public int getStudentId() {

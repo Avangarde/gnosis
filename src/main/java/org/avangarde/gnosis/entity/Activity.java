@@ -174,6 +174,7 @@ public class Activity implements Serializable, IEntity<ActivityVo> {
         }
         if (getTutor() != null) {
             vo.setTutorId(getTutor().getId());
+            vo.setTutorName(getTutor().getUserName());
         }
         vo.setType(getType());
         vo.setUrl(getUrl());

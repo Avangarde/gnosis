@@ -87,7 +87,7 @@
                             </ul>
 
                             <form method="get" action="#{request.contextPath}/search.xhtml" class="navbar-search pull-right">
-                                <input type="text" name="query" value="#{searchBean.query}" class="search-query" placeholder="Busca una materia" align="center"/>
+                                <input type="text" name="query" value="#{searchBean.query}" class="search-query" placeholder="Busca una materia" align="bottom"/>
                                 <button type="submit" class="btn"><i class="icon-search icon-search" /></button>
                             </form>
                         </ui:fragment>          
@@ -109,26 +109,30 @@
                             <f:view>
                                 <h:form id="titleForm">
                                     <p:growl id="mensajes" showDetail="true"/>
-                                                                        
-                                    
-                                    
+
+
+
                                     <h:commandButton id="botonSubscribe" 
                                                      action="#{subjectBean.subscribeStudent()}"
                                                      value="#{subjectBean.changeButtonSubscribeValue()}" 
                                                      onclick="replaceButtonText(botonSubscribe, 'hola')"
                                                      class="btn btn-info"/>
-                                    
+
                                     <p:spacer width="20" height="20" />
-                                    
+
                                     <h:commandButton id="botonTutor" 
                                                      action="#{subjectBean.becomeTutorOnSubject()}"
                                                      value="#{subjectBean.changeButtonTutorValue()}" 
-                                                     onclick="replaceButtonText(botonTutor, 'hola')"
-                                                     class="btn btn-navbar">
-                                        
-                                                                                
+                                                     class="btn btn-navbar"
+                                                     rendered="#{subjectBean.shouldHideButtonBecomeTutor()}">
+
                                     </h:commandButton>
-                                    
+
+                                    <h:link value="Ir a mi página de tutor" class="btn btn-success"  outcome="subject-truknow.xhtml" rendered="#{subjectBean.shouldHideNavigationButton()}">
+                                        <f:param name ="code" value ="#{subjectBean.code}"/>
+                                        <f:param name ="tutorID" value ="#{userBean.id}"/>
+                                    </h:link>
+
                                 </h:form>
                             </f:view>
                         </div> 

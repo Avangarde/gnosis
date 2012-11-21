@@ -20,7 +20,7 @@ import org.avangarde.gnosis.vo.StudentVo;
  */
 @ManagedBean
 @RequestScoped
-public class LoginBean implements Serializable{
+public class LoginBean implements Serializable {
 
     private String userName;
     private String password;
@@ -63,6 +63,12 @@ public class LoginBean implements Serializable{
 
         StudentVo login = studentFacade.login(studentVo);
         if (login != null) {
+            if (!login.isActive()) {
+                FacesContext.getCurrentInstance().addMessage(
+                        "loginForm:userName", new FacesMessage(
+                        "Aún no has confirmado tu email, revisa tu bandeja de entrada"));
+                return "failure";
+            }
             user.setId(login.getId());
             user.setFirstName(login.getFirstName());
             user.setLastName(login.getLastName());

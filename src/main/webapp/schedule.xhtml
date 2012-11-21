@@ -35,23 +35,27 @@
             <p:dialog widgetVar="eventDialog" header="Detalles del Evento" showEffect="clip" hideEffect="clip">  
                 <h:panelGrid id="eventDetails" columns="2">  
                     <h:outputLabel for="title" value="Título:" />  
-                    <p:inputText id="title" value="#{scheduleBean.event.title}" required="true"/>  
+                    <p:inputText id="title" value="#{scheduleBean.event.title}" required="true" disabled="#{subjectBean.studentUnsuscribed()}"/>  
 
                     <h:outputLabel for="from" value="Desde:" />  
-                    <p:inputMask id="from" value="#{scheduleBean.event.startDate}" mask="99/99/9999">  
+                    <p:inputMask id="from" value="#{scheduleBean.event.startDate}" mask="99/99/9999" disabled="#{subjectBean.studentUnsuscribed()}">  
                         <f:convertDateTime pattern="dd/MM/yyyy" />  
                     </p:inputMask>  
 
                     <h:outputLabel for="to" value="Hasta:" />  
-                    <p:inputMask id="to" value="#{scheduleBean.event.endDate}" mask="99/99/9999">  
+                    <p:inputMask id="to" value="#{scheduleBean.event.endDate}" mask="99/99/9999" disabled="#{subjectBean.studentUnsuscribed()}">  
                         <f:convertDateTime pattern="dd/MM/yyyy" />  
                     </p:inputMask>  
 
                     <h:outputLabel for="allDay" value="Todo el día:" />  
-                    <h:selectBooleanCheckbox id="allDay" value="#{scheduleBean.event.allDay}" />  
+                    <h:selectBooleanCheckbox id="allDay" value="#{scheduleBean.event.allDay}" disabled="#{subjectBean.studentUnsuscribed()}"/>  
 
-                    <p:commandButton type="reset" value="Limpiar" />  
-                    <p:commandButton value="Guardar" actionListener="#{scheduleBean.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>  
+                    <p:commandButton type="reset" value="Limpiar"
+                                     disabled="#{subjectBean.studentUnsuscribed()}"/>  
+                    <p:commandButton value="Guardar" 
+                                     actionListener="#{scheduleBean.addEvent}" 
+                                     oncomplete="myschedule.update();eventDialog.hide();"
+                                     disabled="#{subjectBean.studentUnsuscribed()}"/>  
                 </h:panelGrid>  
             </p:dialog>  
 
