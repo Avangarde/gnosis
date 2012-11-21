@@ -48,7 +48,9 @@ public class SubjectService implements IService<SubjectVo> {
 
     @Override
     public void update(SubjectVo vo, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Subject entity = DAOFactory.getInstance().getSubjectDAO().find(vo.getCode(), em);
+        entity.setNoteBook(vo.getNoteBook());
+        DAOFactory.getInstance().getSubjectDAO().update(entity, em);
     }
 
     @Override

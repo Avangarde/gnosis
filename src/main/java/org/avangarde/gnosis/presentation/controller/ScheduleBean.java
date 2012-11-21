@@ -130,7 +130,7 @@ public class ScheduleBean implements Serializable {
             activityVo.setStudentId(user.getId());
             activityVo.setSubjectCode(subject.getCode());
             activityVo.setEventId(subject.getEvents().size());
-            activityVo.setType("NewEvent");
+            activityVo.setType("Event");
 
             activityFacade.create(activityVo);
             subject.setEvents(events);

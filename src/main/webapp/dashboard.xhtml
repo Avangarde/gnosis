@@ -36,6 +36,9 @@
                                         <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
                                             #{activity.tutorName}
                                         </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.eventId.equals(0)}">
+                                            #{activity.eventTitle}
+                                        </ui:fragment>
                                     </h3>
                                     <h:outputText value=" #{activity.dateActivity}"/>
                                 </h:column>
