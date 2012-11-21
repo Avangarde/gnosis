@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/subjectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="code" value="#{subjectBean.code}"/>
+        <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+    </f:metadata>
+
+    <ui:define name="title">
+        - Cuaderno de #{subjectBean.name}
+    </ui:define>
+
+    <ui:define name="content">
+        <script src="http://www.google.com/jsapi?key=API_KEY"></script>
+        <script src="https://apis.google.com/js/client.js?onload=load"></script>
+        <script type="text/javascript">
+            google.load("picker", "1",{"language":"es"});
+            function createPicker() {
+                var picker = new google.picker.PickerBuilder().
+                    addView(google.picker.ViewId.DOCUMENTS).
+                    setCallback(pickerCallback).
+                    build();
+                picker.setVisible(true);
+            }
+            function pickerCallback(data) { 
+                if (data.action == google.picker.Action.PICKED) {
+                    
+                    var fileUrl = data.docs[0].url;
+                    document.getElementById("form:hiddenButton").value = fileUrl;
+                    remoteChangeCommand();
+                    saveNoteBook();      
+                }
+            }
+        </script>
+        <div class="hero-unit">
+            <div class="row">
+                <div class="span11">
+                    <h:form id="form">
+                        <h2>Cuaderno de Apuntes</h2>
+                        <ui:fragment rendered="#{subjectBean.noteBook == null}" >
+                            <h4>Esta materia aún no tiene un cuaderno de apuntes....</h4>
+                            <h4>Deseas compartir un documento tuyo para que sea el cuaderno de la materia?</h4>
+                            <input type="button" name="Create" value="Crea el cuaderno de la materia" OnClick="createPicker();" class="btn btn-info"></input>
+                        </ui:fragment>
+                        <h:inputHidden id="hiddenButton" value="#{subjectBean.noteBook}"/>
+                        <p:remoteCommand name="remoteChangeCommand" process="hiddenButton"/>
+                        <p:remoteCommand name="saveNoteBook" actionListener="#{subjectBean.saveNoteBook()}" oncomplete="location.reload()"/>
+                        <ui:fragment rendered="#{subjectBean.noteBook != null}" >
+                            <iframe name="resource" src="#{subjectBean.noteBook}" width="100%" height="600px" marginwidth="0" scrolling="yes" frameborder="0" ></iframe>
+                        </ui:fragment>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

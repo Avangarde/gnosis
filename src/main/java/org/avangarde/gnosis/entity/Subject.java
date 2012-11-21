@@ -29,6 +29,8 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
     private String description;
     @Column(name = "numGroups")
     private int numGroups;
+    @Column(name = "noteBook")
+    private String noteBook;
     @ManyToMany(mappedBy = "subjectList")
     private List<Student> studentList;
     //@ManyToMany(mappedBy = "subjectList")
@@ -89,6 +91,14 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
 
     public void setNumGroups(int numGroups) {
         this.numGroups = numGroups;
+    }
+
+    public String getNoteBook() {
+        return noteBook;
+    }
+
+    public void setNoteBook(String noteBook) {
+        this.noteBook = noteBook;
     }
 
     public List<Student> getStudentList() {
@@ -184,6 +194,7 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         vo.setName(getName());
         vo.setDescription(getDescription());
         vo.setNumGroups(getNumGroups());
+        vo.setNoteBook(getNoteBook());
         //Listas
         List<StudentVo> listStudentVo = new ArrayList<StudentVo>();
         for (Student entity : getStudentList()) {

@@ -24,6 +24,7 @@ public class SubjectBean implements Serializable {
     private String description;
     private String studentSubscribed;
     private int numGroups;
+    private String noteBook;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
     String buttonSubscribeValue;
@@ -72,6 +73,14 @@ public class SubjectBean implements Serializable {
 
     public void setNumGroups(int numGroups) {
         this.numGroups = numGroups;
+    }
+
+    public String getNoteBook() {
+        return noteBook;
+    }
+
+    public void setNoteBook(String noteBook) {
+        this.noteBook = noteBook;
     }
 
     public void addMessage(FacesMessage message) {
@@ -258,10 +267,11 @@ public class SubjectBean implements Serializable {
             setName(subject.getName());
             setDescription(subject.getDescription());
             setNumGroups(subject.getNumGroups());
+            setNoteBook(subject.getNoteBook());
         }
     }
 
-    public String becomeTutorOnSubject() {
+    public void becomeTutorOnSubject() {
 
 
         if (NOTATUTOR.equals(buttonTutorValue)) {
@@ -308,22 +318,12 @@ public class SubjectBean implements Serializable {
 
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "¡Genial! Ahora eres tutor de la materia", ""));
-                return "success";
-
             } else {
                 addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Algo salió mal, Recuerda que debes estar suscrito a la materia para ser su tutor", ""));
-                return "failure";
             }
-
-
-
         } else {
-
             setShowTutorButton(false);
-
-            return "success";
-
         }
     }
 
@@ -434,5 +434,11 @@ public class SubjectBean implements Serializable {
 
     public void setShowTutorButton(boolean newValue) {
         this.ShowTutorButton = newValue;
+    }
+
+    public void saveNoteBook() {
+        SubjectVo subject = FacadeFactory.getInstance().getSubjectFacade().find(getCode());
+        subject.setNoteBook(getNoteBook());
+        FacadeFactory.getInstance().getSubjectFacade().update(subject);
     }
 }

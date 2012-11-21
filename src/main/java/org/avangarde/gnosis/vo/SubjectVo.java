@@ -16,6 +16,7 @@ public class SubjectVo implements IValueObject {
     private String name;
     private String description;
     private int numGroups;
+    private String noteBook;
     
     private List<StudentVo> studentList;
 //    private List<ProgramVo> programList;
@@ -74,6 +75,14 @@ public class SubjectVo implements IValueObject {
         this.numGroups = numGroups;
     }
 
+    public String getNoteBook() {
+        return noteBook;
+    }
+
+    public void setNoteBook(String noteBook) {
+        this.noteBook = noteBook;
+    }
+
 //    public List<ProgramVo> getProgramList() {
 //        return programList;
 //    }
@@ -121,7 +130,5 @@ public class SubjectVo implements IValueObject {
     public void setTutorSubjectList(List<TutorSubjectVo> tutorSubjectList) {
         this.tutorSubjectList = tutorSubjectList;
     }
-    
-    
     
 }
