@@ -22,6 +22,7 @@ public class SubjectBean implements Serializable {
     private Integer code;
     private String name;
     private String description;
+    private String studentSubscribed;
     private int numGroups;
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
@@ -36,6 +37,7 @@ public class SubjectBean implements Serializable {
     private String query;
     private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
     private List<ActivityVo> activities = new ArrayList<ActivityVo>();
+    private List<EventVo> events = new ArrayList<EventVo>();
 
     public SubjectBean() {
     }
@@ -113,20 +115,33 @@ public class SubjectBean implements Serializable {
         }
         return subjects;
     }
-    
+
     public List<ActivityVo> getActivities() {
         activities = new ArrayList<ActivityVo>();
         List<ActivityVo> vos = FacadeFactory.getInstance().getActivityFacade().getActivitiesBySubject(getCode());
-        if (vos != null){
+        if (vos != null) {
             activities = vos;
         }
         return activities;
     }
 
+    public List<EventVo> getEvents() {
+        events = new ArrayList<EventVo>();
+        List<EventVo> vos = FacadeFactory.getInstance().getEventFacade().getEventsFromSubject(getCode());
+        if (vos != null) {
+            events = vos;
+        }
+        return events;
+    }
+
+    public void setEvents(List<EventVo> events) {
+        this.events = events;
+    }
+
     public void setActivities(List<ActivityVo> activities) {
         this.activities = activities;
     }
-     
+
     public void subscribeStudent() {
         if (NOTSUBSCRIBED.equals(buttonSubscribeValue)) {
             if (FacadeFactory.getInstance().getSubjectFacade().subscribeStudent(new Integer(user.getId()), getCode())) {
@@ -178,14 +193,56 @@ public class SubjectBean implements Serializable {
                 ? SUBSCRIBED : NOTSUBSCRIBED;
     }
 
+    public String getStudentSubscribed() {
+        if (FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())) {
+            studentSubscribed = "#shareModal";
+        } else {
+            studentSubscribed = "javascript: void(0)";
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Recuerda que no puedes compartir recursos si no estas suscrito a la materia", ""));
+        }
+        return studentSubscribed;
+    }
+
+    public String enablednewTopic() {
+        if (FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())) {
+            studentSubscribed = "#newTopicModal";
+        } else {
+            studentSubscribed = "javascript: void(0)";
+            addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Recuerda que no puedes crear temas si no estas suscrito a la materia", ""));
+        }
+        return studentSubscribed;
+    }
+
+    public boolean studentUnsuscribed() {
+        return FacadeFactory.getInstance().getSubjectFacade().
+                isTheStudentSubscribed(new Integer(user.getId()), getCode())
+                ? false : true;
+    }
+
+    public void setStudentSubscribed(String studentSubscribed) {
+        this.studentSubscribed = studentSubscribed;
+    }
+
     public String changeButtonTutorValue() {
 
         TutorVo tutor = new TutorVo();
         tutor.setUserName(user.getUserName());
 
-        return buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
+        buttonTutorValue = FacadeFactory.getInstance().getTutorSubjectFacade().
                 isTheTutorOnSubject(tutor, getCode())
                 ? TUTOR : NOTATUTOR;
+
+        if (buttonTutorValue.equals(TUTOR)) {
+            setShowTutorButton(false);
+        } else {
+            setShowTutorButton(true);
+        }
+
+        return buttonTutorValue;
     }
 
     public String changeButtonSubscribeValue(int subjectCode) {
@@ -238,7 +295,7 @@ public class SubjectBean implements Serializable {
                 TutorSubjectVo tutorSubjectVo = new TutorSubjectVo();
 
                 tutorSubjectVo.setSubjectCode(subjectCode);
-                tutorSubjectVo.setReputation(0);
+                tutorSubjectVo.setReputation(0.0);
 
                 //Hice un poco de trampa aquí
                 tutorSubjectVo.setTutorId(tutorVo.getId());
@@ -263,7 +320,8 @@ public class SubjectBean implements Serializable {
 
         } else {
 
-            //Navigation case
+            setShowTutorButton(false);
+
             return "success";
 
         }
@@ -349,5 +407,32 @@ public class SubjectBean implements Serializable {
         return buttonSubscribeValue = FacadeFactory.getInstance().getSubjectFacade().
                 isTheStudentSubscribedToTutor(new Integer(user.getId()), tutor.getUserName(), code)
                 ? "Abandonar" : "Suscribirme a este tutor";
+    }
+//utilidades de vista
+    private boolean ShowTutorButton = true;
+
+    public boolean shouldHideButtonBecomeTutor() {
+
+        if (changeButtonTutorValue().equals(TUTOR)) {
+            setShowTutorButton(false);
+        } else {
+            setShowTutorButton(true);
+        }
+
+        return ShowTutorButton;
+
+    }
+
+    public boolean shouldHideNavigationButton() {
+        if (shouldHideButtonBecomeTutor()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public void setShowTutorButton(boolean newValue) {
+        this.ShowTutorButton = newValue;
     }
 }

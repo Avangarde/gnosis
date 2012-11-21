@@ -9,9 +9,16 @@
 
 
     <f:metadata>
-        <f:viewParam name="subjectCode" value="#{subjectBean.code}" />
-        <f:viewParam name="name" value="#{subjectBean.name}" />
+        <f:viewParam name="code" value="#{subjectBean.code}"/>
+        <f:viewParam name="code" value="#{tutorSubjectBean.subjectCode}"/>
         <f:event type="preRenderView" listener="#{subjectBean.preRenderView()}" />
+
+        <f:viewParam name="tutorID" value="#{tutorBean.id}"/>
+        <f:viewParam name="tutorID" value="#{tutorSubjectBean.tutorId}"/>
+        <f:event type="preRenderView" listener="#{tutorBean.preRenderView()}" />
+
+        <f:event type="preRenderView" listener="#{tutorSubjectBean.preRenderView()}"/>
+
     </f:metadata>
 
     <ui:define name="title">
@@ -21,49 +28,121 @@
 
 
     <ui:define name="content">
-        <div class="container">
-            <div class="row">
-                <div class="span8">
-                    <div class="hero-unit">
-                        <div class="span4">
-                            <p:graphicImage value="#{tutorBean.urlPhoto}" width="66" height="66" />
-                        </div>
-                        <div class="span8">
-                            <h2>#{tutorBean.userName}</h2>
-                            <h3>Cantidad de votos recibidos #{tutorBean.numberVotes}</h3>
-
-                        </div>
-
-                        <h4>¿Existe algo que quieras preguntar?</h4>
-                        
 
 
-                    </div>
+        <div class="row">
+            <div class="span8">
+                <div class="hero-unit">
+
+                    <h:panelGrid columns="2" cellpadding="10"> 
+                        <p:graphicImage value="#{tutorBean.urlPhoto}" width="64" height="64"/>
+                        <h2>#{tutorBean.userName}</h2>
+                    </h:panelGrid>
+
+                    <p:spacer width="20" height="20" />
+                    <h:form id="grid">
+
+                        <h2>Calificación del tutor: </h2>  
+                        <p:rating value="#{tutorSubjectBean.reputationInt}" readonly="true"/>
+                        <h:outputText value="(#{tutorSubjectBean.reputation})"/>
+                        <h4>Cantidad de votos recibidos #{tutorSubjectBean.numVotes}</h4>
+                        <h>Nivel #{tutorBean.reputation}: #{tutorBean.getLevelInformation()}</h>
+                        <ui:fragment rendered="#{!tutorSubjectBean.isVoted()}">
+                            <h2>Califica: </h2>
+                            <p:rating value="#{tutorSubjectBean.vote}"/>
+                            <p:spacer width="10" height="10"/>
+                            <p:commandButton id="vote" value="Votar"   
+                                             update="grid" actionListener="#{tutorSubjectBean.rate}"/>
+                        </ui:fragment>
+                    </h:form>
+
+                    <p:spacer width="20" height="20" />
+
+                    <h:form >
+
+                        <h:commandButton value="Ver mis otras materias" 
+                                         class="btn btn-info"/>
+
+                        <p:spacer width="20" height="20" />
+
+                        <h:commandButton value="Ver mi página de información" 
+                                         class="btn btn-info"/>
+
+                        <p:spacer width="20" height="20" />
+
+                        <!-- otros cosos -->
+
+                    </h:form>
+
+
+
+
                 </div>
-                <div class="span4">
-                    <h:form > 
-                        <p:growl id="growl" showDetail="true" />  
-                        <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500" > 
+                <div class="hero-unit">
+                    <!-- lugar para la interacción -->
+                    <h1>¿Existe algo que quieras preguntar?</h1>
+                    <h:form >
+                        <p:dataList value="#{tutorSubjectBean.commentList}" var="comment" id="panel"  
+                                    paginator="true" rows="5" effectSpeed="fast"  
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10" type="none">
+                            <f:facet name="header">  
+                                Comentarios Anteriores  
+                            </f:facet>
+                            <p:panel header="#{comment.studentName}" footer="#{comment.date}">  
+                                <h:panelGrid columns="2" cellpadding="10"> 
+                                    <p:graphicImage value="#{comment.studentUrlPhoto}" width="66" height="66"/>
+                                    <h:outputText value="#{comment.content}" escape="false"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataList>
+                        <br></br>
+                        <h2>Comentar:</h2>
+                        <p:editor id="editor" value="#{commentBean.content}" widgetVar="editor"
+                                  controls="bold italic underline strikethrough"
+                                  required="true" requiredMessage="Debes escribir una respuesta"/>
+                        <br></br>
+                        <p:commandButton id="comment" value="Comentar"  oncomplete="editor.clear();" 
+                                         update="panel" actionListener="#{commentBean.createComment}"/>
+                    </h:form>
 
-                            <p:dataTable value="#{tutorBean.students}" var="student">
-                                <p:column style="width:25%">
-                                    <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
-                                </p:column>  
 
-                                <p:column style="width:75%;">  
-                                    #{student.userName}  
-                                </p:column>  
-                            </p:dataTable>
-                        </p:fieldset> 
-
-                        <p:fieldset legend="Lista de Publicaciones" toggleable="true" toggleSpeed="500">  
-
-
-                        </p:fieldset> 
-                    </h:form>    
                 </div>
+
             </div>
-        </div>    
+            <div class="span4">
+                <h:form > 
+                    <p:growl id="growl" showDetail="true" />  
+                    <p:fieldset legend="Lista de Aprendices" toggleable="true" toggleSpeed="500" > 
+
+                        <p:dataTable value="#{tutorSubjectBean.students}" var="student">
+                            <p:column style="width:25%">
+                                <p:graphicImage value="#{student.urlPhoto}" width="30" height="40" />
+                            </p:column>  
+
+                            <p:column style="width:75%;">  
+                                #{student.userName}  
+                            </p:column>  
+                        </p:dataTable>
+                    </p:fieldset> 
+                    <p:spacer width="20" height="20" />
+
+                    <!--
+                    <p:fieldset legend="Lista de Publicaciones" toggleable="true" toggleSpeed="500">  
+
+
+                    </p:fieldset>
+                    -->
+                </h:form>    
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="span12">
+
+            </div>
+        </div>
 
 
 

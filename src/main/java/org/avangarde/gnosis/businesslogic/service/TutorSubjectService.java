@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.dao.TutorSubjectDAO;
+import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Subject;
 import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.entity.TutorSubject;
@@ -51,7 +52,12 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
 
     @Override
     public TutorSubjectVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(id, em);
+        if (tutorSubject != null) {
+            return tutorSubject.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -93,5 +99,27 @@ public class TutorSubjectService implements IService<TutorSubjectVo> {
 
 
 
+    }
+
+    public TutorSubjectVo findTutorOnSubject(Integer tutorId, Integer subjectCode, EntityManager em) {
+        TutorSubjectDAO tutorSubjectDAO = DAOFactory.getInstance().getTutorSubjectDAO();
+        TutorSubject tutorSubject = tutorSubjectDAO.findByIdAndCode(tutorId, subjectCode, em);
+
+        if (tutorSubject != null) {
+            return tutorSubject.toVo();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean isVotedByUser(int studentId, int tutorSubjectId, EntityManager em) {
+        TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(tutorSubjectId, em);
+
+        for (Rating rating : tutorSubject.getRatingList()) {
+            if (rating.getStudent().getId() == studentId) {
+                return true;
+            }
+        }
+        return false;
     }
 }

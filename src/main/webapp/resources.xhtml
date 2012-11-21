@@ -43,6 +43,14 @@
                     $('#shareModal').modal('show')
                 }
             }
+            function checkNewTopic(){
+                if (document.getElementById("shareForm:topic").value == ''){
+                    document.getElementById("newTopic").style.display = '';
+                } else {
+                    document.getElementById("newTopic").style.display = 'none';
+                }
+                
+            }
         </script>
 
         <div class="hero-unit">
@@ -53,9 +61,10 @@
                         Aquí podrás encontrar todo el material relacionado con esta materia...
                     </marquee>
                 </div>
-                <div class="span0">
-                    <h:form id="form">
-                        <h1><a data-toggle="modal" href="#shareModal" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
+                <div class="span0" >
+                    <h:form id="form" >
+                        <p:growl id="message" showDetail="true"/>
+                        <h1><a data-toggle="modal" href="#{subjectBean.studentSubscribed}" class="btn btn-large btn-primary">+ Compartir nuevo recurso</a></h1>
                     </h:form>
                 </div>
             </div>
@@ -136,13 +145,21 @@
                             <div class="control-group">
                                 <label class="control-label" for="topic">Tema:</label>
                                 <div class="controls">
-                                    <p:selectOneMenu id="topic" required="true" value="#{resourceBean.topic}" 
-                                                     requiredMessage="Por favor completa este campo" editable="true">
-                                        <f:selectItem itemLabel=""/>
+                                    <h:selectOneMenu id="topic" value="#{resourceBean.topic}" 
+                                                     requiredMessage="Por favor completa este campo" onchange="checkNewTopic()">
+                                        <f:selectItem itemLabel="Nuevo Tema" itemValue=""/>
                                         <f:selectItems value="#{resourceBean.topics}" />
-                                    </p:selectOneMenu>
-                                    <p:watermark for="topic" value="Crea un tema o selecciona uno" />
+                                    </h:selectOneMenu>
                                     <p:message id="topicMessage" for="topic" />
+                                </div>
+                            </div>
+                            <div id="newTopic">
+                                <div class="control-group">
+                                    <label class="control-label" for="topicNew">Tema Nuevo:</label>
+                                    <div class="controls">
+                                        <p:inputText id="topicNew" value="#{resourceBean.newTopic}"/>
+                                        <p:message id="topicNewMessage" for="topicNew" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -168,9 +185,9 @@
                             </div>  
                         </div>
                         <div class="modal-footer">
-                            <h:commandButton action="#{resourceBean.saveResource()}" value="Compartir" class="btn btn-success" >
+                            <p:commandButton actionListener="#{resourceBean.saveResource()}" value="Compartir" styleClass="btn btn-success" oncomplete="location.reload()">
                                 <f:param name ="code" value ="#{subjectBean.code}"/>
-                            </h:commandButton>
+                            </p:commandButton>
                         </div>        
                     </div>
                 </h:form>

@@ -79,4 +79,15 @@ public class CommentDAO implements IDAO<Comment> {
         }
         return comments;
     }
+
+    public List<Comment> getCommentsByTutorSubject(EntityManager em, Integer id) {
+        List<Comment> comments;
+        Query q = em.createQuery("SELECT c FROM Comment c WHERE c.tutorSubject.id LIKE :tutorSubjectId").setParameter("tutorSubjectId", id.toString());
+        try {
+            comments = q.getResultList();
+        } catch (Exception e) {
+            comments = new ArrayList<Comment>();
+        }
+        return comments;
+    }
 }

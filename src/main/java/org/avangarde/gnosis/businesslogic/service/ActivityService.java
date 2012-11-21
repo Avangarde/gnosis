@@ -69,7 +69,19 @@ public class ActivityService implements IService<ActivityVo> {
                     details = "ha respondido en el tema ";
                 }
                 url = "topicView.xhtml";
-            } 
+            }
+            if (vo.getTutorId() != 0) {
+                Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(vo.getTutorId(), em);
+                tutor.getActivityList().add(entity);
+                entity.setTutor(tutor);
+                if (vo.getType().equals("Comment")){
+                    details = "ha comentado sobre el tutor ";
+                }
+                if (vo.getType().equals("Rating")){
+                    details = "ha calificado al tutor ";
+                }
+                url = "subject-truknow.xhtml";
+            }
             if (vo.getType().equals("Publication")){
                 details = "ha publicado un nuevo recurso: ";
             } else if (vo.getType().equals("Topic")){

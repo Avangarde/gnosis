@@ -52,11 +52,16 @@
                         </p:dataList>
                         <br></br>
                         <h2>Responder:</h2>
-                        <p:editor id="editor" value="#{commentBean.content}" widgetVar="editor"
-                                  required="true" requiredMessage="Debes escribir una respuesta"/>
+                        <p:editor id="editor" value="#{commentBean.content}" 
+                                  widgetVar="editor"
+                                  required="true" 
+                                  requiredMessage="Debes escribir una respuesta"
+                                  disabled="#{subjectBean.studentUnsuscribed()}"/>
                         <br></br>
-                        <p:commandButton value="Responder"  oncomplete="location.reload(), editor.clear();" 
-                                         actionListener="#{commentBean.createComment}"/>
+                        <p:commandButton value="Responder"  
+                                         oncomplete="location.reload(), editor.clear();" 
+                                         actionListener="#{commentBean.createComment}"
+                                         disabled="#{subjectBean.studentUnsuscribed()}"/>
                     </h:form>
                 </div>
             </div>

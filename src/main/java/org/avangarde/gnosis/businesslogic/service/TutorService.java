@@ -57,7 +57,12 @@ public class TutorService implements IService<TutorVo> {
 
     @Override
     public TutorVo find(Object id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(id, em);
+        if (tutor != null) {
+            return tutor.toVo();
+        } else {
+            return null;
+        }
     }
 
     @Override

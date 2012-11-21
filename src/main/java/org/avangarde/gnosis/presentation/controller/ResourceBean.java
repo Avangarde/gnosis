@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -38,6 +39,7 @@ public class ResourceBean implements Serializable {
     private int id;
     private String title;
     private String topic;
+    private String newTopic;
     private String type;
     private String url;
     private String sharedBy;
@@ -57,7 +59,16 @@ public class ResourceBean implements Serializable {
         PublicationVo publicationVo = new PublicationVo();
         publicationVo.setId(FacadeFactory.getInstance().getPublicationFacade().getNewId());
         publicationVo.setTitle(getTitle());
-        publicationVo.setTopic(getTopic());
+        if (!getNewTopic().equals("")) {
+            publicationVo.setTopic(getNewTopic());
+        } else if (getTopic() != null) {
+            publicationVo.setTopic(getTopic());
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                        "shareForm:topicNew", new FacesMessage(
+                        "Debes proporcionar un nombre para el tema nuevo"));
+                return;
+        }
         publicationVo.setType(getType());
         publicationVo.setDate(new GregorianCalendar().getTime());
         publicationVo.setStudentId(getUser().getId());
@@ -160,6 +171,14 @@ public class ResourceBean implements Serializable {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public String getNewTopic() {
+        return newTopic;
+    }
+
+    public void setNewTopic(String newTopic) {
+        this.newTopic = newTopic;
     }
 
     public String getType() {
