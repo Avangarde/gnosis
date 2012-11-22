@@ -45,6 +45,8 @@ public class TutorSubjectBean {
     private Integer reputationInt;
     private int vote;
     private int numVotes;
+    private List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
+
 
     public int getNumVotes() {
         return numVotes;
@@ -150,6 +152,27 @@ public class TutorSubjectBean {
 
     public void setSubject(SubjectBean subject) {
         this.subject = subject;
+    }
+
+    public List<TutorSubjectVo> getTutors() {
+        if (tutors.isEmpty()) {
+            loadMyTutors();
+        }
+        return tutors;
+    }
+
+    public void setTutors(List<TutorSubjectVo> tutors) {
+        this.tutors = tutors;
+    }
+    
+    
+    
+    private void loadMyTutors() {
+        tutors = new ArrayList<TutorSubjectVo>();
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());
+        for (TutorSubjectVo tutor : student.getTutorSubjectList()) {
+            tutors.add(FacadeFactory.getInstance().getTutorSubjectFacade().find(tutor.getId()));
+        }
     }
 
     public void preRenderView() {

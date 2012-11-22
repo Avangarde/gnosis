@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="query" value="#{searchBean.query}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        - Mis tutores
+    </ui:define>
+    <ui:define name="content">
+        
+        <div class="row">   
+            <div class="span9 offset3">
+                <h1 style="color: #555">Mis Tutores</h1>
+                <div class="hero-unit" style="background-color: background">
+                    <f:view>
+                        <h:form prependId="false">   
+
+                            <p:dataTable id="dataTable" var="tutor" value="#{tutorSubjectBean.tutors}">  
+
+                                <p:column headerText=" " style="width:10%">  
+                                    <p:graphicImage value="#{tutor.urlPhoto}" width="30" height="40" />  
+                                </p:column>  
+
+                                <p:column headerText="Nombre" style="width:70%">  
+                                    <h:outputText value="#{tutor.userName}" />  
+                                </p:column>   
+
+                                <p:column headerText="Ver" style="width:15%">  
+                                    <h:link value="Ir al Perfil" class="btn btn-success"  outcome="subject-truknow.xhtml" rendered="#{subjectBean.shouldHideNavigationButton()}">
+                                        <f:param name ="code" value ="#{tutor.subjectCode}"/>
+                                        <f:param name ="tutorID" value ="#{tutor.tutorId}"/>
+                                    </h:link>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </h:form>
+                    </f:view>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition> 
+

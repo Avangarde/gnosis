@@ -39,6 +39,10 @@ public class TutorBean implements Serializable {
     private List<ActivityVo> activityList;
     private List<TutorSubjectVo> tutorSubjectList;
     private String urlPhoto;
+    private List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
+    @ManagedProperty(value = "#{userBean}")
+    private UserBean user;
+    
     //ManagedBeans
 //    @ManagedProperty(value = "#{subjectBean}")
 //    private SubjectBean subject;
@@ -152,6 +156,33 @@ public class TutorBean implements Serializable {
 
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
+    }
+
+    public List<TutorSubjectVo> getTutors() {
+        if (tutors.isEmpty()) {
+            loadMyTutors();
+        }
+        return tutors;
+    }
+
+    public void setTutors(List<TutorSubjectVo> tutors) {
+        this.tutors = tutors;
+    }
+
+    public UserBean getUser() {
+        return user;
+    }
+
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
+    
+    private void loadMyTutors() {
+        tutors = new ArrayList<TutorSubjectVo>();
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());
+        for (TutorSubjectVo tutor : student.getTutorSubjectList()) {
+            tutors.add(FacadeFactory.getInstance().getTutorSubjectFacade().find(tutor.getId()));
+        }
     }
 
     public void preRenderView() {

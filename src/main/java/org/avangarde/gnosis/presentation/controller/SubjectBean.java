@@ -429,7 +429,6 @@ public class SubjectBean implements Serializable {
         } else {
             return true;
         }
-
     }
 
     public void setShowTutorButton(boolean newValue) {

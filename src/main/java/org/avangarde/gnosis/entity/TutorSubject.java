@@ -189,6 +189,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
         vo.setUserName(getUserName());
         vo.setUrlPhoto(getUrlPhoto());
         vo.setNumberVotes(listRatingVo.size());
+        vo.setSubjectCode(getSubject().getCode());
         return vo;
     }
 }
