@@ -17,6 +17,7 @@ import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.businesslogic.facade.RatingFacade;
 import org.avangarde.gnosis.vo.ActivityVo;
 import org.avangarde.gnosis.vo.CommentVo;
+import org.avangarde.gnosis.vo.PublicationVo;
 import org.avangarde.gnosis.vo.RatingVo;
 import org.avangarde.gnosis.vo.StudentVo;
 import org.avangarde.gnosis.vo.TutorSubjectVo;
@@ -40,6 +41,7 @@ public class TutorSubjectBean {
     private int id;
     private List<Integer> studentList;
     private List<StudentVo> students;
+    private List<PublicationVo> publications = new ArrayList<PublicationVo>();
     private List<CommentVo> commentList = new ArrayList<CommentVo>();
     private Double reputation;
     private Integer reputationInt;
@@ -47,6 +49,13 @@ public class TutorSubjectBean {
     private int numVotes;
     private List<TutorSubjectVo> tutors = new ArrayList<TutorSubjectVo>();
 
+    public List<PublicationVo> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<PublicationVo> publications) {
+        this.publications = publications;
+    }
 
     public int getNumVotes() {
         return numVotes;
@@ -63,8 +72,6 @@ public class TutorSubjectBean {
     public void setUser(UserBean user) {
         this.user = user;
     }
-    
-    
 
     public int getVote() {
         return vote;
@@ -164,9 +171,7 @@ public class TutorSubjectBean {
     public void setTutors(List<TutorSubjectVo> tutors) {
         this.tutors = tutors;
     }
-    
-    
-    
+
     private void loadMyTutors() {
         tutors = new ArrayList<TutorSubjectVo>();
         StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(user.getId());
@@ -199,6 +204,8 @@ public class TutorSubjectBean {
 
             }
 
+            
+            publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByStudent(tutor.getStudentId());
 
             if (tutorSubject.getReputation() != null) {
                 setReputationInt(tutorSubject.getReputation().intValue());
@@ -207,7 +214,7 @@ public class TutorSubjectBean {
                 setReputationInt(0);
                 setReputation(0.0);
             }
-            
+
             setNumVotes(tutorSubject.getNumberVotes());
 
         }
