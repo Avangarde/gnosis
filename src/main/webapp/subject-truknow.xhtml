@@ -60,13 +60,9 @@
 
                     <h:form >
 
-                        <h:commandButton value="Ver mis otras materias" 
-                                         class="btn btn-info"/>
-
-                        <p:spacer width="20" height="20" />
-
-                        <h:commandButton value="Ver mi página de información" 
-                                         class="btn btn-info"/>
+                        <h:link value="Ir a mi página de información" class="btn btn-success"  outcome="truknow.xhtml" >
+                            <f:param name ="tutorID" value ="#{tutorBean.id}"/>
+                        </h:link>
 
                         <p:spacer width="20" height="20" />
 
@@ -150,7 +146,7 @@
                                 </f:facet>  
                                 <h:outputText value="#{publication.type}" />  
                             </p:column>
-                            
+
                             <p:column style="width:25%">  
                                 <f:facet name="header">  
                                     Ver 

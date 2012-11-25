@@ -190,4 +190,11 @@ public class UserBean implements Serializable {
         }
     }
     
+    public String getTutorID(){
+        
+        Integer TutorId = FacadeFactory.getInstance().getTutorFacade().findByUsername(getUserName());
+        
+        return TutorId.toString();
+    }
+    
 }

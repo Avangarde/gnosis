@@ -92,4 +92,19 @@ public class TutorService implements IService<TutorVo> {
             return null;
         }
     }
+
+    public Integer findByUsername(String userName, EntityManager em) {
+        Tutor entity = new Tutor();
+        entity.setUserName(userName);
+        
+        TutorVo vo = new TutorVo();
+
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().findByUsername(entity, em);
+        if (tutor != null) {
+             vo = tutor.toVo();
+            return vo.getId();
+        } else {
+            return null;
+        }
+    }
 }

@@ -36,6 +36,8 @@ public class TutorBean implements Serializable {
     private int studentId;
     private List<Integer> students = new ArrayList<Integer>();
     private List<Integer> subjects = new ArrayList<Integer>();
+    private List<SubjectVo> subjectList = new ArrayList<SubjectVo>();
+    private List<StudentVo> studentList = new ArrayList<StudentVo>();
     private List<ActivityVo> activityList;
     private List<TutorSubjectVo> tutorSubjectList;
     private String urlPhoto;
@@ -47,6 +49,24 @@ public class TutorBean implements Serializable {
 //    @ManagedProperty(value = "#{subjectBean}")
 //    private SubjectBean subject;
 
+    public List<SubjectVo> getSubjectList() {
+        return subjectList;
+    }
+
+    public void setSubjectList(List<SubjectVo> subjectList) {
+        this.subjectList = subjectList;
+    }
+
+    public List<StudentVo> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<StudentVo> studentList) {
+        this.studentList = studentList;
+    }
+
+    
+    
     public List<Integer> getSubjects() {
         return subjects;
     }
@@ -207,6 +227,15 @@ public class TutorBean implements Serializable {
                 
                 
             }
+            
+            for (Integer subject: subjects){
+                subjectList.add(FacadeFactory.getInstance().getSubjectFacade().find(subject));
+            }
+            
+            for (Integer student: students){
+                studentList.add(FacadeFactory.getInstance().getStudentFacade().find(student));
+            }
+            
             
         }
     }

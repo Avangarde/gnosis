@@ -15,7 +15,7 @@
         - Mis tutores
     </ui:define>
     <ui:define name="content">
-        
+
         <div class="row">   
             <div class="span9 offset3">
                 <h1 style="color: #555">Mis Tutores</h1>
@@ -45,6 +45,10 @@
                         </h:form>
                     </f:view>
                 </div>
+                <h:link value="Ir a mi página de información" class="btn btn-success"  outcome="truknow.xhtml" rendered="#{not userBean.getTutorID()}">
+                    <f:param name ="tutorID" value ="#{userBean.getTutorID()}"/>
+                </h:link>
+                <p:separator />
             </div>
         </div>
     </ui:define>

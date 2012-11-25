@@ -38,4 +38,24 @@ public class TutorFacade extends Facade<TutorVo> {
 
 
     }
+
+    public Integer findByUsername(String userName) {
+        try {
+            em = emf.createEntityManager();
+
+            //metodo para obtener el vo de un tutor
+            //condicional
+
+            return ((TutorService) service).findByUsername(userName, em);
+
+
+
+        } finally {
+            if (em != null) {
+                em.clear();
+                em.close();
+            }
+        }
+
+    }
 }
