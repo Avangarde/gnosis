@@ -46,7 +46,8 @@
                                         <h:panelGrid columns="2" cellpadding="5">  
 
                                             <h:outputText value="Tu calificacion: " />  
-                                            <p:rating value="#{tutorBean.reputation}" disabled="true"></p:rating>  
+                                            <p:rating value="#{tutorBean.reputationInt}" readonly="true"></p:rating>
+                                            <h:outputText value="(#{tutorBean.reputation})"/>
 
                                         </h:panelGrid>  
 
@@ -80,7 +81,7 @@
                                     </h:column>
                                     <h:column>
                                         <h3>#{subject.name}</h3><br/>
-                                        <p:rating value="#{tutorBean.ratingBySubject(subject.code)}" disabled="true"></p:rating><br/>
+                                        <p:rating value="#{tutorBean.ratingBySubject(subject.code)}" readonly="true"></p:rating><br/>
                                         <h:link value="Ver" outcome="subject-truknow.xhtml" class="btn btn-info">
                                             <f:param name ="code" value ="#{subject.code}" />
                                             <f:param name ="tutorID" value ="#{tutorBean.id}"/>
@@ -90,14 +91,6 @@
 
                             </div>
                         </ui:repeat>
-
-
-
-
-
-
-
-
 
                     </div>
                 </div>
@@ -135,9 +128,9 @@
                                         <h3>#{tutor.userName}</h3><br/>
                                         <!--<p:rating value="#{tutorBean.ratingBySubject(subject.code)}" disabled="true"></p:rating><br/>-->
                                         <h:link value="Ir al Perfil" class="btn btn-success"  outcome="subject-truknow.xhtml" rendered="#{subjectBean.shouldHideNavigationButton()}">
-                                        <f:param name ="code" value ="#{tutor.subjectCode}"/>
-                                        <f:param name ="tutorID" value ="#{tutor.tutorId}"/>
-                                    </h:link>
+                                            <f:param name ="code" value ="#{tutor.subjectCode}"/>
+                                            <f:param name ="tutorID" value ="#{tutor.tutorId}"/>
+                                        </h:link>
                                     </h:column>
                                 </h:panelGrid>
 

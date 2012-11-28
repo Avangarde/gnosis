@@ -6,13 +6,9 @@ package org.avangarde.gnosis.presentation.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.vo.ActivityVo;
@@ -32,6 +28,7 @@ public class TutorBean implements Serializable {
 
     private Integer id;
     private double reputation;
+    private int reputationInt;
     private String userName;
     private int numberVotes;
     private int publishedResources;
@@ -129,6 +126,14 @@ public class TutorBean implements Serializable {
 
     public void setReputation(double reputation) {
         this.reputation = reputation;
+    }
+
+    public int getReputationInt() {
+        return reputationInt;
+    }
+
+    public void setReputationInt(int reputationInt) {
+        this.reputationInt = reputationInt;
     }
 
     public String getUserName() {
@@ -242,6 +247,7 @@ public class TutorBean implements Serializable {
             setPublishedResources(tutor.getPublishedResources());
             setQuestionReceived(tutor.getQuestionReceived());
             setReputation(tutor.getReputation());
+            setReputationInt(new Double(tutor.getReputation()).intValue());
             setStudentId(tutor.getStudentId());
             setTutorSubjectList(tutor.getTutorSubjectList());
             setUrlPhoto(tutor.getUrlPhoto());
