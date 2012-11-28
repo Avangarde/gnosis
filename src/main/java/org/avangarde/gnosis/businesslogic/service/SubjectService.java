@@ -7,14 +7,18 @@ package org.avangarde.gnosis.businesslogic.service;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.avangarde.gnosis.businesslogic.facade.Facade;
+import org.avangarde.gnosis.businesslogic.facade.FacadeFactory;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.dao.StudentDAO;
 import org.avangarde.gnosis.dao.SubjectDAO;
 import org.avangarde.gnosis.dao.TutorSubjectDAO;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.SubjectVo;
+import org.avangarde.gnosis.vo.TutorVo;
 
 /**
  *
@@ -157,6 +161,12 @@ public class SubjectService implements IService<SubjectVo> {
             student.getTutorSubjectList().add(tutorSubject);
 
             studentDAO.update(student, em);
+            
+            
+            Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(tutorSubject.getTutor().getId(), em);
+            tutor.setNumberStudents(tutor.getNumberStudents() + 1);
+            DAOFactory.getInstance().getTutorDAO().update(tutor, em);
+            
             return true;
         } catch (Exception e) {
             return false;

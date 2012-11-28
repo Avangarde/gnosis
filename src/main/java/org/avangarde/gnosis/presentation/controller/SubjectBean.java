@@ -286,6 +286,7 @@ public class SubjectBean implements Serializable {
 
                 tutorVo.setStudentId(user.getId());
                 tutorVo.setUserName(user.getUserName());
+                tutorVo.setNumberStudents(0);
 
 
                 if (!studentFacade.isTutor(tutorVo)) {

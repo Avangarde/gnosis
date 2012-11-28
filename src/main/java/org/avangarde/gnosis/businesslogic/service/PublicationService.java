@@ -12,6 +12,7 @@ import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Subject;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.vo.PublicationVo;
 
 /**
@@ -60,6 +61,14 @@ public class PublicationService implements IService<PublicationVo> {
         entity.setSubject(subject);
 
         DAOFactory.getInstance().getPublicationDAO().persist(entity, em);
+        
+        Tutor tutor = DAOFactory.getInstance().getTutorDAO().findByStudentID(student.getId(), em);
+        if (tutor != null) {
+            tutor.setPublishedResources(student.getPublicationList().size());
+            DAOFactory.getInstance().getTutorDAO().update(tutor, em);
+        }
+
+
     }
 
     @Override
