@@ -181,6 +181,7 @@ public class TutorSubject implements Serializable, IEntity<TutorSubjectVo> {
             listRatingVo.add(entity.toVo());
         }
         vo.setStudentList(listStudentVo);
+        vo.setRatingList(listRatingVo);
         vo.setTutorId(getTutor().getId());
         vo.setNumberStudents(getNumberStudents());
         vo.setNumberVotes(getNumberVotes());

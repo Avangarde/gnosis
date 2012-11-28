@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml">
+
+    <ui:define name="title">
+        Sobre Nosotros
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row">
+                <div class="span5 offset1">
+                    
+                    
+                    <div class="hero-unit">
+                        <h2>
+                            Sobre Avangarde...
+                        </h2>
+                        <h5>
+                            <p class="lead">Avangard es un proyecto de empresa desarrollado por los
+                            programadores de Gnosis. Utiliza las mejores herramientas
+                            de desarrollo actuales para hacer realidad soluciones
+                            pertinentes a los problemas del mundo moderno.</p>
+                        </h5>
+                    </div>
+                    <div class="hero-unit">
+                        <h2>
+                            ¿Quienes Somos?...
+                        </h2>
+                        <h5>
+                            Los integrantes de Avangarde son: 
+                            <ul>
+                                <h>Jose Luis Puerto</h><br></br>
+                                <h>Juan Manuel Martinez</h><br></br>
+                                <h>Jeisson Andrés Vergara</h><br></br>
+                                <h>Edward Alexander Rojas</h><br></br>
+                                <h>Sergio Andrés Cortés</h><br></br>
+                            </ul>
+
+                        </h5>
+                    </div>
+                </div>
+                <div class="span5 offset1">
+                    <div class="hero-unit">
+                        <h2>
+                            Sobre Gnosis...
+                        </h2>
+                        <h5>
+                            <p>Gnosis es un esfuerzo adelantado por Avangarde para
+                                la Universidad nacional de Colombia. Pretende mezclar 
+                                lo mejor de las plataformas conocidas por la comunidad
+                                universitaria, quitando las restricciones de publicación de contenidos,
+                                y explotando las herramientas de la nube que están disponibles
+                                para los estudiantes en General.</p>
+
+                        </h5>
+                    </div>
+                    <img src="#{request.contextPath}/resources/images/gnosis.jpg" style="float: none"></img>
+                    <img src="#{request.contextPath}/resources/images/un.jpg" style="float: right" ></img>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

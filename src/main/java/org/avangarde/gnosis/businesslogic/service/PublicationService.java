@@ -124,4 +124,12 @@ public class PublicationService implements IService<PublicationVo> {
         }
         return list;
     }
+
+    public List<PublicationVo> getPublicationsByStudentAndTutorSubject(int studentId, int subjectCode, EntityManager em) {
+        List<PublicationVo> list = new ArrayList<PublicationVo>();
+        for (Publication publication : DAOFactory.getInstance().getPublicationDAO().getPublicationsByStudentAndTutorSubject(studentId, subjectCode, em)) {
+            list.add((publication).toVo());
+        }
+        return list;
+    }
 }

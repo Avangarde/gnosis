@@ -103,4 +103,16 @@ public class PublicationDAO implements IDAO<Publication> {
         }
         return list;
     }
+
+    public List<Publication> getPublicationsByStudentAndTutorSubject(int studentId, int subjectCode, EntityManager em) {
+        List<Publication> list;
+        Query q = em.createQuery("SELECT p FROM Publication p WHERE p.student.id LIKE :student AND p.subject.code LIKE :subjectCode"
+                + "ORDER BY p.title").setParameter("student", new Integer(studentId).toString()).setParameter("subjectCode", new Integer(subjectCode).toString());
+        try {
+            list = q.getResultList();
+        } catch (Exception e) {
+            list = new ArrayList<Publication>();
+        }
+        return list;
+    }
 }

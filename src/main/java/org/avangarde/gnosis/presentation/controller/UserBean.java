@@ -172,11 +172,11 @@ public class UserBean implements Serializable {
         loggedIn = false;
         return "logout";
     }
-    
-    public void validateAccount(){
+
+    public void validateAccount() {
         StudentVo user = FacadeFactory.getInstance().getStudentFacade().find(getId());
-        if (user != null){
-            if (!user.isActive()){
+        if (user != null) {
+            if (!user.isActive()) {
                 setStatus("new");
                 setActive(false);
                 user.setActive(true);
@@ -186,15 +186,18 @@ public class UserBean implements Serializable {
                 setActive(true);
             }
         } else {
-         setStatus("unregistred");   
+            setStatus("unregistred");
         }
     }
-    
-    public String getTutorID(){
-        
+
+    public String getTutorID() {
+
         Integer TutorId = FacadeFactory.getInstance().getTutorFacade().findByUsername(getUserName());
-        
-        return TutorId.toString();
+
+        if (TutorId != null) {
+            return TutorId.toString();
+        } else {
+            return null;
+        }
     }
-    
 }

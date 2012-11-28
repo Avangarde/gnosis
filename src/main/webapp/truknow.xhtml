@@ -55,7 +55,7 @@
                                         <!-- cambiar color dependiendo del nivel -->
                                         <div class="bar" style ="width: 99%;">
                                             <!-- obtener el progreso a traves de la cantidad de ratings que se le haya dado -->
-                                            <h4>Hacen falta 3 puntuaciones para el siguiente nivel</h4>
+                                            <h>Hacen falta 3 puntuaciones para el siguiente nivel</h>
                                         </div>
                                     </div>
 
@@ -79,6 +79,8 @@
                                         <p:graphicImage value="#{tutorBean.urlPhoto}" width="66" height="66"/>
                                     </h:column>
                                     <h:column>
+                                        <h3>#{subject.name}</h3><br/>
+                                        <p:rating value="#{tutorBean.ratingBySubject(subject.code)}" disabled="true"></p:rating><br/>
                                         <h:link value="Ver" outcome="subject-truknow.xhtml" class="btn btn-info">
                                             <f:param name ="code" value ="#{subject.code}" />
                                             <f:param name ="tutorID" value ="#{tutorBean.id}"/>
@@ -115,13 +117,13 @@
 
                             </ul>
                         </div>
-                        <h4>Ranking en la red TruKnow: ¡Eres el número <strong> #{tutorBean.id} </strong> !</h4>
+                        <h4>Ranking en la red TruKnow: ¡Eres el número <strong> #{tutorBean.id} </strong>!</h4>
 
 
                     </div>
 
                     <div class="hero-unit">
-                        <h2>Maestros</h2>
+                        <h2>Tutores</h2>
                         <div class="well">
                             <div class="row-fluid">
                                 <div class="span4">
