@@ -30,7 +30,7 @@ public class UserBean implements Serializable {
     private int programId;
     private boolean loggedIn;
     private boolean active;
-    private String urlPhoto = "http://userserve-ak.last.fm/serve/_/58531987/Unknown+_user.jpg";
+    private String urlPhoto;
     private List<ActivityVo> activities = new ArrayList<ActivityVo>();
     private List<PublicationVo> publications;
 
@@ -199,5 +199,12 @@ public class UserBean implements Serializable {
         } else {
             return null;
         }
+    }
+    
+    public void update(){
+        StudentVo student = FacadeFactory.getInstance().getStudentFacade().find(getId());
+        student.setAboutMe(getAboutMe());
+        student.setUrlPhoto(getUrlPhoto());
+        FacadeFactory.getInstance().getStudentFacade().update(student);
     }
 }
