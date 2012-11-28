@@ -4,12 +4,14 @@
  */
 package org.avangarde.gnosis.businesslogic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.avangarde.gnosis.dao.DAOFactory;
 import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Rating;
 import org.avangarde.gnosis.entity.Student;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.RatingVo;
 
@@ -49,6 +51,19 @@ public class RatingService implements IService<RatingVo> {
             TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(vo.getTutorSubjectId(), em);
             tutorSubject.getRatingList().add(entity);
             tutorSubject.setReputation(calculateRating(tutorSubject.getRatingList()));
+            Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(tutorSubject.getTutor().getId(), em);
+
+            List<Rating> ratingList = new ArrayList<Rating>();
+            for (TutorSubject each : tutor.getTutorSubjectList()) {
+                ratingList.addAll(each.getRatingList());
+            }
+
+            tutor.setReputation(calculateRating(ratingList));
+            tutor.setNumberVotes(ratingList.size());
+            
+            DAOFactory.getInstance().getTutorDAO().persist(tutor, em);
+            
+            
             entity.setTutorSubject(tutorSubject);
         }
 
