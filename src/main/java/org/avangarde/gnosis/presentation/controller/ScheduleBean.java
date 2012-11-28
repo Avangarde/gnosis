@@ -38,6 +38,7 @@ import org.primefaces.model.ScheduleModel;
 public class ScheduleBean implements Serializable {
 
     private ScheduleModel eventModel;
+    private ScheduleModel myEventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
     @ManagedProperty(value = "#{userBean}")
     private UserBean user;
@@ -71,7 +72,7 @@ public class ScheduleBean implements Serializable {
 
     public ScheduleBean() {
 
-
+        myEventModel = new DefaultScheduleModel();
         eventModel = new DefaultScheduleModel();
     }
 
@@ -85,12 +86,26 @@ public class ScheduleBean implements Serializable {
 
     }
 
+    public ScheduleModel getMyEventModel() {
+
+        loadMyEvents();
+
+        return myEventModel;
+    }
+    
     public ScheduleEvent getEvent() {
         return event;
     }
 
     public void setEvent(ScheduleEvent event) {
         this.event = event;
+    }
+    
+    private void loadMyEvents(){
+        myEventModel.clear();
+        for(EventVo event : FacadeFactory.getInstance().getEventFacade().getEventsByStudent(user.getId())){
+            myEventModel.addEvent(new DefaultScheduleEvent(event.getName(), event.getStartDate(), event.getEndDate()));
+        }
     }
 
     private void loadEvents(List<EventVo> eventsList) {

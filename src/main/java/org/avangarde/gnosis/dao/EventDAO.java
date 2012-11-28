@@ -69,5 +69,14 @@ public class EventDAO implements IDAO<Event> {
         return events;
     }
 
+    public List<Event> getEventsByStudent(EntityManager em, int studentId) {
+        List<Event> events;
+        Query q = em.createQuery("SELECT a FROM Event a WHERE a.student.id LIKE :studentId ").setParameter("studentId", new Integer(studentId).toString());
+        try {
+            events = q.getResultList();
+        } catch (Exception e) {
+            events = new ArrayList<Event>();
+        }
+        return events;
     }
-
+}

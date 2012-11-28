@@ -23,7 +23,8 @@
 
             <p:growl id="messages" showDetail="true" />  
 
-            <p:schedule value="#{scheduleBean.eventModel}"  widgetVar="myschedule" locale="es">  
+            <p:schedule value="#{scheduleBean.eventModel}"  widgetVar="myschedule" locale="es"
+                        draggable="false" resizable="false">  
 
                 <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
                 <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  

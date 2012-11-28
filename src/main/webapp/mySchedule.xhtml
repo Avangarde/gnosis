@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./WEB-INF/templates/default.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        - Mi Calendario
+    </ui:define>
+    <ui:define name="content">
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/locales.js">
+        </script>
+        <div class="container">
+            <div class="span10 offset1">
+                 <h:form>
+
+                    <h2 style="color: blue">Mi Calendario</h2>
+
+                    <p:growl id="messages" showDetail="true" />  
+
+                    <p:schedule value="#{scheduleBean.myEventModel}"  widgetVar="myschedule" locale="es"
+                                draggable="false" resizable="false">  
+                    </p:schedule>   
+
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

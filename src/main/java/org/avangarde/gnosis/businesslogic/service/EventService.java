@@ -108,4 +108,24 @@ public class EventService implements IService<EventVo> {
         }
         return eventVo;
     }
+
+    public Iterable<EventVo> getEventsByStudent(EntityManager em, int studentId) {
+        List<EventVo> eventVo = new ArrayList<EventVo>();
+        List<Event> events = DAOFactory.getInstance().getEventDAO().getEventsByStudent(em, studentId);
+        List<String> eventsNames = new ArrayList<String>();
+        for (Event entity : events) {
+            eventVo.add(entity.toVo());
+            eventsNames.add(entity.getName());
+        }
+        Student student = DAOFactory.getInstance().getStudentDAO().find(studentId, em);
+        for (Subject subject : student.getSubjectList()){
+            for (Event event : subject.getEventList()){
+                if (!eventsNames.contains(event.getName())) {
+                    eventVo.add(event.toVo());
+                    eventsNames.add(event.getName());
+                }
+            }
+        }
+        return eventVo;
+    }
 }

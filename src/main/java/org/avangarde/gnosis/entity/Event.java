@@ -16,9 +16,8 @@ import org.avangarde.gnosis.vo.EventVo;
 @Table(name = "event")
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),})
-
 public class Event implements Serializable, IEntity<EventVo> {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
@@ -44,6 +43,9 @@ public class Event implements Serializable, IEntity<EventVo> {
     private Student student;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private List<Activity> activityList;
+    @ManyToOne
+    @JoinColumn(name = "Subject_code")
+    private Subject subject;
 
     public Date getStartDate() {
         return startDate;
@@ -60,9 +62,6 @@ public class Event implements Serializable, IEntity<EventVo> {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-    @ManyToOne
-    @JoinColumn(name = "Subject_code")
-    private Subject subject;
 
     public Event() {
     }
@@ -82,7 +81,7 @@ public class Event implements Serializable, IEntity<EventVo> {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -130,7 +129,7 @@ public class Event implements Serializable, IEntity<EventVo> {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
-    
+
     @Override
     public EventVo toVo() {
         ArrayList<ActivityVo> listActivityVo = new ArrayList<ActivityVo>();
@@ -148,8 +147,6 @@ public class Event implements Serializable, IEntity<EventVo> {
         vo.setSubjectCode(getSubject().getCode());
         vo.setType(getType());
         vo.setActivityList(listActivityVo);
-        return vo;     
+        return vo;
     }
-
-   
 }
