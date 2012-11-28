@@ -61,7 +61,7 @@ public class RatingService implements IService<RatingVo> {
             tutor.setReputation(calculateRating(ratingList));
             tutor.setNumberVotes(ratingList.size());
             
-            DAOFactory.getInstance().getTutorDAO().persist(tutor, em);
+            DAOFactory.getInstance().getTutorDAO().update(tutor, em);
             
             
             entity.setTutorSubject(tutorSubject);

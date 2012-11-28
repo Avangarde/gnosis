@@ -16,6 +16,7 @@ import org.avangarde.gnosis.entity.Comment;
 import org.avangarde.gnosis.entity.Publication;
 import org.avangarde.gnosis.entity.Student;
 import org.avangarde.gnosis.entity.Topic;
+import org.avangarde.gnosis.entity.Tutor;
 import org.avangarde.gnosis.entity.TutorSubject;
 import org.avangarde.gnosis.vo.CommentVo;
 
@@ -63,6 +64,11 @@ public class CommentService implements IService<CommentVo> {
                 TutorSubject tutorSubject = DAOFactory.getInstance().getTutorSubjectDAO().find(vo.getTutorSubjectId(), em);
                 entity.setTutorSubject(tutorSubject);
                 tutorSubject.getCommentList().add(entity);
+                
+                Tutor tutor = DAOFactory.getInstance().getTutorDAO().find(tutorSubject.getTutor().getId(), em);
+                tutor.setQuestionReceived(tutorSubject.getCommentList().size());
+                DAOFactory.getInstance().getTutorDAO().update(tutor, em);
+                
             }
             DAOFactory.getInstance().getCommentDAO().persist(entity, em);
         } catch (ParseException ex) {
