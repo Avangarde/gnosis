@@ -51,12 +51,12 @@
                             </ul> 
                             <ul class="nav pull-right">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <a href="./userProfile.xhtml" class="dropdown-toggle" data-toggle="dropdown">
                                         <h:outputText value="#{userBean.userName}" />
                                         <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Editar Cuenta</a></li>
+                                        <li><a href="./userProfile.xhtml">Editar Cuenta</a></li>
                                         <li class="divider"></li>
                                         <li>
                                             <h:form class="navbar-form">
@@ -85,28 +85,16 @@
         <footer class="footer" style="background-color:#80CCFF;">
             <div class="container" style="margin:0 auto;">
                 <div class="row">
-                    <div class="span2 offset2">
-                        <h4>Avangarde</h4>
-                        <ul>
-                            <li><a href="" style="color: #FFFFFF">¿Quienes Somos?</a></li>
-                            <li><a href="" style="color: #FFFFFF">Contactar</a></li>
-                        </ul>
+                    <div class="span4 offset2">
+                        <h>Avangarde</h>
+                        <h> | </h>
+                        <a href="#{request.contextPath}/aboutUs.xhtml" style="color: #FFFFFF">¿Quienes Somos?</a>
+                        <h> | </h>
+                        <a href="mailto:gnosisun@gmail.com" style="color: #FFFFFF">Contactar</a>
+
                     </div>
-                    <div class="span2 offset1">
-                        <h4>Recursos</h4>
-                        <ul>
-                            <li><a href="" style="color: #FFFFFF">Ayuda</a></li>
-                            <li><a href="" style="color: #FFFFFF">Preguntas Frecuentes</a></li>
-                            <li><a href="" style="color: #FFFFFF">Soporte</a></li>
-                        </ul>
-                    </div>
-                    <div class="span2 offset1">
-                        <h4>Conectar</h4>
-                        <ul>
-                            <li><a href="" style="color: #FFFFFF" title="Facebook">Facebook</a></li>
-                            <li><a href="" style="color: #FFFFFF" title="Twitter">Twitter</a></li>
-                        </ul>
-                    </div>
+
+
                 </div>
 
             </div>

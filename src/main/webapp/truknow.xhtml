@@ -55,7 +55,7 @@
                                         <!-- cambiar color dependiendo del nivel -->
                                         <div class="bar" style ="width: 99%;">
                                             <!-- obtener el progreso a traves de la cantidad de ratings que se le haya dado -->
-                                            <h4>Hacen falta 3 puntuaciones para el siguiente nivel</h4>
+                                            <h>Hacen falta 3 puntuaciones para el siguiente nivel</h>
                                         </div>
                                     </div>
 
@@ -79,6 +79,8 @@
                                         <p:graphicImage value="#{tutorBean.urlPhoto}" width="66" height="66"/>
                                     </h:column>
                                     <h:column>
+                                        <h3>#{subject.name}</h3><br/>
+                                        <p:rating value="#{tutorBean.ratingBySubject(subject.code)}" disabled="true"></p:rating><br/>
                                         <h:link value="Ver" outcome="subject-truknow.xhtml" class="btn btn-info">
                                             <f:param name ="code" value ="#{subject.code}" />
                                             <f:param name ="tutorID" value ="#{tutorBean.id}"/>
@@ -115,46 +117,34 @@
 
                             </ul>
                         </div>
-                        <h4>Ranking en la red TruKnow: ¡Eres el número <strong> #{tutorBean.id} </strong> !</h4>
+                        <h4>Ranking en la red TruKnow: ¡Eres el número <strong> #{tutorBean.id} </strong>!</h4>
 
 
                     </div>
 
                     <div class="hero-unit">
-                        <h2>Maestros</h2>
-                        <div class="well">
-                            <div class="row-fluid">
-                                <div class="span4">
-                                    <img src="http://www.agenciadenoticias.unal.edu.co/typo3temp/pics/e8a3be99a5.jpg" class="img-polaroid"></img>
-
-                                </div>
-                                <div class="span8">
-
-
-                                    <p:growl id="messages" showDetail="true"/>  
-
-                                    <h:panelGrid columns="2" cellpadding="5">  
-
-                                        <h:outputText value="Califica tu tutor:" />  
-                                        <p:rating value="#{ratingBean.rating3}">  
-                                            <p:ajax event="rate" listener="#{ratingBean.onrate}" update="messages" />  
-
-                                        </p:rating>  
-
-                                    </h:panelGrid>  
-
-
-                                    <ul class="unstyled">
-                                        <li>UserName</li>
-                                        <li>Te enseña: CourseName</li>
-                                        <link><a href="#{request.contextPath}/truknow.xhtml">¡Llevame a la pagina del tutor!</a></link>
-                                    </ul>
-
-                                </div>
+                        <h2>Tutores</h2>
+                        <ui:repeat value="#{tutorSubjectBean.tutors}" var="tutor">
+                            <p:separator/>
+                            <div class="well">
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <h:column>
+                                        <p:graphicImage value="#{tutor.urlPhoto}" width="66" height="66"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h3>#{tutor.userName}</h3><br/>
+                                        <!--<p:rating value="#{tutorBean.ratingBySubject(subject.code)}" disabled="true"></p:rating><br/>-->
+                                        <h:link value="Ir al Perfil" class="btn btn-success"  outcome="subject-truknow.xhtml" rendered="#{subjectBean.shouldHideNavigationButton()}">
+                                        <f:param name ="code" value ="#{tutor.subjectCode}"/>
+                                        <f:param name ="tutorID" value ="#{tutor.tutorId}"/>
+                                    </h:link>
+                                    </h:column>
+                                </h:panelGrid>
 
                             </div>
+                        </ui:repeat>
 
-                        </div>
+
                     </div>
                 </div>
             </div>

@@ -205,7 +205,7 @@ public class TutorSubjectBean {
             }
 
             
-            publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByStudent(tutor.getStudentId());
+            publications = FacadeFactory.getInstance().getPublicationFacade().getPublicationsByStudentAndTutorSubject(tutor.getStudentId(), getSubjectCode());
 
             if (tutorSubject.getReputation() != null) {
                 setReputationInt(tutorSubject.getReputation().intValue());
