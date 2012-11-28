@@ -39,6 +39,7 @@ public class SubjectBean implements Serializable {
     private List<SubjectVo> subjects = new ArrayList<SubjectVo>();
     private List<ActivityVo> activities = new ArrayList<ActivityVo>();
     private List<EventVo> events = new ArrayList<EventVo>();
+    private List<String> programs = new ArrayList<String>();
 
     public SubjectBean() {
     }
@@ -149,6 +150,18 @@ public class SubjectBean implements Serializable {
 
     public void setActivities(List<ActivityVo> activities) {
         this.activities = activities;
+    }
+    
+    public List<String> getPrograms() {
+        List<String> findedPrograms = FacadeFactory.getInstance().getProgramFacade().getProgramsBySubject(getCode());
+        if (findedPrograms != null) {
+            programs = findedPrograms;
+        }
+        return programs;
+    }
+
+    public void setPrograms(List<String> programs) {
+        this.programs = programs;
     }
 
     public void subscribeStudent() {

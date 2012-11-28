@@ -19,7 +19,7 @@ public class SubjectVo implements IValueObject {
     private String noteBook;
     
     private List<StudentVo> studentList;
-//    private List<ProgramVo> programList;
+    private List<Integer> programCodesList;
     private List<TopicVo> topicList;
     private List<EventVo> eventList;
     private List<StudygroupVo> studygroupList;
@@ -83,13 +83,13 @@ public class SubjectVo implements IValueObject {
         this.noteBook = noteBook;
     }
 
-//    public List<ProgramVo> getProgramList() {
-//        return programList;
-//    }
-//
-//    public void setProgramList(List<ProgramVo> programList) {
-//        this.programList = programList;
-//    }
+    public List<Integer> getProgramCodesList() {
+        return programCodesList;
+    }
+
+    public void setProgramCodesList(List<Integer> programList) {
+        this.programCodesList = programList;
+    }
 
     public List<PublicationVo> getPublicationList() {
         return publicationList;

@@ -33,8 +33,8 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
     private String noteBook;
     @ManyToMany(mappedBy = "subjectList")
     private List<Student> studentList;
-    //@ManyToMany(mappedBy = "subjectList")
-    //private List<Program> programList;
+    @ManyToMany(mappedBy = "subjectList")
+    private List<Program> programList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
     private List<Topic> topicList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
@@ -109,13 +109,13 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         this.studentList = studentList;
     }
 
-//    public List<Program> getProgramList() {
-//        return programList;
-//    }
-//
-//    public void setProgramList(List<Program> programList) {
-//        this.programList = programList;
-//    }
+    public List<Program> getProgramList() {
+        return programList;
+    }
+
+    public void setProgramList(List<Program> programList) {
+        this.programList = programList;
+    }
 
     public List<Topic> getTopicList() {
         return topicList;
@@ -200,11 +200,11 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         for (Student entity : getStudentList()) {
              listStudentVo.add(entity.toVo());
         }
-//        
-//        List<ProgramVo> listProgramVo = new ArrayList<ProgramVo>();
-//        for (Program entity : getProgramList()) {
-//             listProgramVo.add(entity.toVo());
-//        }
+        
+        List<Integer> listProgramVoCodes = new ArrayList<Integer>();
+        for (Program entity : getProgramList()) {
+             listProgramVoCodes.add(entity.getCode());
+        }
         
         List<TopicVo> listTopicVo = new ArrayList<TopicVo>();
         for (Topic entity : getTopicList()) {
@@ -237,7 +237,7 @@ public class Subject implements Serializable, IEntity<SubjectVo> {
         }
         
         vo.setStudentList(listStudentVo);
-//        vo.setProgramList(listProgramVo);
+        vo.setProgramCodesList(listProgramVoCodes);
         vo.setTopicList(listTopicVo);
         vo.setEventList(listEventVo);
         vo.setStudygroupList(listStudygroupVo);

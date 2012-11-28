@@ -14,6 +14,7 @@
     <class>org.avangarde.gnosis.entity.Topic</class>
     <class>org.avangarde.gnosis.entity.Tutor</class>
     <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <class>org.avangarde.gnosis.entity.Rating</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gnosis"/>
@@ -35,10 +36,11 @@
     <class>org.avangarde.gnosis.entity.Topic</class>
     <class>org.avangarde.gnosis.entity.Tutor</class>
     <class>org.avangarde.gnosis.entity.TutorSubject</class>
+    <class>org.avangarde.gnosis.entity.Rating</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-gnosistest.j.rsnx.ru:3306/gnosis"/>
-      <property name="javax.persistence.jdbc.password" value="sDB6nhVr8w"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-GnosisU.jelastic.tsukaeru.net/gnosis"/>
+      <property name="javax.persistence.jdbc.password" value="3yr1zu1KGn"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="eclipselink.ddl-generation" value="create-tables"/>

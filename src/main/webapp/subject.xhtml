@@ -23,39 +23,39 @@
                     <h1><small>Ultimas Noticias</small></h1>
                     <ui:repeat value="#{subjectBean.activities}" var="activity">
                         <p:separator/>
-                        <h:panelGrid columns="3" cellpadding="10">
-                            <h:column>
-                                <p:graphicImage value="#{activity.studentUrlPhoto}"/>
-                            </h:column>
-                            <h:column>
-                                <h2 style="color:blue">#{activity.studentUsername}</h2>
-                                <h3 style="color:black">En #{activity.subjectName} #{activity.details}</h3>
-                                <h2 style="color:blue">
-                                    <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
-                                        #{activity.publicationTitle}
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{not activity.topicId.equals(0)}">
-                                        #{activity.topicTitle}
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
-                                        #{activity.tutorName}
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{not activity.eventId.equals(0)}">
-                                        #{activity.eventTitle}
-                                    </ui:fragment>
-                                </h2><br/><br/>
-                                <h:outputText value=" #{activity.dateActivity}"/>
-                            </h:column>
-                            <h:column>
-                                <h:link value="Ver" outcome="#{activity.url}" class="btn btn-info">
-                                    <f:param name ="code" value ="#{activity.subjectCode}"/>
-                                    <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
-                                    <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
-                                    <f:param name ="tutorID" value ="#{activity.tutorId}" rendered="#{not activity.tutorId.equals(0)}"/>
-                                </h:link>
-                            </h:column>
-                        </h:panelGrid>
-                        <p:separator/>
+                            <h:panelGrid columns="3" cellpadding="10">
+                                <h:column>
+                                    <p:graphicImage value="#{activity.studentUrlPhoto}" width="66" height="66"/>
+                                </h:column>
+                                <h:column>
+                                    <h4 style="color:blue">#{activity.studentUsername}</h4>
+                                    <h5 style="color:black">En #{activity.subjectName} #{activity.details}</h5>
+                                    <h5 style="color:blue">
+                                        <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
+                                            #{activity.publicationTitle}
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.topicId.equals(0)}">
+                                            #{activity.topicTitle}
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
+                                            #{activity.tutorName}
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{not activity.eventId.equals(0)}">
+                                            #{activity.eventTitle}
+                                        </ui:fragment>
+                                    </h5>
+                                    <h:outputText value=" #{activity.dateActivity}"/>
+                                </h:column>
+                                <h:column>
+                                    <h:link value="Ver" outcome="#{activity.url}" class="btn btn-info">
+                                        <f:param name ="code" value ="#{activity.subjectCode}"/>
+                                        <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
+                                        <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
+                                        <f:param name ="tutorID" value ="#{activity.tutorId}" rendered="#{not activity.tutorId.equals(0)}"/>
+                                    </h:link>
+                                </h:column>
+                            </h:panelGrid>
+                            <p:separator/>
                     </ui:repeat>
                 </div>
             </div>

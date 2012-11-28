@@ -7,6 +7,8 @@ package org.avangarde.gnosis.businesslogic.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,6 +143,15 @@ public class ActivityService implements IService<ActivityVo> {
                 activityVo.add(activity.toVo());
             }
         }
+        Collections.sort(activityVo, new Comparator() {
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                ActivityVo p1 = (ActivityVo) o1;
+                ActivityVo p2 = (ActivityVo) o2;
+                return p2.getDateActivity().compareTo(p1.getDateActivity());
+            }
+        });
         
         return activityVo;
     }

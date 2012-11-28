@@ -12,71 +12,71 @@
     </ui:define>
 
     <ui:define name="content">
-        <div class="row">
-            <div class="span8 offset2">
-                <h:form id="form" >
-                    <h1 style="color: #555">Últimas Noticias</h1>
-                    <div class="hero-unit">
-                        <ui:repeat value="#{userBean.activities}" var="activity">
-                            <p:separator/>
-                            <h:panelGrid columns="3" cellpadding="10">
-                                <h:column>
-                                    <p:graphicImage value="#{activity.studentUrlPhoto}" width="66" height="66"/>
-                                </h:column>
-                                <h:column>
-                                    <h4 style="color:blue">#{activity.studentUsername}</h4>
-                                    <h5 style="color:black">En #{activity.subjectName} #{activity.details}</h5>
-                                    <h5 style="color:blue">
-                                        <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
-                                            #{activity.publicationTitle}
-                                        </ui:fragment>
-                                        <ui:fragment rendered="#{not activity.topicId.equals(0)}">
-                                            #{activity.topicTitle}
-                                        </ui:fragment>
-                                        <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
-                                            #{activity.tutorName}
-                                        </ui:fragment>
-                                        <ui:fragment rendered="#{not activity.eventId.equals(0)}">
-                                            #{activity.eventTitle}
-                                        </ui:fragment>
-                                    </h5>
-                                    <h:outputText value=" #{activity.dateActivity}"/>
-                                </h:column>
-                                <h:column>
-                                    <h:link value="Ver" outcome="#{activity.url}" class="btn btn-info">
-                                        <f:param name ="code" value ="#{activity.subjectCode}"/>
-                                        <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
-                                        <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
-                                        <f:param name ="tutorID" value ="#{activity.tutorId}" rendered="#{not activity.tutorId.equals(0)}"/>
-                                    </h:link>
-                                </h:column>
-                            </h:panelGrid>
-                            <p:separator/>
-                        </ui:repeat>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span8 offset1">
+                    <h:form id="form" >
+                        <h1 style="color: #555">Últimas Noticias</h1>
+                        <div class="hero-unit">
+                            <ui:repeat value="#{userBean.activities}" var="activity">
+                                <p:separator/>
+                                <h:panelGrid columns="3" cellpadding="10">
+                                    <h:column>
+                                        <p:graphicImage value="#{activity.studentUrlPhoto}" width="66" height="66"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h4 style="color:blue">#{activity.studentUsername}</h4>
+                                        <h5 style="color:black">En #{activity.subjectName} #{activity.details}</h5>
+                                        <h5 style="color:blue">
+                                            <ui:fragment rendered="#{not activity.publicationId.equals(0)}">
+                                                #{activity.publicationTitle}
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{not activity.topicId.equals(0)}">
+                                                #{activity.topicTitle}
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{not activity.tutorId.equals(0)}">
+                                                #{activity.tutorName}
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{not activity.eventId.equals(0)}">
+                                                #{activity.eventTitle}
+                                            </ui:fragment>
+                                        </h5>
+                                        <h:outputText value=" #{activity.dateActivity}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:link value="Ver" outcome="#{activity.url}" class="btn btn-info">
+                                            <f:param name ="code" value ="#{activity.subjectCode}"/>
+                                            <f:param name ="pubId" value ="#{activity.publicationId}" rendered="#{not activity.publicationId.equals(0)}"/>
+                                            <f:param name ="topicId" value ="#{activity.topicId}" rendered="#{not activity.topicId.equals(0)}"/>
+                                            <f:param name ="tutorID" value ="#{activity.tutorId}" rendered="#{not activity.tutorId.equals(0)}"/>
+                                        </h:link>
+                                    </h:column>
+                                </h:panelGrid>
+                                <p:separator/>
+                            </ui:repeat>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="span3">
+                    <div class="alert">
+                        <h2>Enlaces de Interés</h2>
+                        <h:link value="Universidad Nacional de Colombia" outcome="externalLink.xhtml">
+                            <f:param name ="url" value ="http://www.unal.edu.co/"/>
+                        </h:link><br/>
+                        <a href="http://login.unal.edu.co/sso/auth.htm" target="_blank">Correo Institucional
+                        </a><br/>
+                        <h:link value="SIA" outcome="externalLink.xhtml">
+                            <f:param name ="url" value ="http://www.sia.unal.edu.co/"/>
+                        </h:link><br/>
+                        <h:link value="Bibliotecas" outcome="externalLink.xhtml">
+                            <f:param name ="url" value ="http://www.sinab.unal.edu.co/"/>
+                        </h:link><br/>
+                        <a href="http://www.campus.virtual.unal.edu.co/" target="_blank">BlackBoard
+                        </a><br/>
                     </div>
-                </h:form>
-            </div>
-            <div class="span3">
-                <div class="alert">
-                    <h2>Enlaces de Interés</h2>
-                    <h:link value="Universidad Nacional de Colombia" outcome="externalLink.xhtml">
-                        <f:param name ="url" value ="http://www.unal.edu.co/"/>
-                    </h:link><br/>
-                    <h:link value="Correo Institucional" outcome="externalLink.xhtml">
-                        <f:param name ="url" value ="http://login.unal.edu.co/sso/auth.htm"/>
-                    </h:link><br/>
-                    <h:link value="SIA" outcome="externalLink.xhtml">
-                        <f:param name ="url" value ="http://www.sia.unal.edu.co/"/>
-                    </h:link><br/>
-                    <h:link value="Bibliotecas" outcome="externalLink.xhtml">
-                        <f:param name ="url" value ="http://www.sinab.unal.edu.co/"/>
-                    </h:link><br/>
-                    <h:link value="BlackBoard" outcome="externalLink.xhtml">
-                        <f:param name ="url" value ="http://www.campus.virtual.unal.edu.co/"/>
-                    </h:link><br/>
                 </div>
             </div>
-        </div>  
+        </div>
     </ui:define>
 
 </ui:composition>

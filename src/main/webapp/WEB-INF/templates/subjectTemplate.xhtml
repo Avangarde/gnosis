@@ -103,7 +103,11 @@
                     <div class="hero-unit">
                         <div class="form-actions">
                             <h1>#{subjectBean.name}</h1>
-                            <h1><small>Ingeniería de Sistemas</small></h1>
+                            <h1><small>
+                                    <ui:repeat value="#{subjectBean.programs}" var="program">
+                                        #{program} -
+                                    </ui:repeat>
+                                </small></h1>
                         </div>
                         <div class="form-actions">
                             <f:view>
@@ -158,7 +162,7 @@
                 <p:menuitem value="Cuaderno" icon="./resources/images/childish_Bookmark.png" url="noteBook.xhtml?code=#{subjectBean.code}"/>
             </p:dock>
         </div>
-        
+
         <footer class="footer" style="background-color:#80CCFF;">
             <div class="container" style="margin:0 auto;">
                 <div class="row">

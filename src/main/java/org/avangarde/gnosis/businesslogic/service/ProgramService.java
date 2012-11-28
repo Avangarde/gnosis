@@ -73,4 +73,12 @@ public class ProgramService implements IService<ProgramVo> {
         });
         return list;
     }
+
+    public List<String> getProgramsBySubject(EntityManager em, Integer subjectCode) {
+        List<String> list = new ArrayList<String>();
+        for (String program : DAOFactory.getInstance().getProgramDAO().getProgramsBySubject(em, subjectCode)) {
+            list.add(program);
+        }
+        return list;
+    }
 }

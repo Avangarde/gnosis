@@ -4,6 +4,7 @@
  */
 package org.avangarde.gnosis.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -55,5 +56,17 @@ public class ProgramDAO implements IDAO<Program> {
         cq.select(cq.from(Program.class));
         Query q = em.createQuery(cq);
         return q.getResultList();
+    }
+
+    public List<String> getProgramsBySubject(EntityManager em, Integer subjectCode) {
+        List<String> list;
+        Query q = em.createQuery("SELECT p.name FROM Program p INNER JOIN p.subjectList s "
+                + "WHERE s.code LIKE :subjectCode ").setParameter("subjectCode", subjectCode.toString());
+        try {
+            list = q.getResultList();
+        } catch (Exception e) {
+            list = new ArrayList<String>();
+        }
+        return list;
     }
 }
